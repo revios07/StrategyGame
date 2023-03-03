@@ -8,6 +8,11 @@ public class InputHandler : MonoBehaviour
     private InputData _inputData;
     private Vector2 _mousePosition;
 
+    private void Awake()
+    {
+        _inputData.ResetInputData();
+    }
+
     private void Update()
     {
         _mousePosition = CheckMousePosition();

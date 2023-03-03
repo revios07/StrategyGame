@@ -10,13 +10,7 @@ public class InputData : ScriptableObject
     [NaughtyAttributes.ShowNonSerializedField]
     private Vector2 _mousePosition;
 
-
-    private void OnEnable()
-    {
-        ResetInputData();
-    }
-
-    private void ResetInputData()
+    public void ResetInputData()
     {
         _xInput = 0f;
         _yInput = 0f;

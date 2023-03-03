@@ -15,4 +15,9 @@ public class EventManager : MonoBehaviour
     public delegate SoliderScriptable OnSoldierSelectedInProductionPanel(SoliderScriptable selectedSoldierData);
     public delegate TowerScriptable OnTowerSelectedInProductionPanel(TowerScriptable selectedTowerData);
     #endregion
+
+    #region Object Controller
+    public delegate Vector2 OnTowerPlacement();
+    public delegate Vector2 OnSoldierSpawned();
+    #endregion
 }
