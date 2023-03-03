@@ -7,7 +7,6 @@ public class TowerScriptable : ScriptableObject
 {
     [SerializeField]
     private Sprite _towerSprite;
-
     [SerializeField]
     private string _towerName;
     [SerializeField]
