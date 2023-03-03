@@ -9,10 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03569228c472b9341827e54d35d0db6c, type: 3}
-  m_Name: Tower1
+  m_Script: {fileID: 11500000, guid: 35b39b185083849469de02ab9187775a, type: 3}
+  m_Name: InputData
   m_EditorClassIdentifier: 
-  _towerName: 
-  _towerIndex: 0
-  _towerHealth: 0
-  _towerDamage: 0
