@@ -8,7 +8,6 @@ public class SoliderScriptable : ScriptableObject
 {
     [SerializeField]
     private Sprite _soldierSprite;
-
     [SerializeField]
     private int _soldierIndex, _soldierHealth, _soldierDamage;
 }
