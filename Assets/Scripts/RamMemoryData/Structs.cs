@@ -24,13 +24,11 @@ namespace Structs
     public struct SoldierStruct
     {
         public Sprite soldierSprite;
-        public string soldierName;
         public int soldierIndex, soldierHealth, soldierDamage;
 
-        public SoldierStruct(Sprite soldierSprite, string soldierName, int soldierIndex, int soldierHealth, int soldierDamage)
+        public SoldierStruct(Sprite soldierSprite, int soldierIndex, int soldierHealth, int soldierDamage)
         {
             this.soldierSprite = soldierSprite;
-            this.soldierName = soldierName;
             this.soldierIndex = soldierIndex;
             this.soldierHealth = soldierHealth;
             this.soldierDamage = soldierDamage;

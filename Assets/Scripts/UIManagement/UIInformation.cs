@@ -14,14 +14,20 @@ public class UIInformation : MonoBehaviour
 
     private void OnEnable()
     {
-        EventManager.onSoldierSelectedInProductionPanel += UpdateInformationPanel;
-        EventManager.onTowerSelectedInProductionPanel += UpdateInformationPanel;
+        EventManager.onSoldierSelectedInProductionPanel += UpdateProductionInformation;
+        EventManager.onTowerSelectedInProductionPanel += UpdateProductionInformation;
+
+        EventManager.onTowerScriptableSelectedGameBoard += UpdateInformationPanel;
+        EventManager.onSoldierSelectedGameBoard += UpdateInformationPanel;
     }
 
     private void OnDisable()
     {
-        EventManager.onSoldierSelectedInProductionPanel -= UpdateInformationPanel;
-        EventManager.onTowerSelectedInProductionPanel -= UpdateInformationPanel;
+        EventManager.onSoldierSelectedInProductionPanel -= UpdateProductionInformation;
+        EventManager.onTowerSelectedInProductionPanel -= UpdateProductionInformation;
+
+        EventManager.onTowerScriptableSelectedGameBoard -= UpdateInformationPanel;
+        EventManager.onSoldierSelectedGameBoard -= UpdateInformationPanel;
     }
 
     private TowerScriptable UpdateInformationPanel(TowerScriptable selectedTower)
@@ -33,8 +39,25 @@ public class UIInformation : MonoBehaviour
         return null;
     }
 
-    private SoliderScriptable UpdateInformationPanel(SoliderScriptable selectedSoldier)
+    private SoldierScriptable UpdateInformationPanel(SoldierScriptable selectedSoldier)
     {
+        var soldierStruct = selectedSoldier.GetSoldierData();
+        m_informationImage.sprite = soldierStruct.soldierSprite;
+        m_informationText.text = "Soldier " + soldierStruct.soldierIndex;
+
+        return null;
+    }
+
+    private TowerScriptable UpdateProductionInformation(TowerScriptable selectedTower)
+    {
+        m_productionImage.sprite = selectedTower.GetTowerData().towerSprite;
+
+        return null;
+    }
+
+    private SoldierScriptable UpdateProductionInformation(SoldierScriptable selectedSoldier)
+    {
+        m_productionImage.sprite = selectedSoldier.GetSoldierData().soldierSprite;
 
         return null;
     }

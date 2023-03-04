@@ -5,5 +5,5 @@ using UnityEngine;
 public abstract class SoldierAbstract : SelectableAbstract
 {
     [SerializeField]
-    protected SoliderScriptable soldierScriptable;
+    protected SoldierScriptable soldierScriptable;
 }
