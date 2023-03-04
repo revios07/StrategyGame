@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03569228c472b9341827e54d35d0db6c, type: 3}
   m_Name: PowerPlant
   m_EditorClassIdentifier: 
+  _towerSprite: {fileID: 0}
   _towerName: PowerPlant
   _towerIndex: 1
   _towerHealth: 50
   _towerDamage: 0
+  _sizeOfTower: {x: 2, y: 3}

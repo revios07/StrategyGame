@@ -10,4 +10,6 @@ public class SoliderScriptable : ScriptableObject
     private Sprite _soldierSprite;
     [SerializeField]
     private int _soldierIndex, _soldierHealth, _soldierDamage;
+    [ShowNonSerializedField]
+    private Vector2 _sizeOfSoldier = Vector2.one;
 }

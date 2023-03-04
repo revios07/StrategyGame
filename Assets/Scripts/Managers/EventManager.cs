@@ -14,6 +14,9 @@ public class EventManager : MonoBehaviour
     #region UI Events MVC
     public delegate SoliderScriptable OnSoldierSelectedInProductionPanel(SoliderScriptable selectedSoldierData);
     public delegate TowerScriptable OnTowerSelectedInProductionPanel(TowerScriptable selectedTowerData);
+
+    public static OnTowerSelectedInProductionPanel onTowerSelectedInProductionPanel;
+    public static OnSoldierSelectedInProductionPanel onSoldierSelectedInProductionPanel;
     #endregion
 
     #region Object Controller

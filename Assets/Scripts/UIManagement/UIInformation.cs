@@ -14,21 +14,28 @@ public class UIInformation : MonoBehaviour
 
     private void OnEnable()
     {
-        
+        EventManager.onSoldierSelectedInProductionPanel += UpdateInformationPanel;
+        EventManager.onTowerSelectedInProductionPanel += UpdateInformationPanel;
     }
 
     private void OnDisable()
     {
-        
+        EventManager.onSoldierSelectedInProductionPanel -= UpdateInformationPanel;
+        EventManager.onTowerSelectedInProductionPanel -= UpdateInformationPanel;
     }
 
-    private void UpdateInformationPanel(TowerScriptable selectedTower)
+    private TowerScriptable UpdateInformationPanel(TowerScriptable selectedTower)
     {
+        var towerStruct = selectedTower.GetTowerData();
+        m_informationText.text = towerStruct.towerName;
+        m_informationImage.sprite = towerStruct.towerSprite;
 
+        return null;
     }
 
-    private void UpdateInformationPanel(SoliderScriptable selectedSoldier)
+    private SoliderScriptable UpdateInformationPanel(SoliderScriptable selectedSoldier)
     {
 
+        return null;
     }
 }
