@@ -4,13 +4,25 @@ using UnityEngine;
 
 public class Building : BuildingAbstract
 {
-    // Start is called before the first frame update
+    public override void OnItemSelectedFromMenu()
+    {
+        EventManager.onTowerSelectedInProductionPanel?.Invoke(base.towerData);
+
+        base.OnItemSelectedFromMenu();
+    }
+
+    public override void OnSelectedItemFromGame()
+    {
+        EventManager.onTowerScriptableSelectedGameBoard?.Invoke(base.towerData);
+
+        base.OnSelectedItemFromGame();
+    }
+
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         

@@ -5,12 +5,12 @@ using Interfaces;
 
 public abstract class SelectableAbstract : MonoBehaviour, IPoolableObject
 {
-    protected virtual void OnSelectedItemFromGame()
+    public virtual void OnSelectedItemFromGame()
     {
 
     }
 
-    protected virtual void OnItemSelectedFromMenu()
+    public virtual void OnItemSelectedFromMenu()
     {
 
     }
