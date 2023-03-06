@@ -708,6 +708,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ScrollableArea (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1651061680806607484, guid: 0aa43f01bee6b2d4abdb9ba26230b09d, type: 3}
+      propertyPath: _isRightTower
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1651061681088153415, guid: 0aa43f01bee6b2d4abdb9ba26230b09d, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

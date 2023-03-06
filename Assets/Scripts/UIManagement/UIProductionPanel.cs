@@ -12,6 +12,7 @@ public class UIProductionPanel : MonoBehaviour
     private TowerScriptable[] _buildingDatas;
     [SerializeField]
     private bool _isRightTower;
+    private int _placementIndex;
 
     private void Awake()
     {
@@ -22,6 +23,7 @@ public class UIProductionPanel : MonoBehaviour
     [NaughtyAttributes.Button()]
     private void SetSelectablesSprites()
     {
+        _placementIndex = 1;
         int j = 0;
         if (_isRightTower)
         {
@@ -33,13 +35,32 @@ public class UIProductionPanel : MonoBehaviour
 
         for (int i = 0; i < _selectables.Length; ++i)
         {
+            if(i == 0)
+            {
+
+            }
+            else
+            {
+                ReverseToOnetoZero(ref j);
+                _placementIndex += 1;
+            }
+
+            if(_placementIndex % 3f == 0f)
+            {
+                ReverseToOnetoZero(ref j);
+                _placementIndex = 1;
+            }
+
             _selectables[i].sprite = _buildingDatas[j].GetTowerData().towerSprite;
             _selectables[i].GetComponent<ButtonPointerHandler>().SetDataType(_buildingDatas[j]);
-
-            if (j == 0)
-                j = 1;
-            else
-                j = 0;
         }
+    }
+
+    private void ReverseToOnetoZero(ref int reverseNumber)
+    {
+        if (reverseNumber == 0)
+            reverseNumber = 1;
+        else
+            reverseNumber = 0;
     }
 }
