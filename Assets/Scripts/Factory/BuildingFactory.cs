@@ -17,7 +17,7 @@ public class BuildingFactory : GameObjectFactory<Building>
             {
                 for (int j = 0; j < _buildingPrefabs.Length; ++j)
                 {
-                    if (_buildingPrefabs[j].GetComponent<TowerScriptable>().GetTowerData().towerName == gameObjectType)
+                    if (_buildingPrefabs[j].GetComponent<Building>().towerData.GetTowerData().towerName == gameObjectType)
                     {
                         return Instantiate(_buildingPrefabs[j]).GetComponent<Building>();
                     }

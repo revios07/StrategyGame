@@ -4,7 +4,6 @@ using UnityEngine;
 
 public abstract class SoldierAbstract : SelectableAbstract
 {
-    [SerializeField]
-    protected SoldierScriptable soldierScriptable;
+    public SoldierScriptable soldierScriptable;
     public int soldierHealth;
 }
