@@ -6,4 +6,5 @@ public abstract class SoldierAbstract : SelectableAbstract
 {
     [SerializeField]
     protected SoldierScriptable soldierScriptable;
+    public int soldierHealth;
 }

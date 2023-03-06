@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameObjectFactory<T> : MonoBehaviour where T : MonoBehaviour
+public abstract class GameObjectFactory<T> : MonoBehaviour where T : MonoBehaviour
 {
     // Reference to prefab of whatever type
     [SerializeField]
-    private T prefab;
+    protected T prefab;
 
-    public T GetNewInstance()
+    public virtual T GetNewInstance(string gameObjectType)
     {
         return Instantiate(prefab);
     }
