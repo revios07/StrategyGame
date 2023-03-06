@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIPositionUpdater : MonoBehaviour
 {
@@ -10,11 +11,17 @@ public class UIPositionUpdater : MonoBehaviour
     [SerializeField]
     private bool _isPositionsOk;
     private Transform[] _childs;
+    [Tooltip("Open Mask On GamePlay")]
+    [SerializeField]
+    private bool _isMaskOpenScroll;
 
     private void Awake()
     {
         if (!_isPositionsOk)
             SetPositions();
+
+        if (_isMaskOpenScroll)
+            GetComponent<Mask>().enabled = true;
     }
 
     private void Update()

@@ -23,10 +23,7 @@ public class ProductionMenuInfiniteScroll : MonoBehaviour
 
     private void Awake()
     {
-        Debug.Log(_height);
-
         _startPositionY = 0f;
-
         _scrollablePool.Add(this.transform);
 
         CreatePool();
