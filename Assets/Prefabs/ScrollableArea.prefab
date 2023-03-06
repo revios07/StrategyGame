@@ -768,7 +768,7 @@ RectTransform:
   m_GameObject: {fileID: 1651061680806607371}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.86741, y: 0.86741, z: 0.86741}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1651061681203947480}
@@ -832,7 +832,7 @@ MonoBehaviour:
   m_Padding:
     m_Left: 0
     m_Right: 0
-    m_Top: 20
+    m_Top: -40
     m_Bottom: 0
   m_ChildAlignment: 1
   m_StartCorner: 0
@@ -885,6 +885,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inputData: {fileID: 11400000, guid: c33b0df369acc1e459bc3fb2cbd90045, type: 2}
   _scrollableAreaPrefab: {fileID: 1651061680806607371}
+  _height: 300
+  _movementUpperToLower: 1440
   _childTransforms: []
 --- !u!114 &1651061680806607484
 MonoBehaviour:

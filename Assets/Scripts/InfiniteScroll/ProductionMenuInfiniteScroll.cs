@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ProductionMenuInfiniteScroll : MonoBehaviour
 {
@@ -8,12 +9,64 @@ public class ProductionMenuInfiniteScroll : MonoBehaviour
     private InputData _inputData;
     [SerializeField]
     private GameObject _scrollableAreaPrefab;
+    [Tooltip("Diff between Lower and Upper Gameobject")]
+    [SerializeField]
+    private float _height, _movementUpperToLower;
 
     [SerializeField]
     private List<Transform> _childTransforms = new List<Transform>();
     private static List<Transform> _scrollablePool = new List<Transform>();
 
     private float _startPositionY;
+    private bool _canChange;
+
+
+    private void Awake()
+    {
+        Debug.Log(_height);
+
+        _startPositionY = 0f;
+
+        _scrollablePool.Add(this.transform);
+
+        CreatePool();
+
+        for (int i = 0; i < transform.childCount; ++i)
+        {
+            _childTransforms.Add(transform.GetChild(0));
+        }
+    }
+
+    private void Update()
+    {
+        //Scroll Wheel Moves
+        if (_inputData.GetMousePosition().x < Screen.width / 3f && Input.mouseScrollDelta.y != 0f)
+        {
+            Vector3 position = transform.position;
+            position.y += Input.mouseScrollDelta.y * Time.deltaTime * _inputData.GetScrollSpeed();
+
+            transform.position = position;
+        }
+
+        if(transform.localPosition.y > _height * 2f + _startPositionY && Input.mouseScrollDelta.y > 0f)
+        {
+            Reposition(Vector2.down);
+        }
+        if(transform.localPosition.y < -_height * 2f + _startPositionY && Input.mouseScrollDelta.y < 0f)
+        {
+            Reposition(Vector2.up);
+        }
+    }
+
+
+    private void Reposition(Vector2 directionVector)
+    {
+        Debug.Log("Reposition");
+        Vector3 vector = directionVector * _movementUpperToLower;
+
+        transform.localPosition += vector;
+    }
+
 
     //[NaughtyAttributes.Button()]
     [ExecuteAlways]
@@ -44,32 +97,6 @@ public class ProductionMenuInfiniteScroll : MonoBehaviour
             DestroyImmediate(pooledObject.gameObject);
         }
         _scrollablePool.Clear();
-    }
-
-    private void Awake()
-    {
-        _startPositionY = transform.position.y;
-
-        _scrollablePool.Add(this.transform);
-
-        CreatePool();
-
-        for (int i = 0; i < transform.childCount; ++i)
-        {
-            _childTransforms.Add(transform.GetChild(0));
-        }
-    }
-
-    private void Update()
-    {
-        //Scroll Wheel Moves
-        if (_inputData.GetMousePosition().x < Screen.width / 3f && Input.mouseScrollDelta.y != 0f)
-        {
-            Vector3 position = transform.position;
-            position.y += Input.mouseScrollDelta.y * Time.deltaTime * _inputData.GetScrollSpeed();
-
-            transform.position = position;
-        }
     }
 
     public void SetStartPosition(float yPosition, Vector3 defaultPosition)
