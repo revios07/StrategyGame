@@ -23,13 +23,23 @@ public class ObjectPoolSystem : MonoBehaviour
     {
         for (int i = 0; i < 20; ++i)
         {
-            _barracksPool.Enqueue(_buildingFactory.GetNewInstance("Barracks").gameObject);
-            _powerPlantsPool.Enqueue(_buildingFactory.GetNewInstance("PowerPlant").gameObject);
+            Building barracksClone = _buildingFactory.GetNewInstance("Barracks");
+            Building powerPlantClone = _buildingFactory.GetNewInstance("PowerPlant");
+
+            barracksClone.gameObject.SetActive(false);
+            powerPlantClone.gameObject.SetActive(false);
+
+            _barracksPool.Enqueue(barracksClone.gameObject);
+            _powerPlantsPool.Enqueue(powerPlantClone.gameObject);
         }
 
         for (int i = 0; i < 50; ++i)
         {
-            _soldiersPool.Enqueue(_soldierFactory.GetNewInstance("Soldier").gameObject);
+            Soldier soldierClone = (_soldierFactory.GetNewInstance("Soldier"));
+            soldierClone.gameObject.SetActive(false);
+
+            _soldiersPool.Enqueue(soldierClone.gameObject);
+
         }
     }
 
@@ -52,6 +62,30 @@ public class ObjectPoolSystem : MonoBehaviour
         }
 
         return null;
+    }
+
+    public void AddToPool(ObjectType pooledObjectType, Transform pooledObject)
+    {
+        pooledObject.gameObject.SetActive(false);
+
+        switch (pooledObjectType)
+        {
+            case (ObjectType.Soldier):
+                {
+                    _soldiersPool.Enqueue(pooledObject.gameObject);
+                    break;
+                }
+            case (ObjectType.Barracks):
+                {
+                    _barracksPool.Enqueue(pooledObject.gameObject);
+                    break;
+                }
+            case (ObjectType.PowerPlant):
+                {
+                    _powerPlantsPool.Enqueue(pooledObject.gameObject);
+                    break;
+                }
+        }
     }
 }
 
