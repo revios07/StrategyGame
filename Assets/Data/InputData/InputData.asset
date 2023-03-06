@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35b39b185083849469de02ab9187775a, type: 3}
   m_Name: InputData
   m_EditorClassIdentifier: 
+  _scrollSpeedMultiplier: 2.4

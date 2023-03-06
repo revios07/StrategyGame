@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameObjectFactory<T> : MonoBehaviour where T : MonoBehaviour
 {
-    // Reference to prefab of whatever type.
+    // Reference to prefab of whatever type
     [SerializeField]
     private T prefab;
 

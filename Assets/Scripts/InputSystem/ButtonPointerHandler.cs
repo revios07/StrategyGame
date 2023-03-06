@@ -5,7 +5,6 @@ using UnityEngine.EventSystems;
 
 public class ButtonPointerHandler : MonoBehaviour, IPointerDownHandler
 {
-
     [NaughtyAttributes.ResizableTextArea]
     [SerializeField]
     private bool _isOnGameSelectable;
