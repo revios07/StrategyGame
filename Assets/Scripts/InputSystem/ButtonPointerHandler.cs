@@ -80,4 +80,16 @@ public class ButtonPointerHandler : MonoBehaviour, IPointerDownHandler
             }
         }
     }
+
+    public void SetDataType(TowerScriptable buildingType)
+    {
+        if(buildingType.GetTowerData().towerName == "Barracks")
+        {
+
+        }
+        else if(buildingType.GetTowerData().towerName == "PowerPlant")
+        {
+
+        }
+    }
 }

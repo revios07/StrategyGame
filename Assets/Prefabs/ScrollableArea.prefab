@@ -900,6 +900,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d0bd82c4fbca57439e7a9bc008347df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _selectables: []
+  _buildingDatas:
+  - {fileID: 11400000, guid: 735d1b0dd6402b84b8044be87b421d6a, type: 2}
+  - {fileID: 11400000, guid: 0ee7474f8bc502a44917ea432523a390, type: 2}
+  _isRightTower: 0
 --- !u!1 &1651061681088153414
 GameObject:
   m_ObjectHideFlags: 0

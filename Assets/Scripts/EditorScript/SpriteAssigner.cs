@@ -13,9 +13,13 @@ public class SpriteAssigner : MonoBehaviour
     public void AssignSprites()
     {
         SpriteRenderer[] renderers = GetComponentsInChildren<SpriteRenderer>();
+        renderers[0] = null;
 
         foreach(var renderer in renderers)
         {
+            if (renderer == null)
+                continue;
+
             renderer.sprite = _sprite;
         }
     }

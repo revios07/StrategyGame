@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6a78f7040398b047b6f2ef8dead954f, type: 3}
   m_Name: SoldierUnit2
   m_EditorClassIdentifier: 
+  _soldierSprite: {fileID: 21300000, guid: 268b569ca14ba5e4489ce2fd06e95ebd, type: 3}
   _soldierIndex: 1
   _soldierHealth: 10
   _soldierDamage: 5
