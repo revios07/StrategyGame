@@ -12,6 +12,7 @@ public class SoldierScriptable : ScriptableObject
     private int _soldierIndex, _soldierHealth, _soldierDamage;
     [ShowNonSerializedField]
     private Vector2 _sizeOfSoldier = Vector2.one;
+    public ObjectType typeOfThis;
 
     public Structs.SoldierStruct GetSoldierData()
     {

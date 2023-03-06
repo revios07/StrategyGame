@@ -52,7 +52,7 @@ public class UIProductionPanel : MonoBehaviour
             }
 
             _selectables[i].sprite = _buildingDatas[j].GetTowerData().towerSprite;
-            _selectables[i].GetComponent<ButtonPointerHandler>().SetDataType(_buildingDatas[j]);
+            _selectables[i].GetComponent<ButtonPointerHandler>().SetDataType(_buildingDatas[j].typeOfThisSelectable);
         }
     }
 

@@ -13,6 +13,7 @@ public class TowerScriptable : ScriptableObject
     private int _towerIndex, _towerHealth, _towerDamage;
     [SerializeField]
     private Vector2 _sizeOfTower;
+    public ObjectType typeOfThisSelectable;
 
     public Structs.TowerStruct GetTowerData()
     {

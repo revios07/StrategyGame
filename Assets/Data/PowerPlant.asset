@@ -18,3 +18,4 @@ MonoBehaviour:
   _towerHealth: 50
   _towerDamage: 0
   _sizeOfTower: {x: 2, y: 3}
+  typeOfThisSelectable: 2

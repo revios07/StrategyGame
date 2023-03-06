@@ -15,6 +15,8 @@ public class ButtonPointerHandler : MonoBehaviour, IPointerDownHandler
     [SerializeField]
     private Building _building;
 
+    public ObjectType typeOfSelectable;         
+
     [ExecuteInEditMode]
     [NaughtyAttributes.Button("Load Referances")]
     private void OnValidate()
@@ -81,15 +83,8 @@ public class ButtonPointerHandler : MonoBehaviour, IPointerDownHandler
         }
     }
 
-    public void SetDataType(TowerScriptable buildingType)
+    public void SetDataType(ObjectType typeOfSelectable)
     {
-        if(buildingType.GetTowerData().towerName == "Barracks")
-        {
-
-        }
-        else if(buildingType.GetTowerData().towerName == "PowerPlant")
-        {
-
-        }
+        this.typeOfSelectable = typeOfSelectable;
     }
 }
