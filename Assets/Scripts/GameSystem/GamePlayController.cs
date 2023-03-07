@@ -56,6 +56,7 @@ public class GamePlayController : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && (pickedObjectType != Enums.ObjectType.Soldier) && building.CanPlaceable())
         {
             building.Placed();
+            return;
         }
 
         if (Input.GetMouseButtonDown(1))
@@ -64,12 +65,25 @@ public class GamePlayController : MonoBehaviour
             return;
         }
 
-        if (!building.IsPlaced())
+        Debug.Log(pickedObjectTrasform.name);
+        Vector3 worldPos = Camera.main.ScreenToWorldPoint(_inputData.GetMousePosition());
+        worldPos.z = 10f;
+        pickedObjectTrasform.position = Vector3.Lerp(pickedObjectTrasform.position, worldPos, 10f * Time.deltaTime);
+
+
+        //Building Picked
+        if (pickedObjectType != Enums.ObjectType.Soldier && !building.IsPlaced())
         {
+            /*
             Debug.Log(pickedObjectTrasform.name);
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(_inputData.GetMousePosition());
             worldPos.z = 10f;
             pickedObjectTrasform.position = Vector3.Lerp(pickedObjectTrasform.position, worldPos, 10f * Time.deltaTime);
+            */
+        }
+        else if(pickedObjectType == Enums.ObjectType.Soldier)
+        {
+
         }
     }
 

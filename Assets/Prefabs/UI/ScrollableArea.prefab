@@ -173,6 +173,7 @@ MonoBehaviour:
   _barracksData: {fileID: 11400000, guid: 735d1b0dd6402b84b8044be87b421d6a, type: 2}
   _powerPlantData: {fileID: 11400000, guid: 0ee7474f8bc502a44917ea432523a390, type: 2}
   typeOfSelectable: 0
+  _isSoldierSpawner: 0
 --- !u!1 &1651061679427456306
 GameObject:
   m_ObjectHideFlags: 0
@@ -269,6 +270,7 @@ MonoBehaviour:
   _barracksData: {fileID: 11400000, guid: 735d1b0dd6402b84b8044be87b421d6a, type: 2}
   _powerPlantData: {fileID: 11400000, guid: 0ee7474f8bc502a44917ea432523a390, type: 2}
   typeOfSelectable: 0
+  _isSoldierSpawner: 0
 --- !u!1 &1651061679552739514
 GameObject:
   m_ObjectHideFlags: 0
@@ -365,6 +367,7 @@ MonoBehaviour:
   _barracksData: {fileID: 11400000, guid: 735d1b0dd6402b84b8044be87b421d6a, type: 2}
   _powerPlantData: {fileID: 11400000, guid: 0ee7474f8bc502a44917ea432523a390, type: 2}
   typeOfSelectable: 0
+  _isSoldierSpawner: 0
 --- !u!1 &1651061679618066790
 GameObject:
   m_ObjectHideFlags: 0
@@ -461,6 +464,7 @@ MonoBehaviour:
   _barracksData: {fileID: 11400000, guid: 735d1b0dd6402b84b8044be87b421d6a, type: 2}
   _powerPlantData: {fileID: 11400000, guid: 0ee7474f8bc502a44917ea432523a390, type: 2}
   typeOfSelectable: 0
+  _isSoldierSpawner: 0
 --- !u!1 &1651061679950386770
 GameObject:
   m_ObjectHideFlags: 0
@@ -557,6 +561,7 @@ MonoBehaviour:
   _barracksData: {fileID: 11400000, guid: 735d1b0dd6402b84b8044be87b421d6a, type: 2}
   _powerPlantData: {fileID: 11400000, guid: 0ee7474f8bc502a44917ea432523a390, type: 2}
   typeOfSelectable: 0
+  _isSoldierSpawner: 0
 --- !u!1 &1651061680048470667
 GameObject:
   m_ObjectHideFlags: 0
@@ -653,6 +658,7 @@ MonoBehaviour:
   _barracksData: {fileID: 11400000, guid: 735d1b0dd6402b84b8044be87b421d6a, type: 2}
   _powerPlantData: {fileID: 11400000, guid: 0ee7474f8bc502a44917ea432523a390, type: 2}
   typeOfSelectable: 0
+  _isSoldierSpawner: 0
 --- !u!1 &1651061680158602394
 GameObject:
   m_ObjectHideFlags: 0
@@ -749,6 +755,7 @@ MonoBehaviour:
   _barracksData: {fileID: 11400000, guid: 735d1b0dd6402b84b8044be87b421d6a, type: 2}
   _powerPlantData: {fileID: 11400000, guid: 0ee7474f8bc502a44917ea432523a390, type: 2}
   typeOfSelectable: 0
+  _isSoldierSpawner: 0
 --- !u!1 &1651061680719947838
 GameObject:
   m_ObjectHideFlags: 0
@@ -845,6 +852,7 @@ MonoBehaviour:
   _barracksData: {fileID: 11400000, guid: 735d1b0dd6402b84b8044be87b421d6a, type: 2}
   _powerPlantData: {fileID: 11400000, guid: 0ee7474f8bc502a44917ea432523a390, type: 2}
   typeOfSelectable: 0
+  _isSoldierSpawner: 0
 --- !u!1 &1651061680806607371
 GameObject:
   m_ObjectHideFlags: 0
@@ -1110,6 +1118,7 @@ MonoBehaviour:
   _barracksData: {fileID: 11400000, guid: 735d1b0dd6402b84b8044be87b421d6a, type: 2}
   _powerPlantData: {fileID: 11400000, guid: 0ee7474f8bc502a44917ea432523a390, type: 2}
   typeOfSelectable: 0
+  _isSoldierSpawner: 0
 --- !u!1 &1651061681203947487
 GameObject:
   m_ObjectHideFlags: 0
@@ -1206,6 +1215,7 @@ MonoBehaviour:
   _barracksData: {fileID: 11400000, guid: 735d1b0dd6402b84b8044be87b421d6a, type: 2}
   _powerPlantData: {fileID: 11400000, guid: 0ee7474f8bc502a44917ea432523a390, type: 2}
   typeOfSelectable: 0
+  _isSoldierSpawner: 0
 --- !u!1 &1949581730648486251
 GameObject:
   m_ObjectHideFlags: 0

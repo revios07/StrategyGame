@@ -1911,7 +1911,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: ecac6a72352509345bcb43ca107f232b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1959,6 +1959,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2405919731911539660, guid: 1202677b5d3ccdb46a922d68f425d40f, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 2100000, guid: ecac6a72352509345bcb43ca107f232b, type: 2}
+    - target: {fileID: 2405919731911539660, guid: 1202677b5d3ccdb46a922d68f425d40f, type: 3}
       propertyPath: m_RaycastTarget
       value: 0
       objectReference: {fileID: 0}
@@ -1974,6 +1978,10 @@ PrefabInstance:
       propertyPath: m_Maskable
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3329900339468708543, guid: 1202677b5d3ccdb46a922d68f425d40f, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 2100000, guid: ecac6a72352509345bcb43ca107f232b, type: 2}
     - target: {fileID: 3329900339468708543, guid: 1202677b5d3ccdb46a922d68f425d40f, type: 3}
       propertyPath: m_RaycastTarget
       value: 0
@@ -2090,6 +2098,10 @@ PrefabInstance:
       propertyPath: m_Maskable
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8569181490576243913, guid: 1202677b5d3ccdb46a922d68f425d40f, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 2100000, guid: ecac6a72352509345bcb43ca107f232b, type: 2}
     - target: {fileID: 8569181490576243913, guid: 1202677b5d3ccdb46a922d68f425d40f, type: 3}
       propertyPath: m_RaycastTarget
       value: 0

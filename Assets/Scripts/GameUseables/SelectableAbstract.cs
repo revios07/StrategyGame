@@ -4,14 +4,17 @@ using UnityEngine;
 using Interfaces;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(ItemPointerHandler))]
 public abstract class SelectableAbstract : MonoBehaviour, ISelectableObject, ICanTakeDamagePlayableObject
 {
     public Enums.ObjectType objectType;
     protected Slider healthSlider;
+    protected HealthTextUpdater healthTextUpdater;
 
-    protected virtual void Start()
+    protected virtual void Awake()
     {
         healthSlider = GetComponentInChildren<Slider>();
+        healthTextUpdater = healthSlider.transform.GetComponent<HealthTextUpdater>();
     }
 
     public virtual void OnSelectedItemFromGame()
@@ -49,5 +52,6 @@ public abstract class SelectableAbstract : MonoBehaviour, ISelectableObject, ICa
     protected void SetSliderValue(int value)
     {
         healthSlider.value = value;
+        healthTextUpdater.WriteHealth(healthSlider.value);
     }
 }

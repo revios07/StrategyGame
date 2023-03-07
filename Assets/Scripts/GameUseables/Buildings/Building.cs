@@ -1,16 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+ 
 public class Building : BuildingAbstract
 {
-    protected override void Start()
+    protected void Start()
     {
-        base.Start();
         //Load TowerData
         towerStructData = towerData.GetTowerData();
         SetMaxValueOfSlide(towerStructData.towerHealth);
         SetSliderValue(towerStructData.towerHealth);
+
+        Debug.Log(healthSlider.gameObject.name);
     }
 
     void Update()

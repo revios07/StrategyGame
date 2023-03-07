@@ -74,6 +74,7 @@ public class ButtonPointerHandler : MonoBehaviour, IPointerDownHandler
         if (_isSoldierSpawner)
         {
             EventManager.onSoldierSpawnedRequest?.Invoke();
+            EventManager.pickRequestFromPool?.Invoke(ObjectType.Soldier);
 
             return;
         }

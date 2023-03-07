@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class Soldier : SoldierAbstract
 {
-    protected override void Start()
+    protected void Start()
     {
-        base.Start();
         //Give Random Health To Soldier
         //Load Soldier Data
         soldierStructData = GetRandomSoldier();
