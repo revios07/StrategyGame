@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Structs;
 
 public class EventManager : MonoBehaviour
 {
@@ -30,10 +31,10 @@ public class EventManager : MonoBehaviour
     #region Object Controller
     public delegate Vector2 OnTowerPlacement();
     public delegate Vector2 OnSoldierSpawned();
+
     public delegate Transform PickRequestFromPool(Enums.ObjectType typeOfPooledObject);
     public delegate void PickedFromPool(Enums.ObjectType pickedObjectType, Transform pickedTransform);
     public delegate void OnbObjectAddToPool(Enums.ObjectType pooledObjectType, Transform pooledObject);
-
 
     public static OnbObjectAddToPool onObjectAddToPool;
     public static PickRequestFromPool pickRequestFromPool;
