@@ -28,24 +28,31 @@ public class UIInformation : UIInformationReferances
 
     private void Start()
     {
-        CloseHealthTextes();
+        OpenTextes(false);
         ResetNames();
     }
     #endregion
 
     //Tower Selected On GameBoard
-    private TowerScriptable UpdateInformationPanel(TowerScriptable selectedTower)
+    private Structs.TowerStruct UpdateInformationPanel(ref Structs.TowerStruct selectedTower)
     {
         base.ResetNames();
-        base.CloseHealthTextes();
+        base.OpenTextes(false);
 
-        var towerStruct = selectedTower.GetTowerData();
-        m_buildingText.text = towerStruct.towerName;
+        m_buildingText.text = selectedTower.towerName;
         m_buidingImage.color = Color.white;
-        m_buidingImage.sprite = towerStruct.towerSprite;
+        m_buidingImage.sprite = selectedTower.towerSprite;
 
         m_buildingHealth.gameObject.SetActive(true);
-        m_buildingHealth.text = "Health => " + towerStruct.towerHealth;
+        m_buildingHealth.text = "Health => " + selectedTower.towerHealth;
+
+        //Only Barracks Can Spawn Soldiers
+        if(selectedTower.objectType == Enums.ObjectType.Barracks && selectedTower.isPlaced)
+        {
+            //Can Spawn Soldiers
+            OpenCanSpawnSoldierArea();
+            OpenTextes(true);
+        }
 
         //Can Show Barracks Health Here
 
@@ -53,50 +60,58 @@ public class UIInformation : UIInformationReferances
         //Show Soldiers Of Barrack Here
         //</region>
 
-        return null;
+        return selectedTower;
     }
 
     //Soldier Selected On GameBoard
-    private SoldierScriptable UpdateInformationPanel(SoldierScriptable selectedSoldier)
+    private Structs.SoldierStruct UpdateInformationPanel(ref Structs.SoldierStruct selectedSoldier)
     {
         base.ResetNames();
-        base.CloseHealthTextes();
+        base.OpenTextes(false);
 
-        var soldierStruct = selectedSoldier.GetSoldierData();
-        m_soldierImage.sprite = soldierStruct.soldierSprite;
+        m_soldierHealthText.transform.parent.localPosition = Vector3.up * 200f;
+
+        /*
+        m_soldierImage.sprite = selectedSoldier.soldierSprite;
         m_soldierImage.color = Color.white;
-        m_soldierText.text = "Soldier " + soldierStruct.soldierIndex;
+        m_soldierText.text = "Soldier " + selectedSoldier.soldierIndex;
+        */
+
+        m_buildingText.text = "Soldier " + selectedSoldier.soldierIndex;
+        m_buidingImage.color = Color.white;
+        m_buidingImage.sprite = selectedSoldier.soldierSprite;
 
         //Can show Soldiers Health Here
         //Can show Soldiers Damage Here
+        m_soldierImage.gameObject.SetActive(false);
         m_soldierDamageText.gameObject.SetActive(true);
         m_soldierHealthText.gameObject.SetActive(true);
 
-        m_soldierHealthText.text = "Health => " + soldierStruct.soldierHealth;
-        m_soldierDamageText.text = "Damage => " + soldierStruct.soldierDamage;
+        m_soldierHealthText.text = "Health => " + selectedSoldier.soldierHealth;
+        m_soldierDamageText.text = "Damage => " + selectedSoldier.soldierDamage;
 
-        m_buidingImage.sprite = m_emptySprite;
-        m_buildingText.text = "Barracks";
+        //m_buidingImage.sprite = m_emptySprite;
+        //m_buildingText.text = "Barracks";
 
-        return null;
+        return selectedSoldier;
     }
 
     //Barracks Selected On Production Panel
-    private TowerScriptable UpdateProductionInformation(TowerScriptable selectedTower)
+    private Structs.TowerStruct UpdateProductionInformation(ref Structs.TowerStruct selectedTower)
     {
-        UpdateInformationPanel(selectedTower);
+        UpdateInformationPanel(ref selectedTower);
 
         m_soldierImage.color = Color.red;
         m_soldierImage.sprite = m_emptySprite;
 
-        return null;
+        return selectedTower;
     }
 
     //Soldier Selected On Production Panel
-    private SoldierScriptable UpdateProductionInformation(SoldierScriptable selectedSoldier)
+    private Structs.SoldierStruct UpdateProductionInformation(ref Structs.SoldierStruct selectedSoldier)
     {
-        UpdateInformationPanel(selectedSoldier);
+        UpdateInformationPanel(ref selectedSoldier);
 
-        return null;
+        return selectedSoldier;
     }
 }

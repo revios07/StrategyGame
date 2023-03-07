@@ -6,7 +6,7 @@ public class InputHandler : MonoBehaviour
 {
     [SerializeField]
     private InputData _inputData;
-    private Vector2 _mousePosition;
+    public Vector2 _mousePosition { get; private set; }
 
     private void Awake()
     {

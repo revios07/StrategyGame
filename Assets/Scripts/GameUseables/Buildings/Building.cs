@@ -4,27 +4,31 @@ using UnityEngine;
 
 public class Building : BuildingAbstract
 {
+    void Start()
+    {
+        //Load TowerData
+        towerStructData = towerData.GetTowerData();
+    }
+
+    void Update()
+    {
+
+    }
+
     public override void OnItemSelectedFromMenu()
     {
-        EventManager.onTowerSelectedInProductionPanel?.Invoke(base.towerData);
+        EventManager.onTowerSelectedInProductionPanel?.Invoke(ref towerStructData);
 
         base.OnItemSelectedFromMenu();
     }
 
     public override void OnSelectedItemFromGame()
     {
-        EventManager.onTowerScriptableSelectedGameBoard?.Invoke(base.towerData);
+        if (!isPlaced)
+            return;
+
+        EventManager.onTowerScriptableSelectedGameBoard?.Invoke(ref towerStructData);
 
         base.OnSelectedItemFromGame();
-    }
-
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
     }
 }

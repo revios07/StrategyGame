@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using Interfaces;
 
-public abstract class SelectableAbstract : MonoBehaviour, IPoolableObject
+public abstract class SelectableAbstract : MonoBehaviour, ISelectableObject
 {
+    public Enums.ObjectType objectType;
+
     public virtual void OnSelectedItemFromGame()
     {
 
@@ -15,13 +17,13 @@ public abstract class SelectableAbstract : MonoBehaviour, IPoolableObject
 
     }
 
-    public void AddToPool()
+    public virtual void AddToPool()
     {
-        throw new System.NotImplementedException();
+        
     }
 
-    public Transform UseFromPool()
+    public virtual Transform UseFromPool()
     {
-        throw new System.NotImplementedException();
+        return this.transform;
     }
 }

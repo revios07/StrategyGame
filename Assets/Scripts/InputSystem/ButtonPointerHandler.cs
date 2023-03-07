@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Enums;
 
 public class ButtonPointerHandler : MonoBehaviour, IPointerDownHandler
 {
@@ -21,6 +22,14 @@ public class ButtonPointerHandler : MonoBehaviour, IPointerDownHandler
     private TowerScriptable _barracksData, _powerPlantData;
 
     public ObjectType typeOfSelectable;
+
+    [SerializeField]
+    private bool _isSoldierSpawner;
+
+    private void Start()
+    {
+        
+    }
 
     [ExecuteInEditMode]
     [NaughtyAttributes.Button("Load Referances")]
@@ -62,16 +71,29 @@ public class ButtonPointerHandler : MonoBehaviour, IPointerDownHandler
     //Can Select Units Here
     public void OnPointerDown(PointerEventData eventData)
     {
+        if (_isSoldierSpawner)
+        {
+            EventManager.onSoldierSpawnedRequest?.Invoke();
+
+            return;
+        }
+
         //Pick Item From Buy Area
         if (!_isOnGameSelectable)
         {
             if (typeOfSelectable == ObjectType.Barracks)
             {
-                EventManager.onTowerSelectedInProductionPanel.Invoke(_barracksData);
+                Structs.TowerStruct towerData = _barracksData.GetTowerData();
+
+                EventManager.onTowerSelectedInProductionPanel?.Invoke(ref towerData);
+                EventManager.pickRequestFromPool?.Invoke(ObjectType.Barracks);
             }
             else if (typeOfSelectable == ObjectType.PowerPlant)
             {
-                EventManager.onTowerSelectedInProductionPanel.Invoke(_powerPlantData);
+                Structs.TowerStruct barracksData = _powerPlantData.GetTowerData();
+
+                EventManager.onTowerSelectedInProductionPanel?.Invoke(ref barracksData);
+                EventManager.pickRequestFromPool?.Invoke(ObjectType.PowerPlant);
             }
         }
         else if (_isOnGameSelectable)
@@ -107,7 +129,7 @@ public class ButtonPointerHandler : MonoBehaviour, IPointerDownHandler
         }
     }
 
-    public void SetDataType(ObjectType typeOfSelectable)
+    public void SetDataType(Enums.ObjectType typeOfSelectable)
     {
         _isOnGameSelectable = false;
         this.typeOfSelectable = typeOfSelectable;

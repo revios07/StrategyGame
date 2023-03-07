@@ -12,10 +12,10 @@ public class SoldierScriptable : ScriptableObject
     private int _soldierIndex, _soldierHealth, _soldierDamage;
     [ShowNonSerializedField]
     private Vector2 _sizeOfSoldier = Vector2.one;
-    public ObjectType typeOfThis;
+    public Enums.ObjectType typeOfThis;
 
     public Structs.SoldierStruct GetSoldierData()
     {
-        return new Structs.SoldierStruct(_soldierSprite, _soldierIndex, _soldierHealth, _soldierDamage);
+        return new Structs.SoldierStruct(_soldierSprite, _soldierIndex, _soldierHealth, _soldierDamage, typeOfThis);
     }
 }

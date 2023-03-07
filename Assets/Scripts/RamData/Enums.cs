@@ -13,4 +13,11 @@ namespace Enums
         Barracks,
         PowerPlant
     }
+
+    public enum ObjectType
+    {
+        Soldier,
+        Barracks,
+        PowerPlant
+    }
 }

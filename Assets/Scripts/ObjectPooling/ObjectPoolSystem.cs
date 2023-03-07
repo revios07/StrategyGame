@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Interfaces;
+using Enums;
 
 public class ObjectPoolSystem : MonoBehaviour
 {
@@ -10,17 +11,42 @@ public class ObjectPoolSystem : MonoBehaviour
     [SerializeField]
     private BuildingFactory _buildingFactory;
 
-    private Queue<GameObject> _soldiersPool = new Queue<GameObject>();
-    private Queue<GameObject> _barracksPool = new Queue<GameObject>();
-    private Queue<GameObject> _powerPlantsPool = new Queue<GameObject>();
+    //Need Input For Spawn Object At Click Area
+    [SerializeField]
+    private InputData _inputData;
+
+    private Dictionary<ObjectType, Queue<GameObject>> _pool = new Dictionary<ObjectType, Queue<GameObject>>();
+
+    private void OnEnable()
+    {
+        EventManager.pickRequestFromPool += GetObjectFromPool;
+        EventManager.onObjectAddToPool += AddToPool;
+    }
+
+    private void OnDisable()
+    {
+        EventManager.pickRequestFromPool -= GetObjectFromPool;
+        EventManager.onObjectAddToPool -= AddToPool;
+    }
 
     private void Awake()
     {
+        if(_soldierFactory == null || _buildingFactory == null)
+        {
+            _soldierFactory = GetComponentInChildren<SoldierFactory>();
+            _buildingFactory = GetComponentInChildren<BuildingFactory>();
+        }
+
         CreatePool();
     }
 
     private void CreatePool()
     {
+        _pool.Add(ObjectType.Barracks, new Queue<GameObject>());
+        _pool.Add(ObjectType.PowerPlant, new Queue<GameObject>());
+        _pool.Add(ObjectType.Soldier, new Queue<GameObject>());
+
+
         for (int i = 0; i < 20; ++i)
         {
             Building barracksClone = _buildingFactory.GetNewInstance("Barracks");
@@ -29,8 +55,8 @@ public class ObjectPoolSystem : MonoBehaviour
             barracksClone.gameObject.SetActive(false);
             powerPlantClone.gameObject.SetActive(false);
 
-            _barracksPool.Enqueue(barracksClone.gameObject);
-            _powerPlantsPool.Enqueue(powerPlantClone.gameObject);
+            _pool.GetValueOrDefault(ObjectType.Barracks).Enqueue(barracksClone.gameObject);
+            _pool.GetValueOrDefault(ObjectType.PowerPlant).Enqueue(powerPlantClone.gameObject);
         }
 
         for (int i = 0; i < 50; ++i)
@@ -38,30 +64,49 @@ public class ObjectPoolSystem : MonoBehaviour
             Soldier soldierClone = (_soldierFactory.GetNewInstance("Soldier"));
             soldierClone.gameObject.SetActive(false);
 
-            _soldiersPool.Enqueue(soldierClone.gameObject);
-
+            _pool.GetValueOrDefault(ObjectType.Soldier).Enqueue(soldierClone.gameObject);
         }
     }
 
     public Transform GetObjectFromPool(ObjectType pooledObjectType)
     {
+        Transform pickTransform = null;
+        ObjectType pickedObjectType = ObjectType.Barracks;
+
         switch (pooledObjectType)
         {
             case (ObjectType.Soldier):
                 {
-                    return _soldiersPool.Dequeue().transform;
+                    pickTransform = _pool.GetValueOrDefault(ObjectType.Soldier).Dequeue().transform;
+                    pickedObjectType = ObjectType.Soldier;
+                    break;
                 }
             case (ObjectType.Barracks):
                 {
-                    return _barracksPool.Dequeue().transform;
+                    pickTransform = _pool.GetValueOrDefault(ObjectType.Barracks).Dequeue().transform;
+                    pickedObjectType = ObjectType.Barracks;
+                    break;
                 }
             case (ObjectType.PowerPlant):
                 {
-                    return _powerPlantsPool.Dequeue().transform;
+                    pickTransform = _pool.GetValueOrDefault(ObjectType.PowerPlant).Dequeue().transform;
+                    pickedObjectType = ObjectType.PowerPlant;
+                    break;
                 }
         }
 
-        return null;
+        if (pickTransform == null)
+            Debug.LogError("Non Assigned Picked Object!");
+
+        pickTransform.GetComponent<IPoolableObject>().UseFromPool();
+
+        pickTransform.transform.position = Camera.main.ScreenToWorldPoint(_inputData.GetMousePosition());
+        pickTransform.transform.position += Vector3.forward * 10f;
+        pickTransform.gameObject.SetActive(true);
+
+        EventManager.pickedFromPool?.Invoke(pickedObjectType, pickTransform);
+
+        return pickTransform;
     }
 
     public void AddToPool(ObjectType pooledObjectType, Transform pooledObject)
@@ -72,26 +117,19 @@ public class ObjectPoolSystem : MonoBehaviour
         {
             case (ObjectType.Soldier):
                 {
-                    _soldiersPool.Enqueue(pooledObject.gameObject);
+                    _pool.GetValueOrDefault(ObjectType.Soldier).Enqueue(pooledObject.gameObject);
                     break;
                 }
             case (ObjectType.Barracks):
                 {
-                    _barracksPool.Enqueue(pooledObject.gameObject);
+                    _pool.GetValueOrDefault(ObjectType.Barracks).Enqueue(pooledObject.gameObject);
                     break;
                 }
             case (ObjectType.PowerPlant):
                 {
-                    _powerPlantsPool.Enqueue(pooledObject.gameObject);
+                    _pool.GetValueOrDefault(ObjectType.PowerPlant).Enqueue(pooledObject.gameObject);
                     break;
                 }
         }
     }
-}
-
-public enum ObjectType
-{
-    Soldier,
-    Barracks,
-    PowerPlant
 }

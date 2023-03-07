@@ -16,7 +16,13 @@ public class UIProductionPanel : MonoBehaviour
 
     private void Awake()
     {
-        _selectables = GetComponentsInChildren<Image>();
+        _selectables = new Image[transform.childCount];
+        for(int i = 0; i < transform.childCount; ++i)
+        {
+            _selectables[i] = transform.GetChild(i).GetChild(0).GetComponent<Image>();
+        }
+
+        //_selectables = GetComponentsInChildren<Image>();
         SetSelectablesSprites();
     }
 

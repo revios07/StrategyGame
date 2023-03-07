@@ -1,11 +1,9 @@
 fileFormatVersion: 2
-guid: 9c59aea6b4f88314681ae5d484ed5b07
+guid: 381598f9be5d7c44ea91e1e7e45fa9f9
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
-  - _soldierFactory: {instanceID: 0}
-  - _buildingFactory: {instanceID: 0}
   - _inputData: {fileID: 11400000, guid: c33b0df369acc1e459bc3fb2cbd90045, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}

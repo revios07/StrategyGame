@@ -8,6 +8,9 @@ using NaughtyAttributes;
 public abstract class UIInformationReferances : MonoBehaviour
 {
     [SerializeField]
+    protected SoldierScriptable[] m_soldierDatas;
+
+    [SerializeField]
     [BoxGroup("Names")]
     protected TMP_Text m_buildingText, m_soldierText;
     [BoxGroup("Images")]
@@ -16,6 +19,9 @@ public abstract class UIInformationReferances : MonoBehaviour
     [SerializeField]
     [BoxGroup("Soldiers Health-Damage")]
     protected TMP_Text m_soldierHealthText, m_soldierDamageText;
+    [BoxGroup("Soldier Spawner Handler")]
+    [SerializeField]
+    protected ButtonPointerHandler m_soldierSpawnerButtonHandler;
     [SerializeField]
     [BoxGroup("Building Health")]
     protected TMP_Text m_buildingHealth;
@@ -23,16 +29,38 @@ public abstract class UIInformationReferances : MonoBehaviour
     [SerializeField]
     protected Sprite m_emptySprite;
 
-    protected void CloseHealthTextes()
+    protected void OpenTextes(bool isActive)
     {
-        m_soldierHealthText.gameObject.SetActive(false);
-        m_soldierDamageText.gameObject.SetActive(false);
-        m_buildingHealth.gameObject.SetActive(false);
+        m_soldierImage.gameObject.SetActive(isActive);
+        m_soldierText.gameObject.SetActive(isActive);
+        m_soldierHealthText.gameObject.SetActive(isActive);
+        m_soldierDamageText.gameObject.SetActive(isActive);
+        m_buildingHealth.gameObject.SetActive(isActive);
     }
 
     protected void ResetNames()
     {
         m_buildingText.text = "Barracks";
         m_soldierText.text = "Production";
+    }
+
+    protected void CloseCanSpawnSoldierArea()
+    {
+        m_soldierSpawnerButtonHandler.enabled = false;
+    }
+
+    protected void OpenCanSpawnSoldierArea()
+    {
+        m_soldierHealthText.transform.parent.localPosition = Vector3.zero;
+        //Pick Random Soldiers
+        Structs.SoldierStruct soldierData = m_soldierDatas[Random.Range(0, m_soldierDatas.Length)].GetSoldierData();
+        m_soldierImage.sprite = soldierData.soldierSprite;
+        m_soldierImage.color = Color.white;
+        m_soldierText.text = "Soldier " + soldierData.soldierIndex;
+
+        m_soldierHealthText.text = "Health => " + soldierData.soldierHealth;
+        m_soldierDamageText.text = "Damage => " + soldierData.soldierDamage;
+
+        m_soldierSpawnerButtonHandler.enabled = true;
     }
 }
