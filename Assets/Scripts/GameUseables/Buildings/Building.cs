@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class Building : BuildingAbstract
 {
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         //Load TowerData
         towerStructData = towerData.GetTowerData();
+        SetMaxValueOfSlide(towerStructData.towerHealth);
+        SetSliderValue(towerStructData.towerHealth);
     }
 
     void Update()
