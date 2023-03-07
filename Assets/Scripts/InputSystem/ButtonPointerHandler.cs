@@ -15,7 +15,12 @@ public class ButtonPointerHandler : MonoBehaviour, IPointerDownHandler
     [SerializeField]
     private Building _building;
 
-    public ObjectType typeOfSelectable;         
+    [SerializeField]
+    private SoldierScriptable _soldierData;
+    [SerializeField]
+    private TowerScriptable _barracksData, _powerPlantData;
+
+    public ObjectType typeOfSelectable;
 
     [ExecuteInEditMode]
     [NaughtyAttributes.Button("Load Referances")]
@@ -57,6 +62,25 @@ public class ButtonPointerHandler : MonoBehaviour, IPointerDownHandler
     //Can Select Units Here
     public void OnPointerDown(PointerEventData eventData)
     {
+        //Pick Item From Buy Area
+        if (!_isOnGameSelectable)
+        {
+            if (typeOfSelectable == ObjectType.Barracks)
+            {
+                EventManager.onTowerSelectedInProductionPanel.Invoke(_barracksData);
+            }
+            else if (typeOfSelectable == ObjectType.PowerPlant)
+            {
+                EventManager.onTowerSelectedInProductionPanel.Invoke(_powerPlantData);
+            }
+        }
+        else if (_isOnGameSelectable)
+        {
+
+        }
+
+
+        return;
         //Selected Item On Game Area
         if (_isOnGameSelectable)
         {
@@ -85,6 +109,7 @@ public class ButtonPointerHandler : MonoBehaviour, IPointerDownHandler
 
     public void SetDataType(ObjectType typeOfSelectable)
     {
+        _isOnGameSelectable = false;
         this.typeOfSelectable = typeOfSelectable;
     }
 }

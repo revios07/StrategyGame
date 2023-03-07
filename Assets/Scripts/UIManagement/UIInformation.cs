@@ -41,6 +41,7 @@ public class UIInformation : UIInformationReferances
 
         var towerStruct = selectedTower.GetTowerData();
         m_buildingText.text = towerStruct.towerName;
+        m_buidingImage.color = Color.white;
         m_buidingImage.sprite = towerStruct.towerSprite;
 
         m_buildingHealth.gameObject.SetActive(true);
@@ -63,6 +64,7 @@ public class UIInformation : UIInformationReferances
 
         var soldierStruct = selectedSoldier.GetSoldierData();
         m_soldierImage.sprite = soldierStruct.soldierSprite;
+        m_soldierImage.color = Color.white;
         m_soldierText.text = "Soldier " + soldierStruct.soldierIndex;
 
         //Can show Soldiers Health Here
@@ -84,6 +86,7 @@ public class UIInformation : UIInformationReferances
     {
         UpdateInformationPanel(selectedTower);
 
+        m_soldierImage.color = Color.red;
         m_soldierImage.sprite = m_emptySprite;
 
         return null;
