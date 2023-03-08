@@ -43,12 +43,12 @@ public class GridPlacementSystem : MonoBehaviour
 
     public static TileBase[] GetTileBases(BoundsInt area, Tilemap tilemap)
     {
-        TileBase[] tileBases = new TileBase[area.size.x * area.size.y + area.size.z];
+        TileBase[] tileBases = new TileBase[area.size.x * area.size.y * area.size.z];
         int counter = 0;
 
         foreach(var pos in area.allPositionsWithin)
         {
-            Vector3Int posVec = new Vector3Int(pos.x, pos.z, 0);
+            Vector3Int posVec = new Vector3Int(pos.x, pos.y, 0);
             tileBases[counter] = tilemap.GetTile(posVec);
             ++counter;
         }
@@ -76,17 +76,20 @@ public class GridPlacementSystem : MonoBehaviour
     {
         TileBase[] toClear = new TileBase[previousArea.size.x * previousArea.size.y * previousArea.size.z];
         FillTiles(toClear, TileType.Empty);
-        playableAreaTilemap.SetTilesBlock(previousArea, toClear);
+        backGroundTilemap.SetTilesBlock(previousArea, toClear);
     }
 
     protected void FollowBuildings(SelectableAbstract selectableAbstract)
     {
         ClearArea();
 
-        selectableAbstract.sizeArea.position = gridLayout.WorldToCell(selectableAbstract.transform.position);
+        Vector3 selectedPos = selectableAbstract.transform.localPosition;
+        selectedPos.z = 0;
+
+        selectableAbstract.sizeArea.position = gridLayout.LocalToCell(selectedPos);
         BoundsInt buildingArea = selectableAbstract.sizeArea;
 
-        TileBase[] baseArray = GetTileBases(buildingArea, backGroundTilemap);
+        TileBase[] baseArray = GetTileBases(buildingArea, playableAreaTilemap);
 
         int size = baseArray.Length;
         TileBase[] tileArray = new TileBase[size];
@@ -106,7 +109,7 @@ public class GridPlacementSystem : MonoBehaviour
             }
         }
 
-        playableAreaTilemap.SetTilesBlock(buildingArea, tileArray);
+        backGroundTilemap.SetTilesBlock(buildingArea, tileArray);
         previousArea = buildingArea; 
     }
 

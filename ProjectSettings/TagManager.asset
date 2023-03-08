@@ -38,14 +38,14 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: GameArea
+    uniqueID: 1889086417
+    locked: 0
   - name: Ground
     uniqueID: 571128195
     locked: 0
   - name: Edges
     uniqueID: 2958020565
-    locked: 0
-  - name: GameArea
-    uniqueID: 1889086417
     locked: 0
   - name: UI
     uniqueID: 1504164053

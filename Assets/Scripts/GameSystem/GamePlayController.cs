@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class GamePlayController : GridPlacementSystem
 {
@@ -63,17 +64,19 @@ public class GamePlayController : GridPlacementSystem
 
         if (Input.GetMouseButtonDown(1))
         {
+            ClearArea();
             ReleaseObject();
             return;
         }
 
         //Cant Place Area
-        if (_inputData.GetMousePosition().x < Screen.width / 3f || _inputData.GetMousePosition().x > (Screen.width - Screen.width / 3f))
+        if (_inputData.GetMousePosition().x < Screen.width / 4f || _inputData.GetMousePosition().x > (Screen.width - Screen.width / 4f))
         {
             mousePosOnGame.z = 10f;
             pickedObjectTrasform.position = Vector3.Lerp(pickedObjectTrasform.position, mousePosOnGame, 10f * Time.deltaTime);
         }
-        else //Picked Object On Placeable Area
+        //Picked Object On Placeable Area
+        else
         {
             if (pickedObjectTrasform != null)
             {
@@ -89,16 +92,19 @@ public class GamePlayController : GridPlacementSystem
                         previousPos = cellPos;
                         FollowBuildings(selectableAbstract);
                     }
-                }
 
-                if (Input.GetMouseButtonDown(0) && selectableAbstract.CanBePlaced())
-                {
-                    Debug.Log("Placed");
-                    building.Placed();
-                    selectableAbstract = null;
-                    pickedObjectTrasform = null;
-                    pickedObjectTrasform = null;
-                    return;
+                    if (Input.GetMouseButtonDown(0) && selectableAbstract.CanBePlaced())
+                    {
+                        Debug.Log("Placed");
+                        building.Placed();
+                        Debug.Log(building.sizeArea);
+                        TakeArea(building.sizeArea);
+
+                        selectableAbstract = null;
+                        pickedObjectTrasform = null;
+                        pickedObjectTrasform = null;
+                        return;
+                    }
                 }
             }
         }
@@ -108,6 +114,7 @@ public class GamePlayController : GridPlacementSystem
     {
         if (pickedObjectTrasform != null)
         {
+            pickedObjectTrasform.transform.parent = null;
             EventManager.onObjectAddToPool?.Invoke(pickedObjectType, pickedObjectTrasform);
             selectableAbstract = null;
             pickedObjectTrasform = null;
