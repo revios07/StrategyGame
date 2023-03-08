@@ -83,6 +83,7 @@ public class GamePlayController : GridPlacementSystem
 
                     if (previousPos != cellPos)
                     {
+                        Debug.Log("AAAA");
                         selectableAbstract.transform.parent = gridLayout.transform;
                         selectableAbstract.transform.localPosition = gridLayout.CellToLocalInterpolated(cellPos + new Vector3(0.5f, 0.5f, 0.0f));
                         previousPos = cellPos;

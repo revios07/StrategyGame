@@ -29,6 +29,7 @@ public class GridPlacementSystem : MonoBehaviour
         else
         {
             Destroy(gameObject);
+            Debug.LogError("Can't be 2 Placement System!");
         }
     }
 
@@ -82,10 +83,10 @@ public class GridPlacementSystem : MonoBehaviour
     {
         ClearArea();
 
-        selectableAbstract.sizeArea.position = gridLayout.WorldToCell(selectableAbstract.gameObject.transform.position);
+        selectableAbstract.sizeArea.position = gridLayout.WorldToCell(selectableAbstract.transform.position);
         BoundsInt buildingArea = selectableAbstract.sizeArea;
 
-        TileBase[] baseArray = GetTileBases(buildingArea, playableAreaTilemap);
+        TileBase[] baseArray = GetTileBases(buildingArea, backGroundTilemap);
 
         int size = baseArray.Length;
         TileBase[] tileArray = new TileBase[size];
@@ -105,7 +106,7 @@ public class GridPlacementSystem : MonoBehaviour
             }
         }
 
-        backGroundTilemap.SetTilesBlock(buildingArea, tileArray);
+        playableAreaTilemap.SetTilesBlock(buildingArea, tileArray);
         previousArea = buildingArea; 
     }
 
@@ -117,6 +118,7 @@ public class GridPlacementSystem : MonoBehaviour
             if(tileBase != tileBases[TileType.White])
             {
                 //Cannot Place
+                Debug.Log("Cannot Place Here!");
                 return false;
             }
         }
