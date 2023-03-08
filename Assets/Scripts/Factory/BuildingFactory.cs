@@ -25,7 +25,7 @@ public class BuildingFactory : GameObjectFactory<Building>
             }
         }
 
+        Debug.LogError("Cant Find Type!");
         return null;
-        return base.GetNewInstance(gameObjectType);
     }
 }

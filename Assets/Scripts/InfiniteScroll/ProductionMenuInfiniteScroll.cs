@@ -26,8 +26,6 @@ public class ProductionMenuInfiniteScroll : MonoBehaviour
         _startPositionY = 0f;
         _scrollablePool.Add(this.transform);
 
-        CreatePool();
-
         for (int i = 0; i < transform.childCount; ++i)
         {
             _childTransforms.Add(transform.GetChild(0));
@@ -65,11 +63,9 @@ public class ProductionMenuInfiniteScroll : MonoBehaviour
     }
 
 
-    //[NaughtyAttributes.Button()]
     [ExecuteAlways]
     public void CreatePool()
     {
-        return;
         ClearPool();
         if (_scrollablePool.Count == 0 && GameObject.FindObjectsOfType<ProductionMenuInfiniteScroll>().Length < 3)
         {

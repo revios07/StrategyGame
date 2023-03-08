@@ -22,8 +22,5 @@ public class SoldierFactory : GameObjectFactory<Soldier>
         soldierCreated.soldierHealth = _soldierDatas[index].GetSoldierData().soldierHealth;
 
         return soldierCreated;
-
-        return null;
-        return base.GetNewInstance(gameObjectType);
     }
 }

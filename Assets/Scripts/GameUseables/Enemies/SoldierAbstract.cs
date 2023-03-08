@@ -21,11 +21,27 @@ public abstract class SoldierAbstract : SelectableAbstract, IPoolableObject, ICa
             return true;
         }
 
-        return false;
+        //return false;
     }
     protected Structs.SoldierStruct GetRandomSoldier()
     {
         return soldierScriptable[Random.Range(0, soldierScriptable.Length)].GetSoldierData();
+    }
+
+    [NaughtyAttributes.Button("Placed")]
+    public override void PlaceToArea()
+    {
+        base.PlaceToArea();
+
+        if (isPlaced)
+        {
+            isPlaced = false;
+            soldierStructData.isPlaced = isPlaced;
+            return;
+        }
+
+        isPlaced = true;
+        soldierStructData.isPlaced = isPlaced;
     }
 
     //Interface Implementations

@@ -15,8 +15,10 @@ public abstract class BuildingAbstract : SelectableAbstract, IPoolableObject, IC
     }
 
     [NaughtyAttributes.Button("Placed")]
-    public void PlaceToArea()
+    public override void PlaceToArea()
     {
+        base.PlaceToArea();
+
         if (isPlaced)
         {
             isPlaced = false;
@@ -26,17 +28,6 @@ public abstract class BuildingAbstract : SelectableAbstract, IPoolableObject, IC
 
         isPlaced = true;
         towerStructData.isPlaced = isPlaced;
-    }
-
-    public bool CanPlaceable()
-    {
-        return true;
-    }
-
-    public bool IsPlaced()
-    {
-        towerStructData.isPlaced = false;
-        return false;
     }
 
     //Interface Implementations

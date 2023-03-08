@@ -56,12 +56,12 @@ public class GamePlayController : GridPlacementSystem
 
     private void Update()
     {
-        Vector3 mousePosOnGame = Camera.main.ScreenToWorldPoint(_inputData.GetMousePosition());
-
         if (pickedObjectTrasform == null)
             return;
-        Debug.Log(pickedObjectTrasform.name);
 
+        Vector3 mousePosOnGame = Camera.main.ScreenToWorldPoint(_inputData.GetMousePosition());
+
+        //Release The Hanging Object
         if (Input.GetMouseButtonDown(1))
         {
             ClearArea();
@@ -84,22 +84,33 @@ public class GamePlayController : GridPlacementSystem
                 {
                     Vector3Int cellPos = gridLayout.LocalToCell(mousePosOnGame);
 
+                    //Controll Player Can Place Selection With Sprite Change
                     if (previousPos != cellPos)
                     {
-                        Debug.Log("AAAA");
                         selectableAbstract.transform.parent = gridLayout.transform;
                         selectableAbstract.transform.localPosition = gridLayout.CellToLocalInterpolated(cellPos + new Vector3(0.5f, 0.5f, 0.0f));
                         previousPos = cellPos;
                         FollowBuildings(selectableAbstract);
                     }
 
+                    //Place To Area
                     if (Input.GetMouseButtonDown(0) && selectableAbstract.CanBePlaced())
                     {
-                        Debug.Log("Placed");
-                        selectableAbstract.Placed();
-                        Debug.Log(building.sizeArea);
-                        TakeArea(building.sizeArea);
+                        Debug.Log("Placed!");
 
+                        if(soldier != null)
+                        {
+                            soldier.PlaceToArea();
+                        }
+                        else if(building != null)
+                        {
+                            building.PlaceToArea();
+                        }
+
+                        TakeArea(selectableAbstract.sizeArea);
+
+                        soldier = null;
+                        building = null;
                         selectableAbstract = null;
                         pickedObjectTrasform = null;
                         pickedObjectTrasform = null;
@@ -120,14 +131,17 @@ public class GamePlayController : GridPlacementSystem
             pickedObjectTrasform = null;
             pickedObjectTrasform = null;
             soldier = null;
+            building = null;
             return;
         }
     }
 
+#if UNITY_EDITOR
     private void OnDrawGizmos()
     {
         //Limit Areas
         Gizmos.DrawLine(new Vector3(_limitPlacementArea.x, _limitPlacementArea.y), new Vector3(_limitPlacementArea.x, -_limitPlacementArea.y));
         Gizmos.DrawLine(new Vector3(_limitPlacementArea.x * -1.0f, _limitPlacementArea.y), new Vector3(_limitPlacementArea.x * -1.0f, -_limitPlacementArea.y));
     }
+#endif
 }

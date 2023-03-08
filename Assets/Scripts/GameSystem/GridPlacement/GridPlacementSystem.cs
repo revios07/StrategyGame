@@ -41,6 +41,11 @@ public class GridPlacementSystem : MonoBehaviour
         tileBases.Add(TileType.Red, _redTile);
     }
 
+    private void OnDestroy()
+    {
+        tileBases.Clear();
+    }
+
     public static TileBase[] GetTileBases(BoundsInt area, Tilemap tilemap)
     {
         TileBase[] tileBases = new TileBase[area.size.x * area.size.y * area.size.z];
@@ -98,12 +103,12 @@ public class GridPlacementSystem : MonoBehaviour
         {
             if(baseArray[i] == tileBases[TileType.White])
             {
-                Debug.Log("Placeable");
+                //Can Placed
                 tileArray[i] = tileBases[TileType.Green];
             }
             else
             {
-                Debug.Log("Cant Place");
+                //Cant Place
                 FillTiles(tileArray, TileType.Red);
                 break;
             }

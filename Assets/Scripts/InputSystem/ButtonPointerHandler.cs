@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using Enums;
 
+[Tooltip("This Class Only Works With UI")]
+[RequireComponent(typeof(RectTransform))]
 public class ButtonPointerHandler : MonoBehaviour, IPointerDownHandler
 {
     [NaughtyAttributes.ResizableTextArea]
@@ -25,11 +27,6 @@ public class ButtonPointerHandler : MonoBehaviour, IPointerDownHandler
 
     [SerializeField]
     private bool _isSoldierSpawner;
-
-    private void Start()
-    {
-        
-    }
 
     [ExecuteInEditMode]
     [NaughtyAttributes.Button("Load Referances")]
@@ -66,6 +63,9 @@ public class ButtonPointerHandler : MonoBehaviour, IPointerDownHandler
 
             _isSoldier = false;
         }
+
+        if (_isSoldier)
+            _isSoldier = false;
     }
 
     //Can Select Units Here
@@ -100,33 +100,6 @@ public class ButtonPointerHandler : MonoBehaviour, IPointerDownHandler
         else if (_isOnGameSelectable)
         {
 
-        }
-
-
-        return;
-        //Selected Item On Game Area
-        if (_isOnGameSelectable)
-        {
-            if (_isSoldier)
-            {
-                _soldier.OnSelectedItemFromGame();
-            }
-            else if (!_isSoldier)
-            {
-                _building.OnSelectedItemFromGame();
-            }
-        }
-        //Selected Item On Production Panel
-        else if (!_isOnGameSelectable)
-        {
-            if (_isSoldier)
-            {
-                _soldier.OnItemSelectedFromMenu();
-            }
-            else if (!_isSoldier)
-            {
-                _building.OnItemSelectedFromMenu();
-            }
         }
     }
 

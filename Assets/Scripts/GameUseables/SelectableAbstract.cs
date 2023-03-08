@@ -35,9 +35,9 @@ public abstract class SelectableAbstract : MonoBehaviour, ISelectableObject, ICa
         
     }
 
-    public void Placed()
+    public virtual void PlaceToArea()
     {
-        isPlaced = true;
+
     }
 
     public bool CanBePlaced()
