@@ -35,6 +35,20 @@ public abstract class SelectableAbstract : MonoBehaviour, ISelectableObject, ICa
         
     }
 
+    public bool CanBePlaced()
+    {
+        Vector3Int posiitonInt = GridPlacementSystem.instance.gridLayout.LocalToCell(transform.position);
+        BoundsInt areaTemp = sizeArea;
+        areaTemp.position = posiitonInt;
+
+        if (GridPlacementSystem.instance.CanTakeArea(areaTemp))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
     public virtual Transform UseFromPool()
     {
         //Reset Slider

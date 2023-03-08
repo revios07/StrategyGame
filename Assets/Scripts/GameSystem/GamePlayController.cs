@@ -2,16 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GamePlayController : MonoBehaviour
+public class GamePlayController : GridPlacementSystem
 {
     [SerializeField]
     private InputData _inputData;
-    [SerializeField]
-    private GridLayout _gridLayout;
-    private Vector3Int _previousPos;
 
     private Soldier soldier;
     private Building building;
+
+    [SerializeField]
+    private Vector2 _limitPlacementArea;
 
     public SelectableAbstract selectableAbstract { get; private set; }
     public Transform pickedObjectTrasform { get; private set; }
@@ -49,27 +49,23 @@ public class GamePlayController : MonoBehaviour
         {
             pickedObjectTrasform.TryGetComponent<Building>(out building);
         }
+
+        FollowBuildings(selectableAbstract);
     }
 
     private void Update()
     {
+        Vector3 mousePosOnGame = Camera.main.ScreenToWorldPoint(_inputData.GetMousePosition());
+
         if (pickedObjectTrasform == null)
             return;
-
-        if (Input.GetMouseButtonDown(0) && (pickedObjectType != Enums.ObjectType.Soldier) && building.CanPlaceable())
-        {
-            building.Placed();
-            return;
-        }
+        Debug.Log(pickedObjectTrasform.name);
 
         if (Input.GetMouseButtonDown(1))
         {
             ReleaseObject();
             return;
         }
-
-        Debug.Log(pickedObjectTrasform.name);
-        Vector3 mousePosOnGame = Camera.main.ScreenToWorldPoint(_inputData.GetMousePosition());
 
         //Cant Place Area
         if (_inputData.GetMousePosition().x < Screen.width / 3f || _inputData.GetMousePosition().x > (Screen.width - Screen.width / 3f))
@@ -83,14 +79,25 @@ public class GamePlayController : MonoBehaviour
             {
                 if (!selectableAbstract.isPlaced)
                 {
-                    Vector3Int cellPos = _gridLayout.LocalToCell(mousePosOnGame);
+                    Vector3Int cellPos = gridLayout.LocalToCell(mousePosOnGame);
 
-                    if(_previousPos != cellPos)
+                    if (previousPos != cellPos)
                     {
-                        selectableAbstract.transform.parent = _gridLayout.transform;
-                        selectableAbstract.transform.localPosition = _gridLayout.CellToLocalInterpolated(cellPos + new Vector3(0.5f, 0.5f, 0.0f));
-                        _previousPos = cellPos;
+                        selectableAbstract.transform.parent = gridLayout.transform;
+                        selectableAbstract.transform.localPosition = gridLayout.CellToLocalInterpolated(cellPos + new Vector3(0.5f, 0.5f, 0.0f));
+                        previousPos = cellPos;
+                        FollowBuildings(selectableAbstract);
                     }
+                }
+
+                if (Input.GetMouseButtonDown(0) && selectableAbstract.CanBePlaced())
+                {
+                    Debug.Log("Placed");
+                    building.Placed();
+                    selectableAbstract = null;
+                    pickedObjectTrasform = null;
+                    pickedObjectTrasform = null;
+                    return;
                 }
             }
         }
@@ -98,7 +105,7 @@ public class GamePlayController : MonoBehaviour
 
     public void ReleaseObject()
     {
-        if(pickedObjectTrasform != null)
+        if (pickedObjectTrasform != null)
         {
             EventManager.onObjectAddToPool?.Invoke(pickedObjectType, pickedObjectTrasform);
             selectableAbstract = null;
@@ -107,5 +114,12 @@ public class GamePlayController : MonoBehaviour
             soldier = null;
             return;
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        //Limit Areas
+        Gizmos.DrawLine(new Vector3(_limitPlacementArea.x, _limitPlacementArea.y), new Vector3(_limitPlacementArea.x, -_limitPlacementArea.y));
+        Gizmos.DrawLine(new Vector3(_limitPlacementArea.x * -1.0f, _limitPlacementArea.y), new Vector3(_limitPlacementArea.x * -1.0f, -_limitPlacementArea.y));
     }
 }

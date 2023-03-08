@@ -10,8 +10,6 @@ public class Building : BuildingAbstract
         towerStructData = towerData.GetTowerData();
         SetMaxValueOfSlide(towerStructData.towerHealth);
         SetSliderValue(towerStructData.towerHealth);
-
-        Debug.Log(healthSlider.gameObject.name);
     }
 
     void Update()

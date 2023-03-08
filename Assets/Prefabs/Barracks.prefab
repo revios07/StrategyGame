@@ -1820,6 +1820,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectType: 1
+  isPlaced: 0
+  sizeArea:
+    m_Position: {x: -3, y: 0, z: 0}
+    m_Size: {x: 0, y: 0, z: 0}
   towerData: {fileID: 11400000, guid: 735d1b0dd6402b84b8044be87b421d6a, type: 2}
 --- !u!114 &667161040
 MonoBehaviour:
