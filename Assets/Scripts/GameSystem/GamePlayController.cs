@@ -96,7 +96,7 @@ public class GamePlayController : GridPlacementSystem
                     if (Input.GetMouseButtonDown(0) && selectableAbstract.CanBePlaced())
                     {
                         Debug.Log("Placed");
-                        building.Placed();
+                        selectableAbstract.Placed();
                         Debug.Log(building.sizeArea);
                         TakeArea(building.sizeArea);
 

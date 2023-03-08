@@ -35,6 +35,11 @@ public abstract class SelectableAbstract : MonoBehaviour, ISelectableObject, ICa
         
     }
 
+    public void Placed()
+    {
+        isPlaced = true;
+    }
+
     public bool CanBePlaced()
     {
         Vector3Int posiitonInt = GridPlacementSystem.instance.gridLayout.LocalToCell(transform.position);

@@ -33,11 +33,6 @@ public abstract class BuildingAbstract : SelectableAbstract, IPoolableObject, IC
         return true;
     }
 
-    public void Placed()
-    {
-
-    }
-
     public bool IsPlaced()
     {
         towerStructData.isPlaced = false;
