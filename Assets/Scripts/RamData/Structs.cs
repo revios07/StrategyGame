@@ -8,11 +8,11 @@ namespace Structs
         public Sprite towerSprite;
         public string towerName;
         public int towerIndex, towerHealth, towerDamage;
-        public Vector2 size;
+        public BoundsInt size;
         public Enums.ObjectType objectType;
         public bool isPlaced;
 
-        public TowerStruct(Sprite towerSprite, string towerName, int towerIndex, int towerHealth, int towerDamage, Vector2 size, Enums.ObjectType objectType)
+        public TowerStruct(Sprite towerSprite, string towerName, int towerIndex, int towerHealth, int towerDamage, BoundsInt size, Enums.ObjectType objectType)
         {
             this.towerSprite = towerSprite;
             this.towerName = towerName;
@@ -31,8 +31,9 @@ namespace Structs
         public int soldierIndex, soldierHealth, soldierDamage;
         public Enums.ObjectType objectType;
         public bool isPlaced;
+        public BoundsInt size;
 
-        public SoldierStruct(Sprite soldierSprite, int soldierIndex, int soldierHealth, int soldierDamage, Enums.ObjectType objectType)
+        public SoldierStruct(Sprite soldierSprite, int soldierIndex, int soldierHealth, int soldierDamage, Enums.ObjectType objectType, BoundsInt size)
         {
             this.soldierSprite = soldierSprite;
             this.soldierIndex = soldierIndex;
@@ -40,6 +41,7 @@ namespace Structs
             this.soldierDamage = soldierDamage;
             this.objectType = objectType;
             this.isPlaced = false;
+            this.size = size;
         }
     }
 }

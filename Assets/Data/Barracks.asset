@@ -17,5 +17,7 @@ MonoBehaviour:
   _towerIndex: 0
   _towerHealth: 100
   _towerDamage: 0
-  _sizeOfTower: {x: 4, y: 4}
+  _sizeOfTower:
+    m_Position: {x: 0, y: 0, z: 0}
+    m_Size: {x: 4, y: 4, z: 1}
   typeOfThisSelectable: 1

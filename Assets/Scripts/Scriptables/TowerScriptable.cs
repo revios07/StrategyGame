@@ -12,7 +12,7 @@ public class TowerScriptable : ScriptableObject
     [SerializeField]
     private int _towerIndex, _towerHealth, _towerDamage;
     [SerializeField]
-    private Vector2 _sizeOfTower;
+    private BoundsInt _sizeOfTower;
     public Enums.ObjectType typeOfThisSelectable;
 
     public Structs.TowerStruct GetTowerData()

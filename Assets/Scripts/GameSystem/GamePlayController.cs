@@ -6,6 +6,9 @@ public class GamePlayController : MonoBehaviour
 {
     [SerializeField]
     private InputData _inputData;
+    [SerializeField]
+    private GridLayout _gridLayout;
+    private Vector3Int _previousPos;
 
     private Soldier soldier;
     private Building building;
@@ -66,24 +69,30 @@ public class GamePlayController : MonoBehaviour
         }
 
         Debug.Log(pickedObjectTrasform.name);
-        Vector3 worldPos = Camera.main.ScreenToWorldPoint(_inputData.GetMousePosition());
-        worldPos.z = 10f;
-        pickedObjectTrasform.position = Vector3.Lerp(pickedObjectTrasform.position, worldPos, 10f * Time.deltaTime);
+        Vector3 mousePosOnGame = Camera.main.ScreenToWorldPoint(_inputData.GetMousePosition());
 
-
-        //Building Picked
-        if (pickedObjectType != Enums.ObjectType.Soldier && !building.IsPlaced())
+        //Cant Place Area
+        if (_inputData.GetMousePosition().x < Screen.width / 3f || _inputData.GetMousePosition().x > (Screen.width - Screen.width / 3f))
         {
-            /*
-            Debug.Log(pickedObjectTrasform.name);
-            Vector3 worldPos = Camera.main.ScreenToWorldPoint(_inputData.GetMousePosition());
-            worldPos.z = 10f;
-            pickedObjectTrasform.position = Vector3.Lerp(pickedObjectTrasform.position, worldPos, 10f * Time.deltaTime);
-            */
+            mousePosOnGame.z = 10f;
+            pickedObjectTrasform.position = Vector3.Lerp(pickedObjectTrasform.position, mousePosOnGame, 10f * Time.deltaTime);
         }
-        else if(pickedObjectType == Enums.ObjectType.Soldier)
+        else //Picked Object On Placeable Area
         {
+            if (pickedObjectTrasform != null)
+            {
+                if (!selectableAbstract.isPlaced)
+                {
+                    Vector3Int cellPos = _gridLayout.LocalToCell(mousePosOnGame);
 
+                    if(_previousPos != cellPos)
+                    {
+                        selectableAbstract.transform.parent = _gridLayout.transform;
+                        selectableAbstract.transform.localPosition = _gridLayout.CellToLocalInterpolated(cellPos + new Vector3(0.5f, 0.5f, 0.0f));
+                        _previousPos = cellPos;
+                    }
+                }
+            }
         }
     }
 

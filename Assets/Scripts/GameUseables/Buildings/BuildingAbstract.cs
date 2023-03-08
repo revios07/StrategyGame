@@ -7,8 +7,6 @@ public abstract class BuildingAbstract : SelectableAbstract, IPoolableObject, IC
 {
     public TowerScriptable towerData;
     protected Structs.TowerStruct towerStructData;
-    [NaughtyAttributes.ShowNonSerializedField]
-    protected bool isPlaced = false;
 
     protected virtual void OnEnable()
     {

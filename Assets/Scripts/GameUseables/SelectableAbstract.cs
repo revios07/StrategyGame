@@ -10,6 +10,9 @@ public abstract class SelectableAbstract : MonoBehaviour, ISelectableObject, ICa
     public Enums.ObjectType objectType;
     protected Slider healthSlider;
     protected HealthTextUpdater healthTextUpdater;
+    public bool isPlaced;
+
+    public BoundsInt sizeArea;
 
     protected virtual void Awake()
     {
@@ -36,6 +39,7 @@ public abstract class SelectableAbstract : MonoBehaviour, ISelectableObject, ICa
     {
         //Reset Slider
         SetSliderValue(1000);
+        isPlaced = false;
         return this.transform;
     }
 
