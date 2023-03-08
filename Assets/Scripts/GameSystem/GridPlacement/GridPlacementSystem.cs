@@ -14,6 +14,10 @@ public class GridPlacementSystem : MonoBehaviour
     protected BoundsInt previousArea;
     protected Vector3 previousPos;
 
+    [NaughtyAttributes.BoxGroup("Tile Bases")]
+    [SerializeField]
+    private TileBase _whiteTile, _greenTile, _redTile;
+
     public static Dictionary<TileType, TileBase> tileBases = new Dictionary<TileType, TileBase>();
 
     private void Awake()
@@ -30,11 +34,10 @@ public class GridPlacementSystem : MonoBehaviour
 
     private void Start()
     {
-        string tilePath = @"Tiles\";
         tileBases.Add(TileType.Empty, null);
-        tileBases.Add(TileType.White, Resources.Load<TileBase>(tilePath + "white"));
-        tileBases.Add(TileType.Green, Resources.Load<TileBase>(tilePath + "green"));
-        tileBases.Add(TileType.Red, Resources.Load<TileBase>(tilePath + "red"));
+        tileBases.Add(TileType.White, _whiteTile);
+        tileBases.Add(TileType.Green, _greenTile);
+        tileBases.Add(TileType.Red, _redTile);
     }
 
     public static TileBase[] GetTileBases(BoundsInt area, Tilemap tilemap)
