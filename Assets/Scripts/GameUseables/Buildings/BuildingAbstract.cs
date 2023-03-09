@@ -52,7 +52,7 @@ public abstract class BuildingAbstract : SelectableAbstract, IPoolableObject, IC
     public override void TakeDamage(int damage)
     {
         towerStructData.towerHealth -= damage;
-        if(damage <= 0)
+        if(towerStructData.towerHealth <= 0)
         {
             towerStructData.towerHealth = 0;
             base.isDead = true;
@@ -62,6 +62,7 @@ public abstract class BuildingAbstract : SelectableAbstract, IPoolableObject, IC
         }
 
         base.TakeDamage(damage);
+        healthTextUpdater.WriteHealth(towerStructData.towerHealth);
         SetSliderValue(towerStructData.towerHealth);
     }
     #endregion

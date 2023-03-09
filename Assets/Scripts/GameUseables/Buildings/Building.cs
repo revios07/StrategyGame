@@ -11,14 +11,12 @@ public class Building : BuildingAbstract
         SetMaxValueOfSlide(towerStructData.towerHealth);
         SetSliderValue(towerStructData.towerHealth);
     }
-
     public override void OnItemSelectedFromMenu()
     {
         EventManager.onTowerSelectedInProductionPanel?.Invoke(ref towerStructData);
 
         base.OnItemSelectedFromMenu();
     }
-
     public override void OnSelectedItemFromGame()
     {
         if (!isPlaced)

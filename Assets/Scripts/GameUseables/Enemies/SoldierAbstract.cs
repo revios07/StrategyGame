@@ -44,12 +44,11 @@ public abstract class SoldierAbstract : SelectableAbstract, IPoolableObject, ICa
         soldierStructData.isPlaced = isPlaced;
     }
 
-    //Interface Implementations
     #region Attack and Take Damage
     public override void TakeDamage(int damage)
     {
         soldierStructData.soldierHealth -= damage;
-        if (damage <= 0)
+        if (soldierStructData.soldierHealth <= 0)
         {
             soldierStructData.soldierHealth = 0;
             base.isDead = true;
@@ -58,14 +57,37 @@ public abstract class SoldierAbstract : SelectableAbstract, IPoolableObject, ICa
         }
 
         base.TakeDamage(damage);
+        healthTextUpdater.WriteHealth(soldierStructData.soldierHealth);
         SetSliderValue(soldierStructData.soldierHealth);
     }
-    public void GiveDamage(ICanTakeDamagePlayableObject canTakeDamagePlayableObject)
+    public void GiveDamage(Transform targetTransform, ICanTakeDamagePlayableObject canTakeDamagePlayableObject)
     {
         //Give Damage To Object
         canTakeDamagePlayableObject.TakeDamage(soldierStructData.soldierDamage);
 
-        throw new System.NotImplementedException();
+        Transform bullet = EventManager.pickRequestFromPool(Enums.ObjectType.Bullet);
+
+        StartCoroutine(StartAttack(targetTransform, canTakeDamagePlayableObject));
+    }
+    private IEnumerator StartAttack(Transform targetTransform, ICanTakeDamagePlayableObject canTakeDamagePlayableObject)
+    {
+        WaitForFixedUpdate waitForFixedUpdate = new WaitForFixedUpdate();
+        yield return waitForFixedUpdate;
+
+        SelectableAbstract targetSelectableAbstract = targetTransform.GetComponent<SelectableAbstract>();
+
+        while (!targetSelectableAbstract.isDead)
+        {
+            yield return waitForFixedUpdate;
+
+            Transform bulletTransform = EventManager.pickRequestFromPool(Enums.ObjectType.Bullet);
+
+            Bullet bullet = bulletTransform.GetComponent<Bullet>();
+            bullet.ShootFire(transform, targetTransform, soldierStructData.soldierDamage);
+
+            //Only One Bullet Can Fire Same Time
+            yield return new WaitUntil(() => !bullet.IsMoveing());
+        }
     }
     #endregion
 

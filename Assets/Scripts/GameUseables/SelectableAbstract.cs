@@ -11,7 +11,7 @@ public abstract class SelectableAbstract : MonoBehaviour, ISelectableObject, ICa
     protected Slider healthSlider;
     protected HealthTextUpdater healthTextUpdater;
     public bool isPlaced;
-    protected bool isDead;
+    public bool isDead;
 
     public BoundsInt sizeArea;
 
@@ -58,6 +58,7 @@ public abstract class SelectableAbstract : MonoBehaviour, ISelectableObject, ICa
 
     public virtual Transform UseFromPool()
     {
+        GetComponent<Collider2D>().enabled = true;
         //Reset Slider
         SetSliderValue(1000);
         isDead = false;
@@ -67,11 +68,15 @@ public abstract class SelectableAbstract : MonoBehaviour, ISelectableObject, ICa
 
     public virtual void TakeDamage(int damage)
     {
+        GetComponent<Collider2D>().enabled = false;
+
         if (isDead)
         {
             //Clear Area For Another Placement
             //Can Spawn Explosion Effect Here
+            GamePlayController.isAttackContinue = false;
             GridPlacementSystem.SetTilesBlock(sizeArea, Enums.TileType.White, GridPlacementSystem.instance.playableAreaTilemap);
+            EventManager.onObjectAddToPool(objectType, transform);
         }
     }
 

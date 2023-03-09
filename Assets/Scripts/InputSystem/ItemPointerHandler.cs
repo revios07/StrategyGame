@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+[Tooltip("Only Use For In Game Placed Items")]
+[RequireComponent(typeof(SelectableAbstract))]
 public class ItemPointerHandler : MonoBehaviour
 {
     [NaughtyAttributes.ShowNonSerializedField]

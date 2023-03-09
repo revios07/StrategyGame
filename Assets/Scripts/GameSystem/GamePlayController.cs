@@ -12,6 +12,7 @@ public class GamePlayController : GridPlacementSystem
     private Building building;
 
     public static Building lastSelectedBuilding;
+    public static bool isAttackContinue;
 
     [SerializeField]
     private Vector2 _limitPlacementArea;
@@ -34,8 +35,15 @@ public class GamePlayController : GridPlacementSystem
 
     private void PickObject(Enums.ObjectType objectType, Transform pickedTransform)
     {
-        if (objectType == Enums.ObjectType.Soldier)
+        if (objectType == Enums.ObjectType.Bullet)
             return;
+
+        if (objectType == Enums.ObjectType.Soldier)
+        {
+            ReleaseObject();
+            pickedTransform.TryGetComponent<Soldier>(out soldier);
+            return;
+        }
 
         //Currently Picked Object Give it To Pool
         ReleaseObject();
@@ -61,10 +69,56 @@ public class GamePlayController : GridPlacementSystem
 
     private void Update()
     {
+        #region Soldier Contorller
+        if (soldier != null)
+        {
+            if (isAttackContinue)
+                return;
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                //Move To Area With Pathfind
+            }
+
+            if (Input.GetMouseButtonDown(1))
+            {
+                //Move to Area then Attack To Target
+
+                Debug.Log("AAAA");
+
+                RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(_inputData.GetMousePosition()), Vector2.zero);
+                hit = Physics2D.GetRayIntersection(Camera.main.ScreenPointToRay(Input.mousePosition));
+                if (hit.collider != null)
+                {
+                    ICanTakeDamagePlayableObject canTakeDamagePlayableObject1;
+
+                    hit.transform.TryGetComponent<ICanTakeDamagePlayableObject>(out canTakeDamagePlayableObject1);
+
+                    if (canTakeDamagePlayableObject1 != null)
+                    {
+                        if (soldier.transform == hit.transform)
+                        {
+                            //Cant Attack To Self
+                            Debug.Log("Cant Attack To Self!");
+                            return;
+                        }
+
+                        isAttackContinue = true;
+                        soldier.transform.GetComponent<ICanAttackObject>().GiveDamage(hit.transform, canTakeDamagePlayableObject1);
+                    }
+                }
+            }
+
+            return;
+        }
+        #endregion
+
+        #region Building & Placement Controller
         if (pickedObjectTrasform == null)
             return;
 
         Vector3 mousePosOnGame = Camera.main.ScreenToWorldPoint(_inputData.GetMousePosition());
+
 
         //Release The Hanging Object
         if (Input.GetMouseButtonDown(1))
@@ -103,11 +157,11 @@ public class GamePlayController : GridPlacementSystem
                     {
                         Debug.Log("Placed!");
 
-                        if(soldier != null)
+                        if (soldier != null)
                         {
                             soldier.PlaceToArea();
                         }
-                        else if(building != null)
+                        else if (building != null)
                         {
                             building.PlaceToArea();
                         }
@@ -124,18 +178,19 @@ public class GamePlayController : GridPlacementSystem
                 }
             }
         }
+        #endregion
     }
 
     public void ReleaseObject()
     {
+        soldier = null;
+
         if (pickedObjectTrasform != null)
         {
             pickedObjectTrasform.transform.parent = null;
             EventManager.onObjectAddToPool?.Invoke(pickedObjectType, pickedObjectTrasform);
             selectableAbstract = null;
             pickedObjectTrasform = null;
-            pickedObjectTrasform = null;
-            soldier = null;
             building = null;
             return;
         }

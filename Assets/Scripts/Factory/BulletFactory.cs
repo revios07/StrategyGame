@@ -9,7 +9,6 @@ public class BulletFactory : GameObjectFactory<Bullet>
 
     public override Bullet GetNewInstance(string gameObjectType)
     {
-        
         Bullet bulletCreated = Instantiate(_bulletPrefab).GetComponent<Bullet>();
         return bulletCreated;
     }

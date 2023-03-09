@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface ICanAttackObject
 {
-    public void GiveDamage(ICanTakeDamagePlayableObject canTakeDamagePlayableObject);
+    public void GiveDamage(Transform targetTransform,ICanTakeDamagePlayableObject canTakeDamagePlayableObject);
 }

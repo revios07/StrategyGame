@@ -86,8 +86,10 @@ public class GridPlacementSystem : MonoBehaviour
 
     protected void FollowBuildings(SelectableAbstract selectableAbstract)
     {
-        ClearArea();
+        if (selectableAbstract == null)
+            return;
 
+        ClearArea();
 
         Vector3 selectedPos = selectableAbstract.transform.localPosition;
         selectedPos.z = 0;

@@ -12,14 +12,12 @@ public class Soldier : SoldierAbstract
         SetMaxValueOfSlide(soldierStructData.soldierHealth);
         SetSliderValue(soldierStructData.soldierHealth);
     }
-
     public override void OnItemSelectedFromMenu()
     {
         EventManager.onSoldierSelectedInProductionPanel?.Invoke(ref base.soldierStructData);
 
         base.OnItemSelectedFromMenu();
     }
-
     public override void OnSelectedItemFromGame()
     {
         EventManager.onSoldierSelectedInProductionPanel?.Invoke(ref base.soldierStructData);
