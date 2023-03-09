@@ -18,7 +18,8 @@ namespace Enums
     {
         Soldier,
         Barracks,
-        PowerPlant
+        PowerPlant,
+        Bullet
     }
 
     public enum TileType
@@ -26,6 +27,7 @@ namespace Enums
         Empty,
         White,
         Green,
-        Red
+        Red,
+        SoldierSpawn
     }
 }

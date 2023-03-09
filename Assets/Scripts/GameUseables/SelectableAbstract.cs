@@ -11,6 +11,7 @@ public abstract class SelectableAbstract : MonoBehaviour, ISelectableObject, ICa
     protected Slider healthSlider;
     protected HealthTextUpdater healthTextUpdater;
     public bool isPlaced;
+    protected bool isDead;
 
     public BoundsInt sizeArea;
 
@@ -18,6 +19,7 @@ public abstract class SelectableAbstract : MonoBehaviour, ISelectableObject, ICa
     {
         healthSlider = GetComponentInChildren<Slider>();
         healthTextUpdater = healthSlider.transform.GetComponent<HealthTextUpdater>();
+        isDead = false;
     }
 
     public virtual void OnSelectedItemFromGame()
@@ -58,13 +60,19 @@ public abstract class SelectableAbstract : MonoBehaviour, ISelectableObject, ICa
     {
         //Reset Slider
         SetSliderValue(1000);
+        isDead = false;
         isPlaced = false;
         return this.transform;
     }
 
     public virtual void TakeDamage(int damage)
     {
-        
+        if (isDead)
+        {
+            //Clear Area For Another Placement
+            //Can Spawn Explosion Effect Here
+            GridPlacementSystem.SetTilesBlock(sizeArea, Enums.TileType.White, GridPlacementSystem.instance.playableAreaTilemap);
+        }
     }
 
     protected void SetMaxValueOfSlide(int maxSliderValue)

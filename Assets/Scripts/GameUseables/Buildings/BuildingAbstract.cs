@@ -7,9 +7,18 @@ public abstract class BuildingAbstract : SelectableAbstract, IPoolableObject, IC
 {
     public TowerScriptable towerData;
     protected Structs.TowerStruct towerStructData;
+    [SerializeField]
+    protected BoundsInt spawnPoint;
 
     protected virtual void OnEnable()
     {
+        if(towerData.GetTowerData().objectType == Enums.ObjectType.Barracks)
+        {
+            //Spawn Point Area
+            spawnPoint.position = new Vector3Int(0, -10, 0);
+            sizeArea.size += spawnPoint.size;
+            sizeArea.position += spawnPoint.position;
+        }
         //Used From Pool
         isPlaced = false;
     }
@@ -30,21 +39,29 @@ public abstract class BuildingAbstract : SelectableAbstract, IPoolableObject, IC
         towerStructData.isPlaced = isPlaced;
     }
 
+    #region Soldier Spawn
+    public void SpawnUnits()
+    {
+
+
+    }
+    #endregion
+
     //Interface Implementations
     #region Attack and Take Damage
     public override void TakeDamage(int damage)
     {
-        base.TakeDamage(damage);
-
         towerStructData.towerHealth -= damage;
         if(damage <= 0)
         {
             towerStructData.towerHealth = 0;
+            base.isDead = true;
 
             //Tower Destroyed Here
             //Add Pool Again GameObject
         }
 
+        base.TakeDamage(damage);
         SetSliderValue(towerStructData.towerHealth);
     }
     #endregion
@@ -52,7 +69,7 @@ public abstract class BuildingAbstract : SelectableAbstract, IPoolableObject, IC
     #region Pool Calls
     public override void AddToPool()
     {
-        //Reset Towers Health
+        //Reset Data
         towerStructData = towerData.GetTowerData();
 
         base.AddToPool();

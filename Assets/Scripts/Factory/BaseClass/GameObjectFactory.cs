@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class GameObjectFactory<T> : MonoBehaviour where T : MonoBehaviour
 {
     // Reference to prefab of whatever type
-    [SerializeField]
+    [HideInInspector]
     protected T prefab;
 
     public virtual T GetNewInstance(string gameObjectType)

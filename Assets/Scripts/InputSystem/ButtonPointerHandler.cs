@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Enums;
+using UnityEngine.Tilemaps;
 
 [Tooltip("This Class Only Works With UI")]
 [RequireComponent(typeof(RectTransform))]
@@ -27,6 +28,16 @@ public class ButtonPointerHandler : MonoBehaviour, IPointerDownHandler
 
     [SerializeField]
     private bool _isSoldierSpawner;
+
+    private void OnEnable()
+    {
+
+    }
+
+    private void OnDisable()
+    {
+        
+    }
 
     [ExecuteInEditMode]
     [NaughtyAttributes.Button("Load Referances")]
@@ -71,13 +82,23 @@ public class ButtonPointerHandler : MonoBehaviour, IPointerDownHandler
     //Can Select Units Here
     public void OnPointerDown(PointerEventData eventData)
     {
+        if(_isSoldierSpawner)
+        {
+            if (GridPlacementSystem.instance.CanSpawnSoldier(GamePlayController.lastSelectedBuilding))
+            {
+                GridPlacementSystem.instance.SpawnSoldier();
+            }
+            return;
+        }
+
+        /*
         if (_isSoldierSpawner)
         {
             EventManager.onSoldierSpawnedRequest?.Invoke();
             EventManager.pickRequestFromPool?.Invoke(ObjectType.Soldier);
 
             return;
-        }
+        }*/
 
         //Pick Item From Buy Area
         if (!_isOnGameSelectable)
@@ -103,6 +124,27 @@ public class ButtonPointerHandler : MonoBehaviour, IPointerDownHandler
         }
     }
 
+    /*
+    public Structs.TowerStruct BarracksSelects(ref Structs.TowerStruct towerStruct)
+    {
+        bool canSpawnSoldier = false;
+        BoundsInt spawnArea = towerStruct.size;
+
+        if(towerStruct.objectType == ObjectType.Barracks)
+        {
+            canSpawnSoldier = GridPlacementSystem.instance.CanSpawnSoldier(GamePlayController.lastSelectedBuilding);
+        }
+
+        //Spawn Soldier At Empty Spawn Area
+        if (canSpawnSoldier)
+        {
+            GridPlacementSystem.instance.SpawnSoldier();
+        }
+
+        return towerStruct;
+    }
+    */
+    
     public void SetDataType(Enums.ObjectType typeOfSelectable)
     {
         _isOnGameSelectable = false;

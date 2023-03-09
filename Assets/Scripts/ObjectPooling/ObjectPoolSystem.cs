@@ -10,6 +10,8 @@ public class ObjectPoolSystem : MonoBehaviour
     private SoldierFactory _soldierFactory;
     [SerializeField]
     private BuildingFactory _buildingFactory;
+    [SerializeField]
+    private BulletFactory _bulletFactory;
 
     //Need Input For Spawn Object At Click Area
     [SerializeField]
@@ -31,10 +33,11 @@ public class ObjectPoolSystem : MonoBehaviour
 
     private void Awake()
     {
-        if(_soldierFactory == null || _buildingFactory == null)
+        if(_soldierFactory == null || _buildingFactory == null || _bulletFactory == null)
         {
             _soldierFactory = GetComponentInChildren<SoldierFactory>();
             _buildingFactory = GetComponentInChildren<BuildingFactory>();
+            _bulletFactory = GetComponentInChildren<BulletFactory>();
         }
 
         CreatePool();
@@ -45,18 +48,21 @@ public class ObjectPoolSystem : MonoBehaviour
         _pool.Add(ObjectType.Barracks, new Queue<GameObject>());
         _pool.Add(ObjectType.PowerPlant, new Queue<GameObject>());
         _pool.Add(ObjectType.Soldier, new Queue<GameObject>());
+        _pool.Add(ObjectType.Bullet, new Queue<GameObject>());
 
 
         for (int i = 0; i < 20; ++i)
         {
             Building barracksClone = _buildingFactory.GetNewInstance("Barracks");
             Building powerPlantClone = _buildingFactory.GetNewInstance("PowerPlant");
+            Bullet bulletClone = _bulletFactory.GetNewInstance("Bullet");
 
             barracksClone.gameObject.SetActive(false);
             powerPlantClone.gameObject.SetActive(false);
 
             _pool.GetValueOrDefault(ObjectType.Barracks).Enqueue(barracksClone.gameObject);
             _pool.GetValueOrDefault(ObjectType.PowerPlant).Enqueue(powerPlantClone.gameObject);
+            _pool.GetValueOrDefault(ObjectType.Bullet).Enqueue(bulletClone.gameObject);
         }
 
         for (int i = 0; i < 50; ++i)
@@ -91,6 +97,12 @@ public class ObjectPoolSystem : MonoBehaviour
                 {
                     pickTransform = _pool.GetValueOrDefault(ObjectType.PowerPlant).Dequeue().transform;
                     pickedObjectType = ObjectType.PowerPlant;
+                    break;
+                }
+            case (ObjectType.Bullet):
+                {
+                    pickTransform = _pool.GetValueOrDefault(ObjectType.Bullet).Dequeue().transform;
+                    pickedObjectType = ObjectType.Bullet;
                     break;
                 }
         }
@@ -128,6 +140,11 @@ public class ObjectPoolSystem : MonoBehaviour
             case (ObjectType.PowerPlant):
                 {
                     _pool.GetValueOrDefault(ObjectType.PowerPlant).Enqueue(pooledObject.gameObject);
+                    break;
+                }
+            case (ObjectType.Bullet):
+                {
+                    _pool.GetValueOrDefault(ObjectType.Bullet).Enqueue(pooledObject.gameObject);
                     break;
                 }
         }

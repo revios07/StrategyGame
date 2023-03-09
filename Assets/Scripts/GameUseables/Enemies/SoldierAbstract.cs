@@ -48,16 +48,16 @@ public abstract class SoldierAbstract : SelectableAbstract, IPoolableObject, ICa
     #region Attack and Take Damage
     public override void TakeDamage(int damage)
     {
-        base.TakeDamage(damage);
-
         soldierStructData.soldierHealth -= damage;
         if (damage <= 0)
         {
             soldierStructData.soldierHealth = 0;
+            base.isDead = true;
             //Soldier Destroyed Here
             //Add Pool Again GameObject
         }
 
+        base.TakeDamage(damage);
         SetSliderValue(soldierStructData.soldierHealth);
     }
     public void GiveDamage(ICanTakeDamagePlayableObject canTakeDamagePlayableObject)

@@ -12,11 +12,6 @@ public class Building : BuildingAbstract
         SetSliderValue(towerStructData.towerHealth);
     }
 
-    void Update()
-    {
-
-    }
-
     public override void OnItemSelectedFromMenu()
     {
         EventManager.onTowerSelectedInProductionPanel?.Invoke(ref towerStructData);
@@ -28,6 +23,8 @@ public class Building : BuildingAbstract
     {
         if (!isPlaced)
             return;
+
+        GamePlayController.lastSelectedBuilding = this;
 
         EventManager.onTowerScriptableSelectedGameBoard?.Invoke(ref towerStructData);
 

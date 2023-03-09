@@ -11,6 +11,8 @@ public class GamePlayController : GridPlacementSystem
     private Soldier soldier;
     private Building building;
 
+    public static Building lastSelectedBuilding;
+
     [SerializeField]
     private Vector2 _limitPlacementArea;
 
@@ -27,11 +29,14 @@ public class GamePlayController : GridPlacementSystem
     private void OnDisable()
     {
         EventManager.pickedFromPool -= PickObject;
-        EventManager.onSoldierSpawnedRequest += ReleaseObject;
+        EventManager.onSoldierSpawnedRequest -= ReleaseObject;
     }
 
     private void PickObject(Enums.ObjectType objectType, Transform pickedTransform)
     {
+        if (objectType == Enums.ObjectType.Soldier)
+            return;
+
         //Currently Picked Object Give it To Pool
         ReleaseObject();
 
@@ -107,7 +112,7 @@ public class GamePlayController : GridPlacementSystem
                             building.PlaceToArea();
                         }
 
-                        TakeArea(selectableAbstract.sizeArea);
+                        TakeArea(selectableAbstract.sizeArea, selectableAbstract.objectType);
 
                         soldier = null;
                         building = null;
