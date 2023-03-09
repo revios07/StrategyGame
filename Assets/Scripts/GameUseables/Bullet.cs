@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour, IPoolableObject
 {
-    private bool _isMoveing;
-    private IEnumerator _attackCoroutine;
-    private WaitForFixedUpdate waitForFixedUpdate = new WaitForFixedUpdate();
     [SerializeField]
     private BulletScriptable _bulletData;
+    private IEnumerator _attackCoroutine;
+    private WaitForFixedUpdate _waitForFixedUpdate = new WaitForFixedUpdate();
+    private bool _isMoveing;
 
     public void ShootFire(Transform spawn, Transform to, int damage)
     {
@@ -38,7 +38,7 @@ public class Bullet : MonoBehaviour, IPoolableObject
 
         while (true)
         {
-            yield return waitForFixedUpdate;
+            yield return _waitForFixedUpdate;
 
             transform.position = Vector3.MoveTowards(transform.position, to.position, _bulletData.bulletSpeed * Time.fixedDeltaTime);
 

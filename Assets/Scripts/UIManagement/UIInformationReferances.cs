@@ -56,10 +56,14 @@ public abstract class UIInformationReferances : MonoBehaviour
         Structs.SoldierStruct soldierData = m_soldierDatas[Random.Range(0, m_soldierDatas.Length)].GetSoldierData();
         m_soldierImage.sprite = soldierData.soldierSprite;
         m_soldierImage.color = Color.white;
+
+        m_soldierText.text = "Spawn Soldier!";
+        /*
         m_soldierText.text = "Soldier " + soldierData.soldierIndex;
 
         m_soldierHealthText.text = "Health => " + soldierData.soldierHealth;
         m_soldierDamageText.text = "Damage => " + soldierData.soldierDamage;
+        */
 
         m_soldierSpawnerButtonHandler.enabled = true;
     }

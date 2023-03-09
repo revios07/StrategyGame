@@ -66,6 +66,34 @@ public class GridPlacementSystem : MonoBehaviour
         tilemap.SetTilesBlock(area, tileArray);
     }
 
+    public static void ControllAndSetSoldiersTilesBlocks(Transform soldierTransform, BoundsInt area, Tilemap tilemap)
+    {
+        //When Soldier Dead Or Move Controll Spawn Area
+
+        Vector3 raycastPos = soldierTransform.position + Vector3.up * 32f + Vector3.back;
+        Debug.Log("Raycast Try : " + raycastPos);
+
+        RaycastHit2D hit = Physics2D.Raycast(raycastPos, Vector3.forward);
+        if (hit.collider != null)
+        {
+            Building building;
+            bool isBuilding = hit.collider.gameObject.TryGetComponent<Building>(out building);
+            Debug.Log("Hitted !" + hit.collider.gameObject.name);
+
+            if (isBuilding && building.objectType == ObjectType.Barracks)
+            {
+                //There is a barrack of upper 
+                //Rebuild Spawn Area Again
+                Debug.Log("There is a Barracks Upper of Soldier!");
+
+                int size = area.size.x * area.size.y * area.size.z;
+                TileBase[] tileArray = new TileBase[size];
+                FillTiles(tileArray, TileType.SoldierSpawn);
+                tilemap.SetTilesBlock(area, tileArray);
+            }
+        }
+    }
+
     public static void FillTiles(TileBase[] arr, TileType type)
     {
         for (int i = 0; i < arr.Length; ++i)
@@ -90,6 +118,7 @@ public class GridPlacementSystem : MonoBehaviour
 
         Vector3 selectedPos = selectableAbstract.transform.localPosition;
         selectedPos.z = 0;
+        selectedPos.y -= 1;
 
         Vector3Int pos = gridLayout.LocalToCell(selectedPos);
 

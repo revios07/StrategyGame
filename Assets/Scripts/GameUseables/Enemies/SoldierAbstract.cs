@@ -6,8 +6,8 @@ using Interfaces;
 public abstract class SoldierAbstract : SelectableAbstract, IPoolableObject, ICanAttackObject, ICanTakeDamagePlayableObject
 {
     public SoldierScriptable[] soldierScriptable;
-    protected Structs.SoldierStruct soldierStructData;
     public int soldierHealth;
+    protected Structs.SoldierStruct soldierStructData;
 
     public void CanMoveable(Vector3Int movePosition)
     {
@@ -72,7 +72,7 @@ public abstract class SoldierAbstract : SelectableAbstract, IPoolableObject, ICa
 
         SelectableAbstract targetSelectableAbstract = targetTransform.GetComponent<SelectableAbstract>();
 
-        while (!targetSelectableAbstract.isDead)
+        while (!targetSelectableAbstract.isDead || isDead)
         {
             yield return waitForFixedUpdate;
 
@@ -86,6 +86,8 @@ public abstract class SoldierAbstract : SelectableAbstract, IPoolableObject, ICa
 
             Debug.Log(targetSelectableAbstract.isDead);
         }
+
+        GamePlayController.currentlyAttakingSoldiers.Remove(GetComponent<Soldier>());
     }
     #endregion
 

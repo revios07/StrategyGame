@@ -6,9 +6,8 @@ using Interfaces;
 public abstract class BuildingAbstract : SelectableAbstract, IPoolableObject, ICanTakeDamagePlayableObject
 {
     public TowerScriptable towerData;
-    protected Structs.TowerStruct towerStructData;
-    [SerializeField]
     protected BoundsInt spawnPoint;
+    protected Structs.TowerStruct towerStructData;
 
     protected virtual void OnEnable()
     {

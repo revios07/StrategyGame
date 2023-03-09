@@ -34,7 +34,7 @@ public abstract class SelectableAbstract : MonoBehaviour, ISelectableObject, ICa
 
     public virtual void AddToPool()
     {
-        
+
     }
 
     public virtual void PlaceToArea()
@@ -46,6 +46,10 @@ public abstract class SelectableAbstract : MonoBehaviour, ISelectableObject, ICa
     {
         Vector3Int posiitonInt = GridPlacementSystem.instance.gridLayout.LocalToCell(transform.position);
         BoundsInt areaTemp = sizeArea;
+
+        if (objectType == Enums.ObjectType.Barracks)
+            posiitonInt.y -= 1;
+
         areaTemp.position = posiitonInt;
 
         if (GridPlacementSystem.instance.CanTakeArea(areaTemp))
@@ -68,14 +72,18 @@ public abstract class SelectableAbstract : MonoBehaviour, ISelectableObject, ICa
 
     public virtual void TakeDamage(int damage)
     {
-        GetComponent<Collider2D>().enabled = false;
-
         if (isDead)
         {
+            GetComponent<Collider2D>().enabled = false;
             //Clear Area For Another Placement
             //Can Spawn Explosion Effect Here
             GamePlayController.isAttackContinue = false;
-            GridPlacementSystem.SetTilesBlock(sizeArea, Enums.TileType.White, GridPlacementSystem.instance.playableAreaTilemap);
+
+            if (objectType != Enums.ObjectType.Soldier)
+                GridPlacementSystem.SetTilesBlock(sizeArea, Enums.TileType.White, GridPlacementSystem.instance.playableAreaTilemap);
+            else
+                GridPlacementSystem.ControllAndSetSoldiersTilesBlocks(transform, sizeArea, GridPlacementSystem.instance.playableAreaTilemap);
+
             EventManager.onObjectAddToPool(objectType, transform);
         }
     }

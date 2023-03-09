@@ -8,12 +8,13 @@ public class GamePlayController : GridPlacementSystem
     [SerializeField]
     private InputData _inputData;
 
-    private Soldier soldier;
-    private Building building;
+    private Soldier _soldier;
+    private Building _building;
 
     public static Soldier lastSelectedSoldier;
     public static Building lastSelectedBuilding;
     public static bool isAttackContinue;
+    public static List<Soldier> currentlyAttakingSoldiers = new List<Soldier>();
 
     [SerializeField]
     private Vector2 _limitPlacementArea;
@@ -24,6 +25,7 @@ public class GamePlayController : GridPlacementSystem
 
     private void OnEnable()
     {
+        currentlyAttakingSoldiers.Clear();
         ReleaseObject();
         EventManager.pickedFromPool += PickObject;
         EventManager.onSoldierSpawnedRequest += ReleaseObject;
@@ -45,7 +47,7 @@ public class GamePlayController : GridPlacementSystem
             return;
 
             ReleaseObject();
-            pickedTransform.TryGetComponent<Soldier>(out soldier);
+            pickedTransform.TryGetComponent<Soldier>(out _soldier);
 
             Debug.Log("Soldier Hanged!");
         }
@@ -61,12 +63,12 @@ public class GamePlayController : GridPlacementSystem
         //Object is Soldier
         if (objectType == Enums.ObjectType.Soldier)
         {
-            pickedObjectTrasform.TryGetComponent<Soldier>(out soldier);
+            pickedObjectTrasform.TryGetComponent<Soldier>(out _soldier);
         }
         //Object is Building
         else
         {
-            pickedObjectTrasform.TryGetComponent<Building>(out building);
+            pickedObjectTrasform.TryGetComponent<Building>(out _building);
         }
 
         FollowBuildings(selectableAbstract);
@@ -77,8 +79,11 @@ public class GamePlayController : GridPlacementSystem
         #region Soldier Contorller
         if (lastSelectedSoldier != null)
         {
-            if (isAttackContinue)
+            if (currentlyAttakingSoldiers.Contains(lastSelectedSoldier))
+            {
+                //Soldier Still Attacking!
                 return;
+            }
 
             if (Input.GetMouseButtonDown(0))
             {
@@ -88,8 +93,6 @@ public class GamePlayController : GridPlacementSystem
             if (Input.GetMouseButtonDown(1))
             {
                 //Move to Area then Attack To Target
-
-                Debug.Log("AAAA");
 
                 RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(_inputData.GetMousePosition()), Vector2.zero);
                 if (hit.collider != null)
@@ -102,15 +105,26 @@ public class GamePlayController : GridPlacementSystem
                     {
                         if (hit.transform.gameObject.GetInstanceID() == lastSelectedSoldier.transform.gameObject.GetInstanceID())
                         {
-                            ReleaseObject();
                             //Cant Attack To Self
+                            ReleaseObject();
                             Debug.Log("Cant Attack To Self!");
                             return;
                         }
 
+                        if (!currentlyAttakingSoldiers.Contains(lastSelectedSoldier))
+                            currentlyAttakingSoldiers.Add(lastSelectedSoldier);
+
                         isAttackContinue = true;
                         lastSelectedSoldier.transform.GetComponent<ICanAttackObject>().GiveDamage(hit.transform, canTakeDamagePlayableObject1);
                     }
+                }
+                else
+                {
+                    //<summary>
+                    //Check Can Moveable Area
+                    //If Moveable Area Move to Area
+                    //</summary>
+
                 }
             }
 
@@ -162,19 +176,19 @@ public class GamePlayController : GridPlacementSystem
                     {
                         Debug.Log("Placed!");
 
-                        if (soldier != null)
+                        if (_soldier != null)
                         {
-                            soldier.PlaceToArea();
+                            _soldier.PlaceToArea();
                         }
-                        else if (building != null)
+                        else if (_building != null)
                         {
-                            building.PlaceToArea();
+                            _building.PlaceToArea();
                         }
 
                         TakeArea(selectableAbstract.sizeArea, selectableAbstract.objectType);
 
-                        soldier = null;
-                        building = null;
+                        _soldier = null;
+                        _building = null;
                         selectableAbstract = null;
                         pickedObjectTrasform = null;
                         pickedObjectTrasform = null;
@@ -188,7 +202,7 @@ public class GamePlayController : GridPlacementSystem
 
     public void ReleaseObject()
     {
-        soldier = null;
+        _soldier = null;
         lastSelectedSoldier = null;
 
         if (pickedObjectTrasform != null && pickedObjectType != Enums.ObjectType.Soldier)
@@ -199,7 +213,7 @@ public class GamePlayController : GridPlacementSystem
 
         selectableAbstract = null;
         pickedObjectTrasform = null;
-        building = null;
+        _building = null;
         return;
     }
 
