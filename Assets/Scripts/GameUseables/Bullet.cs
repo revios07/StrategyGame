@@ -8,6 +8,8 @@ public class Bullet : MonoBehaviour, IPoolableObject
     private bool _isMoveing;
     private IEnumerator _attackCoroutine;
     private WaitForFixedUpdate waitForFixedUpdate = new WaitForFixedUpdate();
+    [SerializeField]
+    private BulletScriptable _bulletData;
 
     public void ShootFire(Transform spawn, Transform to, int damage)
     {
@@ -16,8 +18,12 @@ public class Bullet : MonoBehaviour, IPoolableObject
 
         _isMoveing = true;
         transform.localPosition = spawn.localPosition;
-        transform.LookAt(to);
-        transform.eulerAngles += Vector3.forward * 90f;
+
+        //Angle Look To Target
+        Vector3 diff = to.position - spawn.position;
+        float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0f, 0f, rot_z - 90);
+
         transform.gameObject.SetActive(true);
         _attackCoroutine = MoveToTarget(spawn, to, damage);
         StartCoroutine(_attackCoroutine);
@@ -34,7 +40,7 @@ public class Bullet : MonoBehaviour, IPoolableObject
         {
             yield return waitForFixedUpdate;
 
-            transform.position = Vector3.Lerp(transform.position, to.position, 2f * Time.fixedDeltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, to.position, _bulletData.bulletSpeed * Time.fixedDeltaTime);
 
             if (Vector2.Distance(transform.position, to.position) < 10f)
             {

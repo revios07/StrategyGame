@@ -34,16 +34,13 @@ public class GridPlacementSystem : MonoBehaviour
 
     private void Start()
     {
+        tileBases.Clear();
+
         tileBases.Add(TileType.Empty, null);
         tileBases.Add(TileType.White, _whiteTile);
         tileBases.Add(TileType.Green, _greenTile);
         tileBases.Add(TileType.Red, _redTile);
         tileBases.Add(TileType.SoldierSpawn, _soldierSpawn);
-    }
-
-    private void OnDestroy()
-    {
-        tileBases.Clear();
     }
 
     public static TileBase[] GetTileBases(BoundsInt area, Tilemap tilemap)

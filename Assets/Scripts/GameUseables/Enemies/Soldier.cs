@@ -22,6 +22,10 @@ public class Soldier : SoldierAbstract
     {
         EventManager.onSoldierSelectedInProductionPanel?.Invoke(ref base.soldierStructData);
 
+        GamePlayController.lastSelectedSoldier = this;
+
+        Debug.Log("Soldier Selected!");
+
         base.OnSelectedItemFromGame();
     }
 }

@@ -11,6 +11,7 @@ public class GamePlayController : GridPlacementSystem
     private Soldier soldier;
     private Building building;
 
+    public static Soldier lastSelectedSoldier;
     public static Building lastSelectedBuilding;
     public static bool isAttackContinue;
 
@@ -23,6 +24,7 @@ public class GamePlayController : GridPlacementSystem
 
     private void OnEnable()
     {
+        ReleaseObject();
         EventManager.pickedFromPool += PickObject;
         EventManager.onSoldierSpawnedRequest += ReleaseObject;
     }
@@ -40,9 +42,12 @@ public class GamePlayController : GridPlacementSystem
 
         if (objectType == Enums.ObjectType.Soldier)
         {
+            return;
+
             ReleaseObject();
             pickedTransform.TryGetComponent<Soldier>(out soldier);
-            return;
+
+            Debug.Log("Soldier Hanged!");
         }
 
         //Currently Picked Object Give it To Pool
@@ -70,7 +75,7 @@ public class GamePlayController : GridPlacementSystem
     private void Update()
     {
         #region Soldier Contorller
-        if (soldier != null)
+        if (lastSelectedSoldier != null)
         {
             if (isAttackContinue)
                 return;
@@ -87,7 +92,6 @@ public class GamePlayController : GridPlacementSystem
                 Debug.Log("AAAA");
 
                 RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(_inputData.GetMousePosition()), Vector2.zero);
-                hit = Physics2D.GetRayIntersection(Camera.main.ScreenPointToRay(Input.mousePosition));
                 if (hit.collider != null)
                 {
                     ICanTakeDamagePlayableObject canTakeDamagePlayableObject1;
@@ -96,15 +100,16 @@ public class GamePlayController : GridPlacementSystem
 
                     if (canTakeDamagePlayableObject1 != null)
                     {
-                        if (soldier.transform == hit.transform)
+                        if (hit.transform.gameObject.GetInstanceID() == lastSelectedSoldier.transform.gameObject.GetInstanceID())
                         {
+                            ReleaseObject();
                             //Cant Attack To Self
                             Debug.Log("Cant Attack To Self!");
                             return;
                         }
 
                         isAttackContinue = true;
-                        soldier.transform.GetComponent<ICanAttackObject>().GiveDamage(hit.transform, canTakeDamagePlayableObject1);
+                        lastSelectedSoldier.transform.GetComponent<ICanAttackObject>().GiveDamage(hit.transform, canTakeDamagePlayableObject1);
                     }
                 }
             }
@@ -184,16 +189,18 @@ public class GamePlayController : GridPlacementSystem
     public void ReleaseObject()
     {
         soldier = null;
+        lastSelectedSoldier = null;
 
-        if (pickedObjectTrasform != null)
+        if (pickedObjectTrasform != null && pickedObjectType != Enums.ObjectType.Soldier)
         {
             pickedObjectTrasform.transform.parent = null;
             EventManager.onObjectAddToPool?.Invoke(pickedObjectType, pickedObjectTrasform);
-            selectableAbstract = null;
-            pickedObjectTrasform = null;
-            building = null;
-            return;
         }
+
+        selectableAbstract = null;
+        pickedObjectTrasform = null;
+        building = null;
+        return;
     }
 
 #if UNITY_EDITOR

@@ -63,10 +63,6 @@ public abstract class SoldierAbstract : SelectableAbstract, IPoolableObject, ICa
     public void GiveDamage(Transform targetTransform, ICanTakeDamagePlayableObject canTakeDamagePlayableObject)
     {
         //Give Damage To Object
-        canTakeDamagePlayableObject.TakeDamage(soldierStructData.soldierDamage);
-
-        Transform bullet = EventManager.pickRequestFromPool(Enums.ObjectType.Bullet);
-
         StartCoroutine(StartAttack(targetTransform, canTakeDamagePlayableObject));
     }
     private IEnumerator StartAttack(Transform targetTransform, ICanTakeDamagePlayableObject canTakeDamagePlayableObject)
@@ -87,6 +83,8 @@ public abstract class SoldierAbstract : SelectableAbstract, IPoolableObject, ICa
 
             //Only One Bullet Can Fire Same Time
             yield return new WaitUntil(() => !bullet.IsMoveing());
+
+            Debug.Log(targetSelectableAbstract.isDead);
         }
     }
     #endregion
