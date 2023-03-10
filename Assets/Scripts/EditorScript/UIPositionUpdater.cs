@@ -24,13 +24,6 @@ public class UIPositionUpdater : MonoBehaviour
             GetComponent<Mask>().enabled = true;
     }
 
-    private void Update()
-    {
-        //Infitinite Scroll
-
-
-    }
-
     [NaughtyAttributes.Button()]
     private void SetPositions()
     {
@@ -47,8 +40,7 @@ public class UIPositionUpdater : MonoBehaviour
             if (_childs[i] == transform.GetChild(0))
                 continue;
 
-            //Medium Child
-            //Lower Child
+            //Medium Child and Lower Child
             _childs[i].localPosition = transform.GetChild(i - 1).localPosition+ Vector3.down * _yPositionDiff;
         }
     }
