@@ -34,8 +34,6 @@ public class Bullet : MonoBehaviour, IPoolableObject
     }
     private IEnumerator MoveToTarget(Transform spawn, Transform to, int damage)
     {
-        Debug.Log(transform.position);
-
         while (true)
         {
             yield return _waitForFixedUpdate;

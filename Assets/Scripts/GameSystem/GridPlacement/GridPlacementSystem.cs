@@ -71,7 +71,6 @@ public class GridPlacementSystem : MonoBehaviour
         //When Soldier Dead Or Move Controll Spawn Area
 
         Vector3 raycastPos = soldierTransform.position + Vector3.up * 32f + Vector3.back;
-        Debug.Log("Raycast Try : " + raycastPos);
 
         int counter = 0;
 
@@ -85,15 +84,12 @@ public class GridPlacementSystem : MonoBehaviour
             {
                 Building building;
                 bool isBuilding = hit.collider.gameObject.TryGetComponent<Building>(out building);
-                Debug.Log("Hitted !" + hit.collider.gameObject.name);
 
                 if (isBuilding && building.objectType == ObjectType.Barracks)
                 {
                     //There is a barrack of upper 
                     //Rebuild Spawn Area Again
                     Debug.Log("There is a Barracks Upper of Soldier!");
-
-                    Debug.Log("Hitted ! : " + hit.point.y);
 
                     bounds.position = gridLayout.WorldToCell(raycastPos);
                     TileBase[] controllTiles = GetTileBases(bounds, playableAreaTilemap);
@@ -107,13 +103,12 @@ public class GridPlacementSystem : MonoBehaviour
                         else
                         {
                             ++counter;
-                            break;
                         }
                     }
                 }
                 else
                 {
-                    Debug.Log("Not Hit : " + counter);
+                    
                 }
 
                 raycastPos += Vector3.up * 32f;
@@ -240,7 +235,7 @@ public class GridPlacementSystem : MonoBehaviour
             controllArea.position = new Vector3Int(i + GamePlayController.lastSelectedBuilding.sizeArea.position.x, controllArea.position.y, 0);
 
             TileBase[] tiles = GetTileBases(controllArea, playableAreaTilemap);
-            int counter = 0;
+            //int counter = 0;
 
             foreach (var tile in tiles)
             {

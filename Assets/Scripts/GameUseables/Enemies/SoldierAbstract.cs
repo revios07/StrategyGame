@@ -84,7 +84,8 @@ public abstract class SoldierAbstract : SelectableAbstract, IPoolableObject, ICa
             //Only One Bullet Can Fire Same Time
             yield return new WaitUntil(() => !bullet.IsMoveing());
 
-            Debug.Log(targetSelectableAbstract.isDead);
+            if (targetSelectableAbstract.isDead)
+                Debug.Log("Dead!");
         }
 
         GamePlayController.currentlyAttakingSoldiers.Remove(GetComponent<Soldier>());
