@@ -79,9 +79,10 @@ public abstract class SelectableAbstract : MonoBehaviour, ISelectableObject, ICa
             //Can Spawn Explosion Effect Here
             GamePlayController.isAttackContinue = false;
 
-            if (objectType != Enums.ObjectType.Soldier)
-                GridPlacementSystem.SetTilesBlock(sizeArea, Enums.TileType.White, GridPlacementSystem.instance.playableAreaTilemap);
-            else
+
+            GridPlacementSystem.SetTilesBlock(sizeArea, Enums.TileType.White, GridPlacementSystem.instance.playableAreaTilemap);
+
+            if (objectType == Enums.ObjectType.Soldier)
                 GridPlacementSystem.ControllAndSetSoldiersTilesBlocks(transform, sizeArea, GridPlacementSystem.instance.playableAreaTilemap);
 
             EventManager.onObjectAddToPool(objectType, transform);

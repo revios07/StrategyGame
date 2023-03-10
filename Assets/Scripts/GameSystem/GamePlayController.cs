@@ -16,6 +16,9 @@ public class GamePlayController : GridPlacementSystem
     public static bool isAttackContinue;
     public static List<Soldier> currentlyAttakingSoldiers = new List<Soldier>();
 
+    private bool _isSoldierCarryStarted;
+    private float _soldierCarryTimer;
+
     [SerializeField]
     private Vector2 _limitPlacementArea;
 
@@ -44,6 +47,7 @@ public class GamePlayController : GridPlacementSystem
 
         if (objectType == Enums.ObjectType.Soldier)
         {
+            _soldierCarryTimer = 0f;
             return;
 
             /*ReleaseObject();
@@ -87,21 +91,36 @@ public class GamePlayController : GridPlacementSystem
                 return;
             }
 
-            if (Input.GetMouseButton(2))
+            #region Soldier Transform Carry
+
+            if (Input.GetMouseButton(0))
             {
-                ReleaseObject();
-                return;
+                _soldierCarryTimer = Mathf.Clamp(_soldierCarryTimer, 0, 10f);
+                _soldierCarryTimer += 1f * Time.deltaTime;
+            }
+            else
+            {
+                _soldierCarryTimer = 0f;
             }
 
-            #region Soldier Transform Carry
-            if (Input.GetMouseButton(0))
+            if (_soldierCarryTimer > 0.5f || _isSoldierCarryStarted)
             {
                 //Move To Area With Pathfind? <<<< Didn't used :/ >>>>>
 
                 followTransform = lastSelectedSoldier.transform;
                 lastSelectedSoldier.isPlaced = false;
                 selectableAbstract = lastSelectedSoldier;
+
+                if (!_isSoldierCarryStarted)
+                {
+                    SetTilesBlock(lastSelectedSoldier.sizeArea, Enums.TileType.White, playableAreaTilemap);
+                    _isSoldierCarryStarted = true;
+                    return;
+                    //ControllAndSetSoldiersTilesBlocks(lastSelectedSoldier.transform, lastSelectedSoldier.sizeArea, playableAreaTilemap);
+                }
+
                 MoveWithMousePos(ref mousePosOnGame, true);
+
                 return;
             }
             #endregion
@@ -189,25 +208,49 @@ public class GamePlayController : GridPlacementSystem
                         FollowBuildings(selectableAbstract);
                     }
 
+                    if (lastSelectedSoldier != null)
+                    {
+                        if (Input.GetMouseButtonDown(0))
+                        {
+                            if (lastSelectedSoldier.CanBePlaced())
+                            {
+                                TakeArea(selectableAbstract.sizeArea, selectableAbstract.objectType);
+                                lastSelectedSoldier.PlaceToArea();
+                                _isSoldierCarryStarted = false;
+                                _soldierCarryTimer = 0f;
+
+                                _soldier = null;
+                                _building = null;
+                                lastSelectedSoldier = null;
+                                lastSelectedBuilding = null;
+                                selectableAbstract = null;
+                                followTransform = null;
+                                return;
+
+                            }
+                            else
+                            {
+                                return;
+                            }
+                        }
+                        else
+                            return;
+                    }
+
                     //Place To Area
                     if (Input.GetMouseButtonDown(0) && selectableAbstract.CanBePlaced())
                     {
                         Debug.Log("Placed!");
 
-                        if (_soldier != null)
-                        {
-                            if (Input.GetMouseButtonUp(0))
-                                _soldier.PlaceToArea();
-                            else
-                                return;
-                        }
-                        else if (_building != null)
+
+                        if (_building != null)
                         {
                             _building.PlaceToArea();
                         }
 
                         TakeArea(selectableAbstract.sizeArea, selectableAbstract.objectType);
 
+                        _soldierCarryTimer = 0f;
                         _soldier = null;
                         _building = null;
                         lastSelectedSoldier = null;
@@ -231,6 +274,7 @@ public class GamePlayController : GridPlacementSystem
     {
         _soldier = null;
         lastSelectedSoldier = null;
+        _soldierCarryTimer = 0f;
 
         if (followTransform != null && pickedObjectType != Enums.ObjectType.Soldier)
         {

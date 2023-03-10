@@ -46,8 +46,11 @@ public class UIInformation : UIInformationReferances
         m_buildingHealth.gameObject.SetActive(true);
         m_buildingHealth.text = "Health => " + selectedTower.towerHealth;
 
+        m_soldierDamageText.gameObject.SetActive(false);
+        m_soldierHealthText.gameObject.SetActive(false);
+
         //Only Barracks Can Spawn Soldiers
-        if(selectedTower.objectType == Enums.ObjectType.Barracks && selectedTower.isPlaced)
+        if (selectedTower.objectType == Enums.ObjectType.Barracks && selectedTower.isPlaced)
         {
             //Can Spawn Soldiers
             OpenCanSpawnSoldierArea();
@@ -103,6 +106,9 @@ public class UIInformation : UIInformationReferances
 
         m_soldierImage.color = Color.red;
         m_soldierImage.sprite = m_emptySprite;
+
+        m_soldierDamageText.gameObject.SetActive(false);
+        m_soldierHealthText.gameObject.SetActive(false);
 
         return selectedTower;
     }

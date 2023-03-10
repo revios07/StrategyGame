@@ -70,27 +70,44 @@ public class GridPlacementSystem : MonoBehaviour
     {
         //When Soldier Dead Or Move Controll Spawn Area
 
-        Vector3 raycastPos = soldierTransform.position + Vector3.up * 32f + Vector3.back;
+        Vector3 raycastPos = soldierTransform.position + Vector3.back;
         Debug.Log("Raycast Try : " + raycastPos);
 
-        RaycastHit2D hit = Physics2D.Raycast(raycastPos, Vector3.forward);
-        if (hit.collider != null)
+        int counter = 0;
+
+        for(int i = 1; i < 5; ++i)
         {
-            Building building;
-            bool isBuilding = hit.collider.gameObject.TryGetComponent<Building>(out building);
-            Debug.Log("Hitted !" + hit.collider.gameObject.name);
-
-            if (isBuilding && building.objectType == ObjectType.Barracks)
+            raycastPos += Vector3.up * 50 * i;
+            RaycastHit2D hit = Physics2D.Raycast(raycastPos, Vector3.forward);
+            if (hit.collider != null)
             {
-                //There is a barrack of upper 
-                //Rebuild Spawn Area Again
-                Debug.Log("There is a Barracks Upper of Soldier!");
+                Building building;
+                bool isBuilding = hit.collider.gameObject.TryGetComponent<Building>(out building);
+                Debug.Log("Hitted !" + hit.collider.gameObject.name);
 
-                int size = area.size.x * area.size.y * area.size.z;
-                TileBase[] tileArray = new TileBase[size];
-                FillTiles(tileArray, TileType.SoldierSpawn);
-                tilemap.SetTilesBlock(area, tileArray);
+                if (isBuilding && building.objectType == ObjectType.Barracks)
+                {
+                    //There is a barrack of upper 
+                    //Rebuild Spawn Area Again
+                    Debug.Log("There is a Barracks Upper of Soldier!");
+
+                    Debug.Log("Not Hit : Hitted ! : " + counter);
+
+                    ++counter;
+                }
+                else
+                {
+                    Debug.Log("Not Hit : " + counter);
+                }
             }
+        }
+
+        if(counter >= 4)
+        {
+            int size = area.size.x * area.size.y * area.size.z;
+            TileBase[] tileArray = new TileBase[size];
+            FillTiles(tileArray, TileType.SoldierSpawn);
+            tilemap.SetTilesBlock(area, tileArray);
         }
     }
 
