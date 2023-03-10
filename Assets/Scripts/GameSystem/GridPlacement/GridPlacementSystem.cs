@@ -9,7 +9,7 @@ public class GridPlacementSystem : MonoBehaviour
     public static GridPlacementSystem instance;
 
     public GridLayout gridLayout;
-    public Tilemap playableAreaTilemap, backGroundTilemap;
+    public Tilemap playableAreaTilemap, backGroundTilemap, agentWalkableTileMap, agentBlockerTileMap;
     protected BoundsInt previousArea;
     protected Vector3 previousPos;
 

@@ -20,7 +20,7 @@ public class GamePlayController : GridPlacementSystem
     private Vector2 _limitPlacementArea;
 
     public SelectableAbstract selectableAbstract { get; private set; }
-    public Transform pickedObjectTrasform { get; private set; }
+    public Transform followTransform { get; private set; }
     public Enums.ObjectType pickedObjectType { get; private set; }
 
     private void OnEnable()
@@ -46,29 +46,29 @@ public class GamePlayController : GridPlacementSystem
         {
             return;
 
-            ReleaseObject();
+            /*ReleaseObject();
             pickedTransform.TryGetComponent<Soldier>(out _soldier);
 
-            Debug.Log("Soldier Hanged!");
+            Debug.Log("Soldier Hanged!");*/
         }
 
         //Currently Picked Object Give it To Pool
         ReleaseObject();
 
         Debug.Log("Picked");
-        pickedObjectTrasform = pickedTransform;
+        followTransform = pickedTransform;
         pickedObjectType = objectType;
-        selectableAbstract = pickedObjectTrasform.GetComponent<SelectableAbstract>();
+        selectableAbstract = followTransform.GetComponent<SelectableAbstract>();
 
         //Object is Soldier
         if (objectType == Enums.ObjectType.Soldier)
         {
-            pickedObjectTrasform.TryGetComponent<Soldier>(out _soldier);
+            followTransform.TryGetComponent<Soldier>(out _soldier);
         }
         //Object is Building
         else
         {
-            pickedObjectTrasform.TryGetComponent<Building>(out _building);
+            followTransform.TryGetComponent<Building>(out _building);
         }
 
         FollowBuildings(selectableAbstract);
@@ -76,6 +76,8 @@ public class GamePlayController : GridPlacementSystem
 
     private void Update()
     {
+        Vector3 mousePosOnGame = Camera.main.ScreenToWorldPoint(_inputData.GetMousePosition());
+
         #region Soldier Contorller
         if (lastSelectedSoldier != null)
         {
@@ -85,10 +87,24 @@ public class GamePlayController : GridPlacementSystem
                 return;
             }
 
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButton(2))
             {
-                //Move To Area With Pathfind
+                ReleaseObject();
+                return;
             }
+
+            #region Soldier Transform Carry
+            if (Input.GetMouseButton(0))
+            {
+                //Move To Area With Pathfind? <<<< Didn't used :/ >>>>>
+
+                followTransform = lastSelectedSoldier.transform;
+                lastSelectedSoldier.isPlaced = false;
+                selectableAbstract = lastSelectedSoldier;
+                MoveWithMousePos(ref mousePosOnGame, true);
+                return;
+            }
+            #endregion
 
             if (Input.GetMouseButtonDown(1))
             {
@@ -124,7 +140,6 @@ public class GamePlayController : GridPlacementSystem
                     //Check Can Moveable Area
                     //If Moveable Area Move to Area
                     //</summary>
-
                 }
             }
 
@@ -133,11 +148,8 @@ public class GamePlayController : GridPlacementSystem
         #endregion
 
         #region Building & Placement Controller
-        if (pickedObjectTrasform == null)
+        if (followTransform == null)
             return;
-
-        Vector3 mousePosOnGame = Camera.main.ScreenToWorldPoint(_inputData.GetMousePosition());
-
 
         //Release The Hanging Object
         if (Input.GetMouseButtonDown(1))
@@ -147,16 +159,22 @@ public class GamePlayController : GridPlacementSystem
             return;
         }
 
+        MoveWithMousePos(ref mousePosOnGame);
+        #endregion
+    }
+
+    public void MoveWithMousePos(ref Vector3 mousePosOnGame)
+    {
         //Cant Place Area
         if (_inputData.GetMousePosition().x < Screen.width / 4f || _inputData.GetMousePosition().x > (Screen.width - Screen.width / 4f))
         {
             mousePosOnGame.z = 10f;
-            pickedObjectTrasform.position = Vector3.Lerp(pickedObjectTrasform.position, mousePosOnGame, 10f * Time.deltaTime);
+            followTransform.position = Vector3.Lerp(followTransform.position, mousePosOnGame, 10f * Time.deltaTime);
         }
         //Picked Object On Placeable Area
         else
         {
-            if (pickedObjectTrasform != null)
+            if (followTransform != null && selectableAbstract != null)
             {
                 if (!selectableAbstract.isPlaced)
                 {
@@ -178,7 +196,10 @@ public class GamePlayController : GridPlacementSystem
 
                         if (_soldier != null)
                         {
-                            _soldier.PlaceToArea();
+                            if (Input.GetMouseButtonUp(0))
+                                _soldier.PlaceToArea();
+                            else
+                                return;
                         }
                         else if (_building != null)
                         {
@@ -189,15 +210,21 @@ public class GamePlayController : GridPlacementSystem
 
                         _soldier = null;
                         _building = null;
+                        lastSelectedSoldier = null;
+                        lastSelectedBuilding = null;
                         selectableAbstract = null;
-                        pickedObjectTrasform = null;
-                        pickedObjectTrasform = null;
+                        followTransform = null;
                         return;
                     }
                 }
             }
         }
-        #endregion
+    }
+
+    public void MoveWithMousePos(ref Vector3 mousePosOnGame, bool isSoldier)
+    {
+        ControllAndSetSoldiersTilesBlocks(followTransform, lastSelectedSoldier.sizeArea, playableAreaTilemap);
+        MoveWithMousePos(ref mousePosOnGame);
     }
 
     public void ReleaseObject()
@@ -205,14 +232,14 @@ public class GamePlayController : GridPlacementSystem
         _soldier = null;
         lastSelectedSoldier = null;
 
-        if (pickedObjectTrasform != null && pickedObjectType != Enums.ObjectType.Soldier)
+        if (followTransform != null && pickedObjectType != Enums.ObjectType.Soldier)
         {
-            pickedObjectTrasform.transform.parent = null;
-            EventManager.onObjectAddToPool?.Invoke(pickedObjectType, pickedObjectTrasform);
+            followTransform.transform.parent = null;
+            EventManager.onObjectAddToPool?.Invoke(pickedObjectType, followTransform);
         }
 
         selectableAbstract = null;
-        pickedObjectTrasform = null;
+        followTransform = null;
         _building = null;
         return;
     }
