@@ -5,21 +5,20 @@ using UnityEngine.UI;
 
 public class ProductionMenuInfiniteScroll : MonoBehaviour
 {
+    private bool _canChange;
+    [Tooltip("Diff between Lower and Upper Gameobject")]
+    [SerializeField]
+    private float _height, _movementUpperToLower;
+    private float _startPositionY;
+
     [SerializeField]
     private InputData _inputData;
     [SerializeField]
     private GameObject _scrollableAreaPrefab;
-    [Tooltip("Diff between Lower and Upper Gameobject")]
-    [SerializeField]
-    private float _height, _movementUpperToLower;
 
-    [SerializeField]
+    [NaughtyAttributes.ShowNonSerializedField]
     private List<Transform> _childTransforms = new List<Transform>();
     private static List<Transform> _scrollablePool = new List<Transform>();
-
-    private float _startPositionY;
-    private bool _canChange;
-
 
     private void Awake()
     {
@@ -53,7 +52,6 @@ public class ProductionMenuInfiniteScroll : MonoBehaviour
         }
     }
 
-
     private void Reposition(Vector2 directionVector)
     {
         Debug.Log("Reposition");
@@ -61,7 +59,6 @@ public class ProductionMenuInfiniteScroll : MonoBehaviour
 
         transform.localPosition += vector;
     }
-
 
     [ExecuteAlways]
     public void CreatePool()
@@ -81,7 +78,6 @@ public class ProductionMenuInfiniteScroll : MonoBehaviour
         }
     }
 
-    //[NaughtyAttributes.Button()]
     [ExecuteAlways]
     public void ClearPool()
     {

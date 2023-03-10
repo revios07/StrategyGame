@@ -5,11 +5,12 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour, IPoolableObject
 {
+    private bool _isMoveing;
+
     [SerializeField]
     private BulletScriptable _bulletData;
-    private IEnumerator _attackCoroutine;
     private WaitForFixedUpdate _waitForFixedUpdate = new WaitForFixedUpdate();
-    private bool _isMoveing;
+    private IEnumerator _attackCoroutine;
 
     public void ShootFire(Transform spawn, Transform to, int damage)
     {
@@ -19,7 +20,7 @@ public class Bullet : MonoBehaviour, IPoolableObject
         _isMoveing = true;
         transform.localPosition = spawn.localPosition;
 
-        //Angle Look To Target
+        //Bullet Face To Target
         Vector3 diff = to.position - spawn.position;
         float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0f, 0f, rot_z - 90);

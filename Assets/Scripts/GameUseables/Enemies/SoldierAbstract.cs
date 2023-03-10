@@ -5,10 +5,16 @@ using Interfaces;
 
 public abstract class SoldierAbstract : SelectableAbstract, IPoolableObject, ICanAttackObject, ICanTakeDamagePlayableObject
 {
-    public SoldierScriptable[] soldierScriptable;
     public int soldierHealth;
     protected Structs.SoldierStruct soldierStructData;
+    public SoldierScriptable[] soldierScriptable;
 
+    protected Structs.SoldierStruct GetRandomSoldier()
+    {
+        return soldierScriptable[Random.Range(0, soldierScriptable.Length)].GetSoldierData();
+    }
+
+    #region PathFind Functions
     public void CanMoveable(Vector3Int movePosition)
     {
 
@@ -23,12 +29,9 @@ public abstract class SoldierAbstract : SelectableAbstract, IPoolableObject, ICa
 
         //return false;
     }
-    protected Structs.SoldierStruct GetRandomSoldier()
-    {
-        return soldierScriptable[Random.Range(0, soldierScriptable.Length)].GetSoldierData();
-    }
+    #endregion
 
-    [NaughtyAttributes.Button("Placed")]
+    #region Placement
     public override void PlaceToArea()
     {
         base.PlaceToArea();
@@ -43,6 +46,7 @@ public abstract class SoldierAbstract : SelectableAbstract, IPoolableObject, ICa
         isPlaced = true;
         soldierStructData.isPlaced = isPlaced;
     }
+    #endregion
 
     #region Attack and Take Damage
     public override void TakeDamage(int damage)
@@ -50,11 +54,18 @@ public abstract class SoldierAbstract : SelectableAbstract, IPoolableObject, ICa
         soldierStructData.soldierHealth -= damage;
         if (soldierStructData.soldierHealth <= 0)
         {
+            GamePlayController.currentlyTakeingDamageSoldiers.Remove(this as Soldier);
             soldierStructData.soldierHealth = 0;
             base.isDead = true;
             //Soldier Destroyed Here
             //Add Pool Again GameObject
         }
+
+        if (!GamePlayController.currentlyTakeingDamageSoldiers.Contains(this as Soldier))
+        {
+            GamePlayController.currentlyTakeingDamageSoldiers.Add(this as Soldier);
+        }
+
 
         base.TakeDamage(damage);
         healthTextUpdater.WriteHealth(soldierStructData.soldierHealth);

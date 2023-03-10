@@ -6,13 +6,13 @@ using NaughtyAttributes;
 [CreateAssetMenu(menuName = "Enemy/SoldierUnit", fileName = "SoldierUnit")]
 public class SoldierScriptable : ScriptableObject
 {
+    public Enums.ObjectType typeOfThis;
     [SerializeField]
     private Sprite _soldierSprite;
     [SerializeField]
     private int _soldierIndex, _soldierHealth, _soldierDamage;
     [SerializeField]
     private BoundsInt _sizeOfSoldier;
-    public Enums.ObjectType typeOfThis;
 
     public Structs.SoldierStruct GetSoldierData()
     {

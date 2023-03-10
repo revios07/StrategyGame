@@ -9,25 +9,20 @@ using UnityEngine.Tilemaps;
 [RequireComponent(typeof(RectTransform))]
 public class ButtonPointerHandler : MonoBehaviour, IPointerDownHandler
 {
+    public ObjectType typeOfSelectable;
+
     [NaughtyAttributes.ResizableTextArea]
     [SerializeField]
-    private bool _isOnGameSelectable;
-    private bool _isSoldier;
+    private bool _isOnGameSelectable, _isSoldier, _isSoldierSpawner;
 
     [SerializeField]
     private Soldier _soldier;
     [SerializeField]
     private Building _building;
-
     [SerializeField]
     private SoldierScriptable _soldierData;
     [SerializeField]
     private TowerScriptable _barracksData, _powerPlantData;
-
-    public ObjectType typeOfSelectable;
-
-    [SerializeField]
-    private bool _isSoldierSpawner;
 
     private void OnEnable()
     {
@@ -36,7 +31,7 @@ public class ButtonPointerHandler : MonoBehaviour, IPointerDownHandler
 
     private void OnDisable()
     {
-        
+
     }
 
     [ExecuteInEditMode]
@@ -82,7 +77,7 @@ public class ButtonPointerHandler : MonoBehaviour, IPointerDownHandler
     //Can Select Units Here
     public void OnPointerDown(PointerEventData eventData)
     {
-        if(_isSoldierSpawner)
+        if (_isSoldierSpawner)
         {
             if (GridPlacementSystem.instance.CanSpawnSoldier(GamePlayController.lastSelectedBuilding))
             {
@@ -144,7 +139,7 @@ public class ButtonPointerHandler : MonoBehaviour, IPointerDownHandler
         return towerStruct;
     }
     */
-    
+
     public void SetDataType(Enums.ObjectType typeOfSelectable)
     {
         _isOnGameSelectable = false;

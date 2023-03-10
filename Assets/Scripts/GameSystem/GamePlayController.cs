@@ -2,25 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using Interfaces;
 
 public class GamePlayController : GridPlacementSystem
 {
-    [SerializeField]
-    private InputData _inputData;
-
-    private Soldier _soldier;
-    private Building _building;
+    public static bool isAttackContinue;
 
     public static Soldier lastSelectedSoldier;
     public static Building lastSelectedBuilding;
-    public static bool isAttackContinue;
+
     public static List<Soldier> currentlyAttakingSoldiers = new List<Soldier>();
+    public static List<Soldier> currentlyTakeingDamageSoldiers = new List<Soldier>();
+    public static List<Soldier> currentlyAllPlacedSoldiers = new List<Soldier>();
 
     private bool _isSoldierCarryStarted;
     private float _soldierCarryTimer;
 
     [SerializeField]
     private Vector2 _limitPlacementArea;
+    [SerializeField]
+    private InputData _inputData;
+
+    private Soldier _soldier;
+    private Building _building;
 
     public SelectableAbstract selectableAbstract { get; private set; }
     public Transform followTransform { get; private set; }
@@ -87,7 +91,7 @@ public class GamePlayController : GridPlacementSystem
         #region Soldier Contorller
         if (lastSelectedSoldier != null)
         {
-            if (currentlyAttakingSoldiers.Contains(lastSelectedSoldier))
+            if (currentlyAttakingSoldiers.Contains(lastSelectedSoldier) || currentlyTakeingDamageSoldiers.Contains(lastSelectedSoldier))
             {
                 //Soldier Still Attacking!
                 return;

@@ -11,7 +11,7 @@ public abstract class BuildingAbstract : SelectableAbstract, IPoolableObject, IC
 
     protected virtual void OnEnable()
     {
-        if(towerData.GetTowerData().objectType == Enums.ObjectType.Barracks)
+        if (towerData.GetTowerData().objectType == Enums.ObjectType.Barracks)
         {
             //Spawn Point Area
             spawnPoint.position = new Vector3Int(0, -10, 0);
@@ -22,7 +22,15 @@ public abstract class BuildingAbstract : SelectableAbstract, IPoolableObject, IC
         isPlaced = false;
     }
 
-    [NaughtyAttributes.Button("Placed")]
+    #region Soldier Spawn
+    public void SpawnUnits()
+    {
+
+
+    }
+    #endregion
+
+    #region Placement
     public override void PlaceToArea()
     {
         base.PlaceToArea();
@@ -37,21 +45,13 @@ public abstract class BuildingAbstract : SelectableAbstract, IPoolableObject, IC
         isPlaced = true;
         towerStructData.isPlaced = isPlaced;
     }
-
-    #region Soldier Spawn
-    public void SpawnUnits()
-    {
-
-
-    }
     #endregion
 
-    //Interface Implementations
     #region Attack and Take Damage
     public override void TakeDamage(int damage)
     {
         towerStructData.towerHealth -= damage;
-        if(towerStructData.towerHealth <= 0)
+        if (towerStructData.towerHealth <= 0)
         {
             towerStructData.towerHealth = 0;
             base.isDead = true;

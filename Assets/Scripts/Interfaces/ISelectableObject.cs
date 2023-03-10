@@ -1,16 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
-public interface ISelectableObject
+namespace Interfaces
 {
-    public virtual void OnSelectedItemFromGame()
+    public interface ISelectableObject
     {
+        public virtual void OnSelectedItemFromGame()
+        {
 
-    }
+        }
 
-    public virtual void OnItemSelectedFromMenu()
-    {
+        public virtual void OnItemSelectedFromMenu()
+        {
 
+        }
     }
 }

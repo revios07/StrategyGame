@@ -25,7 +25,6 @@ public abstract class UIInformationReferances : MonoBehaviour
     [SerializeField]
     [BoxGroup("Building Health")]
     protected TMP_Text m_buildingHealth;
-
     [SerializeField]
     protected Sprite m_emptySprite;
 

@@ -6,16 +6,16 @@ using Enums;
 
 public class ObjectPoolSystem : MonoBehaviour
 {
+    //Need Input For Spawn Object At Click Area
+    [SerializeField]
+    private InputData _inputData;
+    //Factories
     [SerializeField]
     private SoldierFactory _soldierFactory;
     [SerializeField]
     private BuildingFactory _buildingFactory;
     [SerializeField]
     private BulletFactory _bulletFactory;
-
-    //Need Input For Spawn Object At Click Area
-    [SerializeField]
-    private InputData _inputData;
 
     private Dictionary<ObjectType, Queue<GameObject>> _pool = new Dictionary<ObjectType, Queue<GameObject>>();
 

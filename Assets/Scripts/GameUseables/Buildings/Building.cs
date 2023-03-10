@@ -14,7 +14,6 @@ public class Building : BuildingAbstract
     public override void OnItemSelectedFromMenu()
     {
         EventManager.onTowerSelectedInProductionPanel?.Invoke(ref towerStructData);
-
         base.OnItemSelectedFromMenu();
     }
     public override void OnSelectedItemFromGame()
@@ -23,9 +22,7 @@ public class Building : BuildingAbstract
             return;
 
         GamePlayController.lastSelectedBuilding = this;
-
         EventManager.onTowerScriptableSelectedGameBoard?.Invoke(ref towerStructData);
-
         base.OnSelectedItemFromGame();
     }
 }

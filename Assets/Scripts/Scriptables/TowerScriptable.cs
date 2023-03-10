@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Enemy/Tower", fileName = "Tower")]
 public class TowerScriptable : ScriptableObject
 {
+    public Enums.ObjectType typeOfThisSelectable;
     [SerializeField]
     private Sprite _towerSprite;
     [SerializeField]
@@ -13,7 +14,6 @@ public class TowerScriptable : ScriptableObject
     private int _towerIndex, _towerHealth, _towerDamage;
     [SerializeField]
     private BoundsInt _sizeOfTower;
-    public Enums.ObjectType typeOfThisSelectable;
 
     public Structs.TowerStruct GetTowerData()
     {

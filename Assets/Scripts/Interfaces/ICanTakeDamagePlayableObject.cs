@@ -1,8 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
-public interface ICanTakeDamagePlayableObject
+namespace Interfaces
 {
-    public void TakeDamage(int damage);
+    public interface ICanTakeDamagePlayableObject
+    {
+        public void TakeDamage(int damage);
+    }
 }

@@ -14,12 +14,10 @@ public class HealthTextUpdater : MonoBehaviour
         _slider = GetComponent<Slider>();
         WriteHealth(10);
     }
-
     private void Start()
     {
         WriteHealth(10);
     }
-
     public void WriteHealth(float health)
     {
         _healthText.text = "Health => " + _slider.value;

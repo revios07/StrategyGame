@@ -10,17 +10,17 @@ public class ItemPointerHandler : MonoBehaviour
     [NaughtyAttributes.ShowNonSerializedField]
     private bool _isSoldier;
 
-    private Building building;
-    private Soldier soldier;
+    private Building _building;
+    private Soldier _soldier;
 
     private void Awake()
     {
-        TryGetComponent<Building>(out building);
-        TryGetComponent<Soldier>(out soldier);
+        TryGetComponent<Building>(out _building);
+        TryGetComponent<Soldier>(out _soldier);
 
-        if (soldier != null)
+        if (_soldier != null)
             _isSoldier = true;
-        else if (building != null)
+        else if (_building != null)
             _isSoldier = false;
         else
             Debug.LogError("This Can be A Type of Selectable!");
@@ -30,12 +30,12 @@ public class ItemPointerHandler : MonoBehaviour
     {
         if (_isSoldier)
         {
-            soldier.OnSelectedItemFromGame();
+            _soldier.OnSelectedItemFromGame();
         }
         //Building Selected
         else if (!_isSoldier)
         {
-            building.OnSelectedItemFromGame();
+            _building.OnSelectedItemFromGame();
         }
     }
 }

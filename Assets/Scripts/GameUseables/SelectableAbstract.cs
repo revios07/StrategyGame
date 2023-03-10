@@ -7,13 +7,13 @@ using UnityEngine.UI;
 [RequireComponent(typeof(ItemPointerHandler))]
 public abstract class SelectableAbstract : MonoBehaviour, ISelectableObject, ICanTakeDamagePlayableObject
 {
-    public Enums.ObjectType objectType;
-    protected Slider healthSlider;
-    protected HealthTextUpdater healthTextUpdater;
     public bool isPlaced;
     public bool isDead;
-
+    public Enums.ObjectType objectType;
     public BoundsInt sizeArea;
+
+    protected Slider healthSlider;
+    protected HealthTextUpdater healthTextUpdater;
 
     protected virtual void Awake()
     {

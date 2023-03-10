@@ -5,7 +5,7 @@ using Structs;
 
 public class EventManager : MonoBehaviour
 {
-    #region Game Base Events
+    #region Game Base Events Not Need
     public delegate void OnGameStarted();
     public delegate void OnGameEnded(bool isWin);
     #endregion
