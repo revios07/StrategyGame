@@ -57,6 +57,8 @@ public class GamePlayController : GridPlacementSystem
         }
 
         //Currently Picked Object Give it To Pool
+        _isSoldierCarryStarted = false;
+        _soldierCarryTimer = 0f;
         ReleaseObject();
 
         Debug.Log("Picked");
@@ -103,7 +105,7 @@ public class GamePlayController : GridPlacementSystem
                 _soldierCarryTimer = 0f;
             }
 
-            if (_soldierCarryTimer > 0.5f || _isSoldierCarryStarted)
+            if (_soldierCarryTimer > 0.35f || _isSoldierCarryStarted)
             {
                 //Move To Area With Pathfind? <<<< Didn't used :/ >>>>>
 

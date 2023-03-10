@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -66,18 +66,20 @@ public class GridPlacementSystem : MonoBehaviour
         tilemap.SetTilesBlock(area, tileArray);
     }
 
-    public static void ControllAndSetSoldiersTilesBlocks(Transform soldierTransform, BoundsInt area, Tilemap tilemap)
+    public void ControllAndSetSoldiersTilesBlocks(Transform soldierTransform, BoundsInt area, Tilemap tilemap)
     {
         //When Soldier Dead Or Move Controll Spawn Area
 
-        Vector3 raycastPos = soldierTransform.position + Vector3.back;
+        Vector3 raycastPos = soldierTransform.position + Vector3.up * 32f + Vector3.back;
         Debug.Log("Raycast Try : " + raycastPos);
 
         int counter = 0;
 
-        for(int i = 1; i < 5; ++i)
+
+
+        for (int i = 0; i < 4; ++i)
         {
-            raycastPos += Vector3.up * 50 * i;
+            BoundsInt bounds = soldierTransform.GetComponent<Soldier>().sizeArea;
             RaycastHit2D hit = Physics2D.Raycast(raycastPos, Vector3.forward);
             if (hit.collider != null)
             {
@@ -91,18 +93,34 @@ public class GridPlacementSystem : MonoBehaviour
                     //Rebuild Spawn Area Again
                     Debug.Log("There is a Barracks Upper of Soldier!");
 
-                    Debug.Log("Not Hit : Hitted ! : " + counter);
+                    Debug.Log("Hitted ! : " + hit.point.y);
 
-                    ++counter;
+                    bounds.position = gridLayout.WorldToCell(raycastPos);
+                    TileBase[] controllTiles = GetTileBases(bounds, playableAreaTilemap);
+
+                    for (int j = 0; j < controllTiles.Length; j++)
+                    {
+                        if (controllTiles[j] == tileBases[TileType.Green])
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            ++counter;
+                            break;
+                        }
+                    }
                 }
                 else
                 {
                     Debug.Log("Not Hit : " + counter);
                 }
+
+                raycastPos += Vector3.up * 32f;
             }
         }
 
-        if(counter >= 4)
+        if (counter >= 4)
         {
             int size = area.size.x * area.size.y * area.size.z;
             TileBase[] tileArray = new TileBase[size];

@@ -83,7 +83,7 @@ public abstract class SelectableAbstract : MonoBehaviour, ISelectableObject, ICa
             GridPlacementSystem.SetTilesBlock(sizeArea, Enums.TileType.White, GridPlacementSystem.instance.playableAreaTilemap);
 
             if (objectType == Enums.ObjectType.Soldier)
-                GridPlacementSystem.ControllAndSetSoldiersTilesBlocks(transform, sizeArea, GridPlacementSystem.instance.playableAreaTilemap);
+                GridPlacementSystem.instance.ControllAndSetSoldiersTilesBlocks(transform, sizeArea, GridPlacementSystem.instance.playableAreaTilemap);
 
             EventManager.onObjectAddToPool(objectType, transform);
         }
