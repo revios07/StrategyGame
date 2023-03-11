@@ -74,7 +74,14 @@ public abstract class SoldierAbstract : SelectableAbstract, IPoolableObject, ICa
     public void GiveDamage(Transform targetTransform, ICanTakeDamagePlayableObject canTakeDamagePlayableObject)
     {
         //Give Damage To Object
-        StartCoroutine(StartAttack(targetTransform, canTakeDamagePlayableObject));
+        if (this.gameObject.activeInHierarchy)
+        {
+            StartCoroutine(StartAttack(targetTransform, canTakeDamagePlayableObject));
+        }
+        else if (GamePlayController.currentlyAttakingSoldiers.Contains(this as Soldier))
+        {
+            GamePlayController.currentlyAttakingSoldiers.Remove(this as Soldier);
+        }
     }
     private IEnumerator StartAttack(Transform targetTransform, ICanTakeDamagePlayableObject canTakeDamagePlayableObject)
     {

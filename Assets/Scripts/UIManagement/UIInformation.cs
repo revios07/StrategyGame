@@ -46,15 +46,15 @@ public class UIInformation : UIInformationReferances
         m_buildingHealth.gameObject.SetActive(true);
         m_buildingHealth.text = "Health => " + selectedTower.towerHealth;
 
-        m_soldierDamageText.gameObject.SetActive(false);
-        m_soldierHealthText.gameObject.SetActive(false);
-
         //Only Barracks Can Spawn Soldiers
         if (selectedTower.objectType == Enums.ObjectType.Barracks && selectedTower.isPlaced)
         {
             //Can Spawn Soldiers
             OpenCanSpawnSoldierArea();
-            OpenTextes(true);
+        }
+        else
+        {
+            OpenTextes(false);
         }
 
         //Can Show Barracks Health Here

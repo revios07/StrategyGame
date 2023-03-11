@@ -51,18 +51,18 @@ public abstract class UIInformationReferances : MonoBehaviour
     protected void OpenCanSpawnSoldierArea()
     {
         m_soldierHealthText.transform.parent.localPosition = Vector3.zero;
-        //Pick Random Soldiers
+
+        //Pick Random Soldiers For Wiew
         Structs.SoldierStruct soldierData = m_soldierDatas[Random.Range(0, m_soldierDatas.Length)].GetSoldierData();
+
+        m_soldierText.text = "Spawn Soldier!";
         m_soldierImage.sprite = soldierData.soldierSprite;
         m_soldierImage.color = Color.white;
 
-        m_soldierText.text = "Spawn Soldier!";
-        /*
-        m_soldierText.text = "Soldier " + soldierData.soldierIndex;
-
-        m_soldierHealthText.text = "Health => " + soldierData.soldierHealth;
-        m_soldierDamageText.text = "Damage => " + soldierData.soldierDamage;
-        */
+        m_soldierHealthText.gameObject.SetActive(false);
+        m_soldierDamageText.gameObject.SetActive(false);
+        m_soldierImage.gameObject.SetActive(true);
+        m_soldierText.gameObject.SetActive(true);
 
         m_soldierSpawnerButtonHandler.enabled = true;
     }

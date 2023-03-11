@@ -9,7 +9,8 @@ public class GridPlacementSystem : MonoBehaviour
     public static GridPlacementSystem instance;
 
     public GridLayout gridLayout;
-    public Tilemap playableAreaTilemap, backGroundTilemap, agentWalkableTileMap, agentBlockerTileMap;
+    [NaughtyAttributes.BoxGroup("TileMaps")]
+    public Tilemap playableAreaTilemap, backGroundTilemap, agentWalkableTilemap, agentBlockerTilemap;
     protected BoundsInt previousArea;
     protected Vector3 previousPos;
 

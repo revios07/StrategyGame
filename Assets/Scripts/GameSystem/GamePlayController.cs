@@ -51,7 +51,7 @@ public class GamePlayController : GridPlacementSystem
         #region Soldier Contorller
         if (lastSelectedSoldier != null)
         {
-            if (currentlyAttakingSoldiers.Contains(lastSelectedSoldier) || currentlyTakeingDamageSoldiers.Contains(lastSelectedSoldier))
+            if (currentlyAttakingSoldiers.Contains(lastSelectedSoldier))
             {
                 //Soldier Still Attacking!
                 return;
@@ -59,7 +59,7 @@ public class GamePlayController : GridPlacementSystem
 
             #region Soldier Transform Carry
 
-            if (Input.GetMouseButton(0))
+            if (Input.GetMouseButton(0) && !currentlyTakeingDamageSoldiers.Contains(lastSelectedSoldier))
             {
                 _soldierCarryTimer = Mathf.Clamp(_soldierCarryTimer, 0, 10f);
                 _soldierCarryTimer += 1f * Time.deltaTime;

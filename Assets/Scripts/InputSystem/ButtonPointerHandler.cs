@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using NaughtyAttributes;
 using Enums;
-using UnityEngine.Tilemaps;
 
 [Tooltip("This Class Only Works With UI")]
 [RequireComponent(typeof(RectTransform))]
@@ -11,18 +11,19 @@ public class ButtonPointerHandler : MonoBehaviour, IPointerDownHandler
 {
     public ObjectType typeOfSelectable;
 
-    [NaughtyAttributes.ResizableTextArea]
+    [BoxGroup("Clicable Function Types")]
     [SerializeField]
     private bool _isOnGameSelectable, _isSoldier, _isSoldierSpawner;
 
     [SerializeField]
-    private Soldier _soldier;
-    [SerializeField]
-    private Building _building;
-    [SerializeField]
+    [BoxGroup("Data")]
     private SoldierScriptable _soldierData;
     [SerializeField]
+    [BoxGroup("Data")]
     private TowerScriptable _barracksData, _powerPlantData;
+
+    private Soldier _soldier;
+    private Building _building;
 
     private void OnEnable()
     {
