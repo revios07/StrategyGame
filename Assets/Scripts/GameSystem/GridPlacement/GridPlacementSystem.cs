@@ -16,7 +16,6 @@ public class GridPlacementSystem : MonoBehaviour
     [NaughtyAttributes.BoxGroup("Tile Bases")]
     [SerializeField]
     private TileBase _whiteTile, _greenTile, _redTile, _soldierSpawn;
-
     public static Dictionary<TileType, TileBase> tileBases = new Dictionary<TileType, TileBase>();
 
     private void Awake()
@@ -69,21 +68,19 @@ public class GridPlacementSystem : MonoBehaviour
     public void ControllAndSetSoldiersTilesBlocks(Transform soldierTransform, BoundsInt area, Tilemap tilemap)
     {
         //When Soldier Dead Or Move Controll Spawn Area
-
         Vector3 raycastPos = soldierTransform.position + Vector3.up * 32f + Vector3.back;
 
         int counter = 0;
 
-
-
-        for (int i = 0; i < 4; ++i)
+        for (int i = 1; i <= 4; ++i)
         {
             BoundsInt bounds = soldierTransform.GetComponent<Soldier>().sizeArea;
-            RaycastHit2D hit = Physics2D.Raycast(raycastPos, Vector3.forward);
-            if (hit.collider != null)
+            Collider2D hit = Physics2D.OverlapCircle(soldierTransform.position + Vector3.up* 32f * i, 1f);
+
+            if (hit != null)
             {
                 Building building;
-                bool isBuilding = hit.collider.gameObject.TryGetComponent<Building>(out building);
+                bool isBuilding = hit.gameObject.TryGetComponent<Building>(out building);
 
                 if (isBuilding && building.objectType == ObjectType.Barracks)
                 {
@@ -91,7 +88,7 @@ public class GridPlacementSystem : MonoBehaviour
                     //Rebuild Spawn Area Again
                     Debug.Log("There is a Barracks Upper of Soldier!");
 
-                    bounds.position = gridLayout.WorldToCell(raycastPos);
+                    bounds.position = gridLayout.WorldToCell(soldierTransform.position);
                     TileBase[] controllTiles = GetTileBases(bounds, playableAreaTilemap);
 
                     for (int j = 0; j < controllTiles.Length; j++)
@@ -110,8 +107,6 @@ public class GridPlacementSystem : MonoBehaviour
                 {
                     
                 }
-
-                raycastPos += Vector3.up * 32f;
             }
         }
 
@@ -152,7 +147,7 @@ public class GridPlacementSystem : MonoBehaviour
 
         Vector3Int pos = gridLayout.LocalToCell(selectedPos);
 
-        //Spawn Area Calculate
+        //Soldier Spawn Area Calculate For Barracks
         if (selectableAbstract.objectType == ObjectType.Barracks)
             pos.y -= 1;
 
@@ -173,7 +168,7 @@ public class GridPlacementSystem : MonoBehaviour
             }
             else
             {
-                //Cant Place
+                //Can't Place
                 FillTiles(tileArray, TileType.Red);
                 break;
             }
@@ -219,7 +214,7 @@ public class GridPlacementSystem : MonoBehaviour
             }
         }
 
-        //Cant Spawn Soldier Here
+        //Can't Spawn Soldier Here
         return false;
     }
 
@@ -235,7 +230,6 @@ public class GridPlacementSystem : MonoBehaviour
             controllArea.position = new Vector3Int(i + GamePlayController.lastSelectedBuilding.sizeArea.position.x, controllArea.position.y, 0);
 
             TileBase[] tiles = GetTileBases(controllArea, playableAreaTilemap);
-            //int counter = 0;
 
             foreach (var tile in tiles)
             {

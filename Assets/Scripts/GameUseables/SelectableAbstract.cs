@@ -87,13 +87,11 @@ public abstract class SelectableAbstract : MonoBehaviour, ISelectableObject, ICa
             }
             else if(objectType == Enums.ObjectType.Barracks)
             {
+                //Soldier Spawner Area Check!
                 BoundsInt soldierSpawnerArea = sizeArea;
 
                 Vector3Int soldierSpawnerAreaPosition = sizeArea.position;
-                soldierSpawnerAreaPosition.y -= 4;
-
-                Vector3Int soldierSpawnerSize;
-                soldierSpawnerSize = Vector3Int.one;;
+                Vector3Int soldierSpawnerSize = Vector3Int.one;
                
                 soldierSpawnerArea.size = soldierSpawnerSize;
                 soldierSpawnerArea.position = soldierSpawnerAreaPosition;
@@ -121,6 +119,7 @@ public abstract class SelectableAbstract : MonoBehaviour, ISelectableObject, ICa
                     soldierSpawnerArea.position = pos;
                 }
 
+                //Clear Barracks Self area Without SoldierSpawner
                 Vector3Int posAreaWithoutSpawner = sizeArea.position;
                 posAreaWithoutSpawner.y += 1;
                 BoundsInt sizeAreaWithoutSpawner = sizeArea;
