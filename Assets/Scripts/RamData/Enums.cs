@@ -1,4 +1,3 @@
-
 namespace Enums
 {
     public enum SoldierDamageType

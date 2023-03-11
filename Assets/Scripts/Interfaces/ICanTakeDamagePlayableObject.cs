@@ -1,4 +1,3 @@
-
 namespace Interfaces
 {
     public interface ICanTakeDamagePlayableObject

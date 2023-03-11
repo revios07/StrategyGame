@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Interfaces;
 using UnityEngine.UI;
+using UnityEngine.Tilemaps;
 
 [RequireComponent(typeof(ItemPointerHandler))]
 public abstract class SelectableAbstract : MonoBehaviour, ISelectableObject, ICanTakeDamagePlayableObject
@@ -80,10 +81,59 @@ public abstract class SelectableAbstract : MonoBehaviour, ISelectableObject, ICa
             GamePlayController.isAttackContinue = false;
 
 
-            GridPlacementSystem.SetTilesBlock(sizeArea, Enums.TileType.White, GridPlacementSystem.instance.playableAreaTilemap);
+            if(objectType != Enums.ObjectType.Barracks)
+            {
+                GridPlacementSystem.SetTilesBlock(sizeArea, Enums.TileType.White, GridPlacementSystem.instance.playableAreaTilemap);
+            }
+            else if(objectType == Enums.ObjectType.Barracks)
+            {
+                BoundsInt soldierSpawnerArea = sizeArea;
+
+                Vector3Int soldierSpawnerAreaPosition = sizeArea.position;
+                soldierSpawnerAreaPosition.y -= 4;
+
+                Vector3Int soldierSpawnerSize;
+                soldierSpawnerSize = Vector3Int.one;;
+               
+                soldierSpawnerArea.size = soldierSpawnerSize;
+                soldierSpawnerArea.position = soldierSpawnerAreaPosition;
+
+
+                for(int i = 0; i < sizeArea.size.x; ++i)
+                {
+                    //Controll area there any soldier at spawn area!
+                    TileBase[] tiles = GridPlacementSystem.GetTileBases(soldierSpawnerArea, GridPlacementSystem.instance.playableAreaTilemap);
+                    for(int j = 0; j < tiles.Length; ++j)
+                    {
+                        if(tiles[j] == GridPlacementSystem.tileBases[Enums.TileType.SoldierSpawn])
+                        {
+                            //Empty Spawn area
+                            GridPlacementSystem.SetTilesBlock(soldierSpawnerArea, Enums.TileType.White, GridPlacementSystem.instance.playableAreaTilemap);
+                        }
+                        else
+                        {
+                            //Stay with green
+                        }
+                    }
+
+                    Vector3Int pos = soldierSpawnerArea.position;
+                    pos.x += 1;
+                    soldierSpawnerArea.position = pos;
+                }
+
+                Vector3Int posAreaWithoutSpawner = sizeArea.position;
+                posAreaWithoutSpawner.y += 1;
+                BoundsInt sizeAreaWithoutSpawner = sizeArea;
+                sizeAreaWithoutSpawner.position = posAreaWithoutSpawner;
+
+                GridPlacementSystem.SetTilesBlock(sizeAreaWithoutSpawner, Enums.TileType.White, GridPlacementSystem.instance.playableAreaTilemap);
+            }
+
 
             if (objectType == Enums.ObjectType.Soldier)
+            {
                 GridPlacementSystem.instance.ControllAndSetSoldiersTilesBlocks(transform, sizeArea, GridPlacementSystem.instance.playableAreaTilemap);
+            }
 
             EventManager.onObjectAddToPool(objectType, transform);
         }

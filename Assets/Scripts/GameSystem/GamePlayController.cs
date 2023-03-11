@@ -44,46 +44,6 @@ public class GamePlayController : GridPlacementSystem
         EventManager.onSoldierSpawnedRequest -= ReleaseObject;
     }
 
-    private void PickObject(Enums.ObjectType objectType, Transform pickedTransform)
-    {
-        if (objectType == Enums.ObjectType.Bullet)
-            return;
-
-        if (objectType == Enums.ObjectType.Soldier)
-        {
-            _soldierCarryTimer = 0f;
-            return;
-
-            /*ReleaseObject();
-            pickedTransform.TryGetComponent<Soldier>(out _soldier);
-
-            Debug.Log("Soldier Hanged!");*/
-        }
-
-        //Currently Picked Object Give it To Pool
-        _isSoldierCarryStarted = false;
-        _soldierCarryTimer = 0f;
-        ReleaseObject();
-
-        Debug.Log("Picked");
-        followTransform = pickedTransform;
-        pickedObjectType = objectType;
-        selectableAbstract = followTransform.GetComponent<SelectableAbstract>();
-
-        //Object is Soldier
-        if (objectType == Enums.ObjectType.Soldier)
-        {
-            followTransform.TryGetComponent<Soldier>(out _soldier);
-        }
-        //Object is Building
-        else
-        {
-            followTransform.TryGetComponent<Building>(out _building);
-        }
-
-        FollowBuildings(selectableAbstract);
-    }
-
     private void Update()
     {
         Vector3 mousePosOnGame = Camera.main.ScreenToWorldPoint(_inputData.GetMousePosition());
@@ -186,6 +146,46 @@ public class GamePlayController : GridPlacementSystem
 
         MoveWithMousePos(ref mousePosOnGame);
         #endregion
+    }
+
+    private void PickObject(Enums.ObjectType objectType, Transform pickedTransform)
+    {
+        if (objectType == Enums.ObjectType.Bullet)
+            return;
+
+        if (objectType == Enums.ObjectType.Soldier)
+        {
+            _soldierCarryTimer = 0f;
+            return;
+
+            /*ReleaseObject();
+            pickedTransform.TryGetComponent<Soldier>(out _soldier);
+
+            Debug.Log("Soldier Hanged!");*/
+        }
+
+        //Currently Picked Object Give it To Pool
+        _isSoldierCarryStarted = false;
+        _soldierCarryTimer = 0f;
+        ReleaseObject();
+
+        Debug.Log("Picked");
+        followTransform = pickedTransform;
+        pickedObjectType = objectType;
+        selectableAbstract = followTransform.GetComponent<SelectableAbstract>();
+
+        //Object is Soldier
+        if (objectType == Enums.ObjectType.Soldier)
+        {
+            followTransform.TryGetComponent<Soldier>(out _soldier);
+        }
+        //Object is Building
+        else
+        {
+            followTransform.TryGetComponent<Building>(out _building);
+        }
+
+        FollowBuildings(selectableAbstract);
     }
 
     public void MoveWithMousePos(ref Vector3 mousePosOnGame)
