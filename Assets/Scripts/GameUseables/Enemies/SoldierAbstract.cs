@@ -83,7 +83,7 @@ public abstract class SoldierAbstract : SelectableAbstract, IPoolableObject, ICa
             GamePlayController.currentlyTakeingDamageSoldiers.Add(this as Soldier);
         }
 
-        EventManager.onSelectableTakeDamageInGame?.Invoke(this as SelectableAbstract);
+        EventManager.onSelectableTakeDamageInGame?.Invoke(this);
         base.TakeDamage(damage);
         healthTextUpdater.WriteHealth(soldierStructData.soldierHealth);
         SetSliderValue(soldierStructData.soldierHealth);

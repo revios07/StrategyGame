@@ -136,11 +136,12 @@ public class UIInformation : UIInformationReferances
 
         return selectedTower;
     }
-    //Soldier Selected On Production Panel
+    //Soldier Selected On Game Panel
     private Structs.SoldierStruct UpdateProductionInformation(ref Structs.SoldierStruct selectedSoldier, SelectableAbstract selectableAbstract)
     {
         UpdateInformationPanel(ref selectedSoldier, selectableAbstract);
-        m_inGameItemPicked = false;
+        m_inGameItemPicked = true;
+        m_pickedObjectType = Enums.ObjectType.Soldier;
 
         return selectedSoldier;
     }
@@ -151,6 +152,14 @@ public class UIInformation : UIInformationReferances
     {
         if (!m_inGameItemPicked)
             return;
+
+        if (selectableAbstract.isDead)
+        {
+            //Clear Area
+            m_buildingText.text = "Destroyed! => " + selectableAbstract.objectType.ToString();
+            base.OpenTextes(false);
+            return;
+        }
 
         //Soldier
         if ((selectableAbstract.objectType == Enums.ObjectType.Soldier) && (selectableAbstract == m_selectableAbstract))

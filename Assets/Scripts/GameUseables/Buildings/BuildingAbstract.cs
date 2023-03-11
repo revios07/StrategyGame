@@ -77,7 +77,7 @@ public abstract class BuildingAbstract : SelectableAbstract, IPoolableObject, IC
             //Add Pool Again GameObject
         }
 
-        EventManager.onSelectableTakeDamageInGame?.Invoke(this as SelectableAbstract);
+        EventManager.onSelectableTakeDamageInGame?.Invoke(this);
         base.TakeDamage(damage);
         healthTextUpdater.WriteHealth(towerStructData.towerHealth);
         SetSliderValue(towerStructData.towerHealth);
