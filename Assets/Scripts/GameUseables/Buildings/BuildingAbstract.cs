@@ -22,6 +22,22 @@ public abstract class BuildingAbstract : SelectableAbstract, IPoolableObject, IC
         isPlaced = false;
     }
 
+    #region Pool Calls
+    public override void AddToPool()
+    {
+        //Reset Data
+        towerStructData = towerData.GetTowerData();
+
+        base.AddToPool();
+    }
+    public override Transform UseFromPool()
+    {
+        base.UseFromPool();
+
+        return this.transform;
+    }
+    #endregion
+
     #region Soldier Spawn
     public void SpawnUnits()
     {
@@ -30,7 +46,7 @@ public abstract class BuildingAbstract : SelectableAbstract, IPoolableObject, IC
     }
     #endregion
 
-    #region Placement
+    #region Placement on Game
     public override void PlaceToArea()
     {
         base.PlaceToArea();
@@ -47,7 +63,7 @@ public abstract class BuildingAbstract : SelectableAbstract, IPoolableObject, IC
     }
     #endregion
 
-    #region Attack and Take Damage
+    #region Damage/Health
     public override void TakeDamage(int damage)
     {
         towerStructData.towerHealth -= damage;
@@ -63,22 +79,6 @@ public abstract class BuildingAbstract : SelectableAbstract, IPoolableObject, IC
         base.TakeDamage(damage);
         healthTextUpdater.WriteHealth(towerStructData.towerHealth);
         SetSliderValue(towerStructData.towerHealth);
-    }
-    #endregion
-
-    #region Pool Calls
-    public override void AddToPool()
-    {
-        //Reset Data
-        towerStructData = towerData.GetTowerData();
-
-        base.AddToPool();
-    }
-    public override Transform UseFromPool()
-    {
-        base.UseFromPool();
-
-        return this.transform;
     }
     #endregion
 }

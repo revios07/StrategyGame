@@ -31,6 +31,23 @@ public abstract class SoldierAbstract : SelectableAbstract, IPoolableObject, ICa
     }
     #endregion
 
+    #region Pool Calls
+    public override void AddToPool()
+    {
+        //Reset Soldier Health Here
+        //Give Random Health To Soldier
+        soldierStructData = GetRandomSoldier();
+
+        base.AddToPool();
+    }
+    public override Transform UseFromPool()
+    {
+        base.UseFromPool();
+
+        return this.transform;
+    }
+    #endregion
+
     #region Placement
     public override void PlaceToArea()
     {
@@ -48,7 +65,7 @@ public abstract class SoldierAbstract : SelectableAbstract, IPoolableObject, ICa
     }
     #endregion
 
-    #region Attack and Take Damage
+    #region Damage/Health
     public override void TakeDamage(int damage)
     {
         soldierStructData.soldierHealth -= damage;
@@ -107,23 +124,6 @@ public abstract class SoldierAbstract : SelectableAbstract, IPoolableObject, ICa
         }
 
         GamePlayController.currentlyAttakingSoldiers.Remove(GetComponent<Soldier>());
-    }
-    #endregion
-
-    #region Pool Calls
-    public override void AddToPool()
-    {
-        //Reset Soldier Health Here
-        //Give Random Health To Soldier
-        soldierStructData = GetRandomSoldier();
-
-        base.AddToPool();
-    }
-    public override Transform UseFromPool()
-    {
-        base.UseFromPool();
-
-        return this.transform;
     }
     #endregion
 }

@@ -23,26 +23,38 @@ public abstract class SelectableAbstract : MonoBehaviour, ISelectableObject, ICa
         isDead = false;
     }
 
+    #region Selections
     public virtual void OnSelectedItemFromGame()
     {
 
     }
-
     public virtual void OnItemSelectedFromMenu()
     {
 
     }
+    #endregion
 
+    #region Pool Calls
+    public virtual Transform UseFromPool()
+    {
+        GetComponent<Collider2D>().enabled = true;
+        //Reset Slider
+        SetSliderValue(1000);
+        isDead = false;
+        isPlaced = false;
+        return this.transform;
+    }
     public virtual void AddToPool()
     {
 
     }
+    #endregion
 
+    #region Placement on Game
     public virtual void PlaceToArea()
     {
 
     }
-
     public bool CanBePlaced()
     {
         Vector3Int posiitonInt = GridPlacementSystem.instance.gridLayout.LocalToCell(transform.position);
@@ -60,17 +72,9 @@ public abstract class SelectableAbstract : MonoBehaviour, ISelectableObject, ICa
 
         return false;
     }
+    #endregion
 
-    public virtual Transform UseFromPool()
-    {
-        GetComponent<Collider2D>().enabled = true;
-        //Reset Slider
-        SetSliderValue(1000);
-        isDead = false;
-        isPlaced = false;
-        return this.transform;
-    }
-
+    #region Damage/Health
     public virtual void TakeDamage(int damage)
     {
         if (isDead)
@@ -137,15 +141,14 @@ public abstract class SelectableAbstract : MonoBehaviour, ISelectableObject, ICa
             EventManager.onObjectAddToPool(objectType, transform);
         }
     }
-
     protected void SetMaxValueOfSlide(int maxSliderValue)
     {
         healthSlider.maxValue = maxSliderValue;
     }
-
     protected void SetSliderValue(int value)
     {
         healthSlider.value = value;
         healthTextUpdater.WriteHealth(healthSlider.value);
     }
+    #endregion
 }

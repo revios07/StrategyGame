@@ -58,7 +58,6 @@ public class UIInformation : UIInformationReferances
         }
 
         //Can Show Barracks Health Here
-
         //<region>
         //Show Soldiers Of Barrack Here
         //</region>
@@ -99,7 +98,7 @@ public class UIInformation : UIInformationReferances
         return selectedSoldier;
     }
 
-    //Barracks Selected On Production Panel
+    //Tower Selected On Production Panel
     private Structs.TowerStruct UpdateProductionInformation(ref Structs.TowerStruct selectedTower)
     {
         UpdateInformationPanel(ref selectedTower);

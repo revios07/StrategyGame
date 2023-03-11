@@ -37,13 +37,11 @@ public class GamePlayController : GridPlacementSystem
         EventManager.pickedFromPool += PickObject;
         EventManager.onSoldierSpawnedRequest += ReleaseObject;
     }
-
     private void OnDisable()
     {
         EventManager.pickedFromPool -= PickObject;
         EventManager.onSoldierSpawnedRequest -= ReleaseObject;
     }
-
     private void Update()
     {
         Vector3 mousePosOnGame = Camera.main.ScreenToWorldPoint(_inputData.GetMousePosition());
@@ -187,7 +185,25 @@ public class GamePlayController : GridPlacementSystem
 
         FollowBuildings(selectableAbstract);
     }
+    public void ReleaseObject()
+    {
+        _soldier = null;
+        lastSelectedSoldier = null;
+        _soldierCarryTimer = 0f;
 
+        if (followTransform != null && pickedObjectType != Enums.ObjectType.Soldier)
+        {
+            followTransform.transform.parent = null;
+            EventManager.onObjectAddToPool?.Invoke(pickedObjectType, followTransform);
+        }
+
+        selectableAbstract = null;
+        followTransform = null;
+        _building = null;
+        return;
+    }
+
+    //Building
     public void MoveWithMousePos(ref Vector3 mousePosOnGame)
     {
         //Cant Place Area
@@ -269,29 +285,11 @@ public class GamePlayController : GridPlacementSystem
             }
         }
     }
-
+    //Soldier
     public void MoveWithMousePos(ref Vector3 mousePosOnGame, bool isSoldier)
     {
         ControllAndSetSoldiersTilesBlocks(followTransform, lastSelectedSoldier.sizeArea, playableAreaTilemap);
         MoveWithMousePos(ref mousePosOnGame);
-    }
-
-    public void ReleaseObject()
-    {
-        _soldier = null;
-        lastSelectedSoldier = null;
-        _soldierCarryTimer = 0f;
-
-        if (followTransform != null && pickedObjectType != Enums.ObjectType.Soldier)
-        {
-            followTransform.transform.parent = null;
-            EventManager.onObjectAddToPool?.Invoke(pickedObjectType, followTransform);
-        }
-
-        selectableAbstract = null;
-        followTransform = null;
-        _building = null;
-        return;
     }
 
 #if UNITY_EDITOR
