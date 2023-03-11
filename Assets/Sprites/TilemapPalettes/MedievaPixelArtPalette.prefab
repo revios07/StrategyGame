@@ -38,7 +38,7 @@ GameObject:
   - component: {fileID: 4136452614651496}
   - component: {fileID: 2569400267027410764}
   m_Layer: 31
-  m_Name: Medieval Pixel Art Palette
+  m_Name: MedievaPixelArtPalette
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
