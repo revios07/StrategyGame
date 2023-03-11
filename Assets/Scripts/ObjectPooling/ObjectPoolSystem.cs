@@ -69,6 +69,7 @@ public class ObjectPoolSystem : MonoBehaviour
         for (int i = 0; i < 50; ++i)
         {
             Soldier soldierClone = (_soldierFactory.GetNewInstance("Soldier"));
+
             soldierClone.gameObject.SetActive(false);
 
             _pool.GetValueOrDefault(ObjectType.Soldier).Enqueue(soldierClone.gameObject);
