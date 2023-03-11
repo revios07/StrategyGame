@@ -16,7 +16,6 @@ public class UIInformation : UIInformationReferances
         EventManager.onTowerScriptableSelectedGameBoard += UpdateInformationPanel;
         EventManager.onSoldierSelectedGameBoard += UpdateInformationPanel;
     }
-
     private void OnDisable()
     {
         EventManager.onSoldierSelectedInProductionPanel -= UpdateProductionInformation;
@@ -25,7 +24,6 @@ public class UIInformation : UIInformationReferances
         EventManager.onTowerScriptableSelectedGameBoard -= UpdateInformationPanel;
         EventManager.onSoldierSelectedGameBoard -= UpdateInformationPanel;
     }
-
     private void Start()
     {
         OpenTextes(false);

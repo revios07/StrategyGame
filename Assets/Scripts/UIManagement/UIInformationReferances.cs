@@ -36,18 +36,15 @@ public abstract class UIInformationReferances : MonoBehaviour
         m_soldierDamageText.gameObject.SetActive(isActive);
         m_buildingHealth.gameObject.SetActive(isActive);
     }
-
     protected void ResetNames()
     {
         m_buildingText.text = "Barracks";
         m_soldierText.text = "Production";
     }
-
     protected void CloseCanSpawnSoldierArea()
     {
         m_soldierSpawnerButtonHandler.enabled = false;
     }
-
     protected void OpenCanSpawnSoldierArea()
     {
         m_soldierHealthText.transform.parent.localPosition = Vector3.zero;

@@ -24,13 +24,11 @@ public class ObjectPoolSystem : MonoBehaviour
         EventManager.pickRequestFromPool += GetObjectFromPool;
         EventManager.onObjectAddToPool += AddToPool;
     }
-
     private void OnDisable()
     {
         EventManager.pickRequestFromPool -= GetObjectFromPool;
         EventManager.onObjectAddToPool -= AddToPool;
     }
-
     private void Awake()
     {
         if(_soldierFactory == null || _buildingFactory == null || _bulletFactory == null)
@@ -75,7 +73,6 @@ public class ObjectPoolSystem : MonoBehaviour
             _pool.GetValueOrDefault(ObjectType.Soldier).Enqueue(soldierClone.gameObject);
         }
     }
-
     public Transform GetObjectFromPool(ObjectType pooledObjectType)
     {
         Transform pickTransform = null;
@@ -122,7 +119,6 @@ public class ObjectPoolSystem : MonoBehaviour
 
         return pickTransform;
     }
-
     public void AddToPool(ObjectType pooledObjectType, Transform pooledObject)
     {
         pooledObject.gameObject.SetActive(false);
