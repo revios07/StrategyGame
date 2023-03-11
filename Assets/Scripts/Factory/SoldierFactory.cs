@@ -18,9 +18,8 @@ public class SoldierFactory : GameObjectFactory<Soldier>
         {
             index = 0;
         }
-        Soldier soldierCreated = Instantiate(_soldierPrefabs[index]).GetComponent<Soldier>();
-        soldierCreated.soldierHealth = _soldierDatas[index].GetSoldierData().soldierHealth;
 
+        Soldier soldierCreated = Instantiate(_soldierPrefabs[index]).GetComponent<Soldier>();
         return soldierCreated;
     }
 }

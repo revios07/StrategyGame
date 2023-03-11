@@ -22,7 +22,7 @@ public class Building : BuildingAbstract
             return;
 
         GamePlayController.lastSelectedBuilding = this;
-        EventManager.onTowerScriptableSelectedGameBoard?.Invoke(ref towerStructData);
+        EventManager.onTowerScriptableSelectedGameBoard?.Invoke(ref towerStructData, this as SelectableAbstract);
         base.OnSelectedItemFromGame();
     }
 }

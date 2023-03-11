@@ -5,9 +5,9 @@ using Interfaces;
 
 public abstract class SoldierAbstract : SelectableAbstract, IPoolableObject, ICanAttackObject, ICanTakeDamagePlayableObject
 {
-    public int soldierHealth;
-    protected Structs.SoldierStruct soldierStructData;
+    public int soldierHealth => soldierStructData.soldierHealth;
     public SoldierScriptable[] soldierScriptable;
+    protected Structs.SoldierStruct soldierStructData;
 
     protected Structs.SoldierStruct GetRandomSoldier()
     {
@@ -83,7 +83,7 @@ public abstract class SoldierAbstract : SelectableAbstract, IPoolableObject, ICa
             GamePlayController.currentlyTakeingDamageSoldiers.Add(this as Soldier);
         }
 
-
+        EventManager.onSelectableTakeDamageInGame?.Invoke(this as SelectableAbstract);
         base.TakeDamage(damage);
         healthTextUpdater.WriteHealth(soldierStructData.soldierHealth);
         SetSliderValue(soldierStructData.soldierHealth);

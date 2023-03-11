@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using NaughtyAttributes;
+using Structs;
 
 public abstract class UIInformationReferances : MonoBehaviour
 {
@@ -27,6 +28,13 @@ public abstract class UIInformationReferances : MonoBehaviour
     protected TMP_Text m_buildingHealth;
     [SerializeField]
     protected Sprite m_emptySprite;
+
+    protected bool m_inGameItemPicked;
+    protected Enums.ObjectType m_pickedObjectType;
+
+    protected SelectableAbstract m_selectableAbstract;
+    protected SoldierStruct m_soldierStruct;
+    protected TowerStruct m_towerStruct;
 
     protected void OpenTextes(bool isActive)
     {
@@ -62,5 +70,15 @@ public abstract class UIInformationReferances : MonoBehaviour
         m_soldierText.gameObject.SetActive(true);
 
         m_soldierSpawnerButtonHandler.enabled = true;
+    }
+
+    protected void LoadReferancesForHealthUpdate(ref SoldierStruct soldierStruct)
+    {
+        this.m_soldierStruct = soldierStruct;
+    }
+
+    protected void LoadReferancesForHealthUpdate(ref TowerStruct towerStruct)
+    {
+        this.m_towerStruct = towerStruct;
     }
 }

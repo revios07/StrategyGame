@@ -14,14 +14,13 @@ public class Soldier : SoldierAbstract
     }
     public override void OnItemSelectedFromMenu()
     {
-        EventManager.onSoldierSelectedInProductionPanel?.Invoke(ref base.soldierStructData);
+        EventManager.onSoldierSelectedInProductionPanel?.Invoke(ref base.soldierStructData, null);
 
         base.OnItemSelectedFromMenu();
     }
     public override void OnSelectedItemFromGame()
     {
-        EventManager.onSoldierSelectedInProductionPanel?.Invoke(ref base.soldierStructData);
-
+        EventManager.onSoldierSelectedInProductionPanel?.Invoke(ref base.soldierStructData, this as SelectableAbstract);
         GamePlayController.lastSelectedSoldier = this;
 
         Debug.Log("Soldier Selected!");

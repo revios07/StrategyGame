@@ -5,6 +5,7 @@ using Interfaces;
 
 public abstract class BuildingAbstract : SelectableAbstract, IPoolableObject, ICanTakeDamagePlayableObject
 {
+    public int towerHealth => towerStructData.towerHealth;
     public TowerScriptable towerData;
     protected BoundsInt spawnPoint;
     protected Structs.TowerStruct towerStructData;
@@ -76,6 +77,7 @@ public abstract class BuildingAbstract : SelectableAbstract, IPoolableObject, IC
             //Add Pool Again GameObject
         }
 
+        EventManager.onSelectableTakeDamageInGame?.Invoke(this as SelectableAbstract);
         base.TakeDamage(damage);
         healthTextUpdater.WriteHealth(towerStructData.towerHealth);
         SetSliderValue(towerStructData.towerHealth);
