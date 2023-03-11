@@ -59,6 +59,7 @@ public class ObjectPoolSystem : MonoBehaviour
 
             barracksClone.gameObject.SetActive(false);
             powerPlantClone.gameObject.SetActive(false);
+            bulletClone.gameObject.SetActive(false);
 
             _pool.GetValueOrDefault(ObjectType.Barracks).Enqueue(barracksClone.gameObject);
             _pool.GetValueOrDefault(ObjectType.PowerPlant).Enqueue(powerPlantClone.gameObject);
