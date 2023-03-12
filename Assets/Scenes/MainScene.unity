@@ -7237,7 +7237,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3578800644448626835, guid: 891ef41174d7d7043a91c46f400159a3, type: 3}
       propertyPath: m_Name
-      value: SelectedObjectAssigner
+      value: SelectedObjectAssignerSingle
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 891ef41174d7d7043a91c46f400159a3, type: 3}

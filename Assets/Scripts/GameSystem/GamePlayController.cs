@@ -33,7 +33,6 @@ public class GamePlayController : GridPlacementSystem
     private void OnEnable()
     {
         currentlyAttakingSoldiers.Clear();
-        ReleaseObject();
         EventManager.pickedFromPool += PickObject;
         //EventManager.onSoldierSpawnedRequest += ReleaseObject;
     }

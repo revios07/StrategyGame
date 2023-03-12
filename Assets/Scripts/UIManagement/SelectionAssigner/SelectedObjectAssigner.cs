@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Enums;
 
+[SelectionBase]
 public class SelectedObjectAssigner : MonoBehaviour
 {
     public static SelectedObjectAssigner instance;
@@ -29,7 +30,7 @@ public class SelectedObjectAssigner : MonoBehaviour
         _transform = transform;
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _images = GetComponentsInChildren<Image>();
-        _spriteRenderer.enabled = false;
+
         StopAssign();
     }
     private void OnEnable()
@@ -73,7 +74,9 @@ public class SelectedObjectAssigner : MonoBehaviour
     }
     public void StopAssign()
     {
-        _transform.parent = null;
+        if (_transform.parent != null)
+            _transform.parent = null;
+
         _spriteRenderer.enabled = false;
         gameObject.SetActive(false);
     }
