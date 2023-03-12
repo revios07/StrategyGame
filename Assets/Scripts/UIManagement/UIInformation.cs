@@ -32,6 +32,7 @@ public class UIInformation : UIInformationReferances
     {
         OpenTextes(false);
         ResetNames();
+        m_selectedObjectAssigner = SelectedObjectAssigner.instance;
     }
     #endregion
 
@@ -42,6 +43,11 @@ public class UIInformation : UIInformationReferances
         base.ResetNames();
         base.OpenTextes(false);
         base.LoadReferancesForHealthUpdate(ref selectedTower);
+
+        if (selectableAbstract != null)
+        {
+            m_selectedObjectAssigner.StartAssign(selectableAbstract.transform);
+        }
 
         m_inGameItemPicked = true;
         m_selectableAbstract = selectableAbstract;
@@ -86,6 +92,7 @@ public class UIInformation : UIInformationReferances
         base.ResetNames();
         base.OpenTextes(false);
         base.LoadReferancesForHealthUpdate(ref selectedSoldier);
+        m_selectedObjectAssigner.StartAssign(selectableAbstract.transform);
 
         if (selectableAbstract != null)
         {
@@ -136,7 +143,7 @@ public class UIInformation : UIInformationReferances
 
         return selectedTower;
     }
-    //Soldier Selected On Game Panel
+    //Soldier Selected On Game Board
     private Structs.SoldierStruct UpdateProductionInformation(ref Structs.SoldierStruct selectedSoldier, SelectableAbstract selectableAbstract)
     {
         UpdateInformationPanel(ref selectedSoldier, selectableAbstract);
@@ -153,7 +160,7 @@ public class UIInformation : UIInformationReferances
         if (!m_inGameItemPicked)
             return;
 
-        if (selectableAbstract.isDead)
+        if (selectableAbstract.isDead && m_selectableAbstract == selectableAbstract)
         {
             //Clear Area
             m_buildingText.text = "Destroyed! => " + selectableAbstract.objectType.ToString();

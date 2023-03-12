@@ -1772,7 +1772,7 @@ GameObject:
   m_Layer: 0
   m_Name: Barracks
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -1819,12 +1819,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4db8b045257706342b862b5a5e106955, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectType: 1
   isPlaced: 0
   isDead: 0
+  objectType: 1
   sizeArea:
     m_Position: {x: 0, y: 0, z: 0}
-    m_Size: {x: 4, y: 4, z: 1}
+    m_Size: {x: 4, y: 5, z: 1}
   towerData: {fileID: 11400000, guid: 735d1b0dd6402b84b8044be87b421d6a, type: 2}
 --- !u!114 &667161040
 MonoBehaviour:

@@ -32,6 +32,7 @@ public abstract class UIInformationReferances : MonoBehaviour
     protected bool m_inGameItemPicked;
     protected Enums.ObjectType m_pickedObjectType;
 
+    protected SelectedObjectAssigner m_selectedObjectAssigner;
     protected SelectableAbstract m_selectableAbstract;
     protected SoldierStruct m_soldierStruct;
     protected TowerStruct m_towerStruct;
@@ -76,7 +77,6 @@ public abstract class UIInformationReferances : MonoBehaviour
     {
         this.m_soldierStruct = soldierStruct;
     }
-
     protected void LoadReferancesForHealthUpdate(ref TowerStruct towerStruct)
     {
         this.m_towerStruct = towerStruct;

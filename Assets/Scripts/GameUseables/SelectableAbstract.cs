@@ -83,7 +83,7 @@ public abstract class SelectableAbstract : MonoBehaviour, ISelectableObject, ICa
             //Clear Area For Another Placement
             //Can Spawn Explosion Effect Here
             GamePlayController.isAttackContinue = false;
-
+            SelectedObjectAssigner.instance.ControllIsAssigned(transform);
 
             if(objectType != Enums.ObjectType.Barracks)
             {

@@ -692,7 +692,7 @@ GameObject:
   m_Layer: 0
   m_Name: PowerPlant
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -739,9 +739,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4db8b045257706342b862b5a5e106955, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectType: 2
   isPlaced: 0
   isDead: 0
+  objectType: 2
   sizeArea:
     m_Position: {x: 0, y: 0, z: 0}
     m_Size: {x: 2, y: 3, z: 1}

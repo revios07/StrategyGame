@@ -35,12 +35,12 @@ public class GamePlayController : GridPlacementSystem
         currentlyAttakingSoldiers.Clear();
         ReleaseObject();
         EventManager.pickedFromPool += PickObject;
-        EventManager.onSoldierSpawnedRequest += ReleaseObject;
+        //EventManager.onSoldierSpawnedRequest += ReleaseObject;
     }
     private void OnDisable()
     {
         EventManager.pickedFromPool -= PickObject;
-        EventManager.onSoldierSpawnedRequest -= ReleaseObject;
+        //EventManager.onSoldierSpawnedRequest -= ReleaseObject;
     }
     private void Update()
     {
@@ -154,6 +154,7 @@ public class GamePlayController : GridPlacementSystem
         if (objectType == Enums.ObjectType.Soldier)
         {
             _soldierCarryTimer = 0f;
+            _isSoldierCarryStarted = false;
             return;
 
             /*ReleaseObject();
@@ -171,6 +172,7 @@ public class GamePlayController : GridPlacementSystem
         followTransform = pickedTransform;
         pickedObjectType = objectType;
         selectableAbstract = followTransform.GetComponent<SelectableAbstract>();
+        SelectedObjectAssigner.instance.StartAssign(followTransform);
 
         //Object is Soldier
         if (objectType == Enums.ObjectType.Soldier)
@@ -190,6 +192,7 @@ public class GamePlayController : GridPlacementSystem
         _soldier = null;
         lastSelectedSoldier = null;
         _soldierCarryTimer = 0f;
+        SelectedObjectAssigner.instance.StopAssign();
 
         if (followTransform != null && pickedObjectType != Enums.ObjectType.Soldier)
         {
@@ -238,6 +241,7 @@ public class GamePlayController : GridPlacementSystem
                             {
                                 TakeArea(selectableAbstract.sizeArea, selectableAbstract.objectType);
                                 lastSelectedSoldier.PlaceToArea();
+                                SelectedObjectAssigner.instance.StopAssign();
                                 _isSoldierCarryStarted = false;
                                 _soldierCarryTimer = 0f;
 
