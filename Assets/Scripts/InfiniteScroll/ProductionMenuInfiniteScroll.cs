@@ -12,7 +12,7 @@ public class ProductionMenuInfiniteScroll : MonoBehaviour
     private float _startPositionY;
 
     [SerializeField]
-    private InputData _inputData;
+    private InputDataSO _inputData;
     [SerializeField]
     private GameObject _scrollableAreaPrefab;
 

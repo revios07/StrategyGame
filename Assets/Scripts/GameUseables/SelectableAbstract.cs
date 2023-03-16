@@ -53,7 +53,7 @@ public abstract class SelectableAbstract : MonoBehaviour, ISelectableObject, ICa
     #region Placement on Game
     public virtual void PlaceToArea()
     {
-
+        isPlaced = true;
     }
     public bool CanBePlaced()
     {
@@ -85,29 +85,29 @@ public abstract class SelectableAbstract : MonoBehaviour, ISelectableObject, ICa
             GamePlayController.isAttackContinue = false;
             SelectedObjectAssigner.instance.ControllIsAssigned(transform);
 
-            if(objectType != Enums.ObjectType.Barracks)
+            if (objectType != Enums.ObjectType.Barracks)
             {
                 GridPlacementSystem.SetTilesBlock(sizeArea, Enums.TileType.White, GridPlacementSystem.instance.playableAreaTilemap);
             }
-            else if(objectType == Enums.ObjectType.Barracks)
+            else if (objectType == Enums.ObjectType.Barracks)
             {
                 //Soldier Spawner Area Check!
                 BoundsInt soldierSpawnerArea = sizeArea;
 
                 Vector3Int soldierSpawnerAreaPosition = sizeArea.position;
                 Vector3Int soldierSpawnerSize = Vector3Int.one;
-               
+
                 soldierSpawnerArea.size = soldierSpawnerSize;
                 soldierSpawnerArea.position = soldierSpawnerAreaPosition;
 
 
-                for(int i = 0; i < sizeArea.size.x; ++i)
+                for (int i = 0; i < sizeArea.size.x; ++i)
                 {
                     //Controll area there any soldier at spawn area!
                     TileBase[] tiles = GridPlacementSystem.GetTileBases(soldierSpawnerArea, GridPlacementSystem.instance.playableAreaTilemap);
-                    for(int j = 0; j < tiles.Length; ++j)
+                    for (int j = 0; j < tiles.Length; ++j)
                     {
-                        if(tiles[j] == GridPlacementSystem.tileBases[Enums.TileType.SoldierSpawn])
+                        if (tiles[j] == GridPlacementSystem.tileBases[Enums.TileType.SoldierSpawn])
                         {
                             //Empty Spawn area
                             GridPlacementSystem.SetTilesBlock(soldierSpawnerArea, Enums.TileType.White, GridPlacementSystem.instance.playableAreaTilemap);
@@ -126,8 +126,16 @@ public abstract class SelectableAbstract : MonoBehaviour, ISelectableObject, ICa
                 //Clear Barracks Self area Without SoldierSpawner
                 Vector3Int posAreaWithoutSpawner = sizeArea.position;
                 posAreaWithoutSpawner.y += 1;
+
+
+                Vector3Int sizeAreaSizeWithoutSpawner = sizeArea.size;
+                sizeAreaSizeWithoutSpawner.y -= 1;
+
                 BoundsInt sizeAreaWithoutSpawner = sizeArea;
+
+                sizeAreaWithoutSpawner.size = sizeAreaSizeWithoutSpawner;
                 sizeAreaWithoutSpawner.position = posAreaWithoutSpawner;
+
 
                 GridPlacementSystem.SetTilesBlock(sizeAreaWithoutSpawner, Enums.TileType.White, GridPlacementSystem.instance.playableAreaTilemap);
             }
@@ -137,6 +145,7 @@ public abstract class SelectableAbstract : MonoBehaviour, ISelectableObject, ICa
             {
                 GridPlacementSystem.instance.ControllAndSetSoldiersTilesBlocks(transform, sizeArea, GridPlacementSystem.instance.playableAreaTilemap);
             }
+
 
             EventManager.onObjectAddToPool(objectType, transform);
         }

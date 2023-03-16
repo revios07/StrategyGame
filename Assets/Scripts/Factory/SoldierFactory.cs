@@ -5,7 +5,7 @@ using UnityEngine;
 public class SoldierFactory : GameObjectFactory<Soldier>
 {
     [SerializeField]
-    private SoldierScriptable[] _soldierDatas;
+    private SoldierDataSO[] _soldierDatas;
     [SerializeField]
     private GameObject[] _soldierPrefabs;
     private int index = -1;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Input/InputData", fileName = "InputData")]
-public class InputData : ScriptableObject
+public class InputDataSO : ScriptableObject
 {
     [NaughtyAttributes.ShowNonSerializedField]
     private float _xInput, _yInput;

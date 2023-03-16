@@ -65,9 +65,6 @@ public class UIInformation : UIInformationReferances
         m_buidingImage.color = Color.white;
         m_buidingImage.sprite = selectedTower.towerSprite;
 
-        m_buildingHealth.gameObject.SetActive(true);
-        m_buildingHealth.text = "Health => " + selectedTower.towerHealth;
-
         //Only Barracks Can Spawn Soldiers
         if (selectedTower.objectType == Enums.ObjectType.Barracks && selectedTower.isPlaced)
         {
@@ -78,6 +75,9 @@ public class UIInformation : UIInformationReferances
         {
             OpenTextes(false);
         }
+
+        m_buildingHealth.gameObject.SetActive(true);
+        m_buildingHealth.text = "Health => " + selectedTower.towerHealth;
 
         //Can Show Barracks Health Here
         //<region>

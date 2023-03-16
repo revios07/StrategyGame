@@ -8,7 +8,7 @@ public class ObjectPoolSystem : MonoBehaviour
 {
     //Need Input For Spawn Object At Click Area
     [SerializeField]
-    private InputData _inputData;
+    private InputDataSO _inputData;
     //Factories
     [SerializeField]
     private SoldierFactory _soldierFactory;
@@ -49,7 +49,7 @@ public class ObjectPoolSystem : MonoBehaviour
         _pool.Add(ObjectType.Bullet, new Queue<GameObject>());
 
 
-        for (int i = 0; i < 20; ++i)
+        for (int i = 0; i < 3; ++i)
         {
             Building barracksClone = _buildingFactory.GetNewInstance("Barracks");
             Building powerPlantClone = _buildingFactory.GetNewInstance("PowerPlant");
@@ -64,7 +64,7 @@ public class ObjectPoolSystem : MonoBehaviour
             _pool.GetValueOrDefault(ObjectType.Bullet).Enqueue(bulletClone.gameObject);
         }
 
-        for (int i = 0; i < 50; ++i)
+        for (int i = 0; i < 30; ++i)
         {
             Soldier soldierClone = (_soldierFactory.GetNewInstance("Soldier"));
 

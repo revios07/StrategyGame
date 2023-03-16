@@ -20,6 +20,9 @@ public class Soldier : SoldierAbstract
     }
     public override void OnSelectedItemFromGame()
     {
+        if (GamePlayController.isCarrying)
+            return;
+
         EventManager.onSoldierSelectedInProductionPanel?.Invoke(ref base.soldierStructData, this as SelectableAbstract);
         GamePlayController.lastSelectedSoldier = this;
 

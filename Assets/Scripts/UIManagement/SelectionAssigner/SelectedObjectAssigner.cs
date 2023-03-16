@@ -9,7 +9,7 @@ public class SelectedObjectAssigner : MonoBehaviour
 {
     public static SelectedObjectAssigner instance;
     [SerializeField]
-    private GameObjectAssignerScriptable _objectAssignerData;
+    private GameObjectAssignerDataSO _objectAssignerData;
 
     private bool _isFollowing;
     private Transform _transform;

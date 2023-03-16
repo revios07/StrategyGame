@@ -17,10 +17,10 @@ public class ButtonPointerHandler : MonoBehaviour, IPointerDownHandler
 
     [SerializeField]
     [BoxGroup("Data")]
-    private SoldierScriptable _soldierData;
+    private SoldierDataSO _soldierData;
     [SerializeField]
     [BoxGroup("Data")]
-    private TowerScriptable _barracksData, _powerPlantData;
+    private TowerDataSO _barracksData, _powerPlantData;
 
     private Soldier _soldier;
     private Building _building;

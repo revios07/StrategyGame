@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Enemy/Tower", fileName = "Tower")]
-public class TowerScriptable : ScriptableObject
+public class TowerDataSO: ScriptableObject
 {
     public Enums.ObjectType typeOfThisSelectable;
     [SerializeField]

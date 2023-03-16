@@ -6,33 +6,22 @@ using Interfaces;
 public abstract class BuildingAbstract : SelectableAbstract, IPoolableObject, ICanTakeDamagePlayableObject
 {
     public int towerHealth => towerStructData.towerHealth;
-    public TowerScriptable towerData;
+    public TowerDataSO towerData;
     protected BoundsInt spawnPoint;
     protected Structs.TowerStruct towerStructData;
-
-    protected virtual void OnEnable()
-    {
-        if (towerData.GetTowerData().objectType == Enums.ObjectType.Barracks)
-        {
-            //Spawn Point Area
-            spawnPoint.position = new Vector3Int(0, -10, 0);
-            sizeArea.size += spawnPoint.size;
-            sizeArea.position += spawnPoint.position;
-        }
-        //Used From Pool
-        isPlaced = false;
-    }
 
     #region Pool Calls
     public override void AddToPool()
     {
-        //Reset Data
-        towerStructData = towerData.GetTowerData();
-
         base.AddToPool();
     }
     public override Transform UseFromPool()
     {
+        //Reset Data
+        towerStructData = towerData.GetTowerData();
+        SetMaxValueOfSlide(towerStructData.towerHealth);
+        SetSliderValue(towerStructData.towerHealth);
+
         base.UseFromPool();
 
         return this.transform;
@@ -47,17 +36,10 @@ public abstract class BuildingAbstract : SelectableAbstract, IPoolableObject, IC
     }
     #endregion
 
-    #region Placement on Game
+    #region Placement to GameBoard
     public override void PlaceToArea()
     {
         base.PlaceToArea();
-
-        if (isPlaced)
-        {
-            isPlaced = false;
-            towerStructData.isPlaced = isPlaced;
-            return;
-        }
 
         isPlaced = true;
         towerStructData.isPlaced = isPlaced;
@@ -67,12 +49,15 @@ public abstract class BuildingAbstract : SelectableAbstract, IPoolableObject, IC
     #region Damage/Health
     public override void TakeDamage(int damage)
     {
+        if (base.isDead)
+            return;
+
         towerStructData.towerHealth -= damage;
         if (towerStructData.towerHealth <= 0)
         {
             towerStructData.towerHealth = 0;
             base.isDead = true;
-
+            AddToPool();
             //Tower Destroyed Here
             //Add Pool Again GameObject
         }

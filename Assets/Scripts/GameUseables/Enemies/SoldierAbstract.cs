@@ -6,7 +6,7 @@ using Interfaces;
 public abstract class SoldierAbstract : SelectableAbstract, IPoolableObject, ICanAttackObject, ICanTakeDamagePlayableObject
 {
     public int soldierHealth => soldierStructData.soldierHealth;
-    public SoldierScriptable[] soldierScriptable;
+    public SoldierDataSO[] soldierScriptable;
     protected Structs.SoldierStruct soldierStructData;
 
     protected Structs.SoldierStruct GetRandomSoldier()
@@ -34,14 +34,16 @@ public abstract class SoldierAbstract : SelectableAbstract, IPoolableObject, ICa
     #region Pool Calls
     public override void AddToPool()
     {
-        //Reset Soldier Health Here
-        //Give Random Health To Soldier
-        soldierStructData = GetRandomSoldier();
-
         base.AddToPool();
     }
     public override Transform UseFromPool()
     {
+        //Reset Soldier Health Here
+        //Give Random Health To Soldier
+        soldierStructData = GetRandomSoldier();
+        SetMaxValueOfSlide(soldierStructData.soldierHealth);
+        SetSliderValue(soldierStructData.soldierHealth);
+
         base.UseFromPool();
 
         return this.transform;
@@ -53,13 +55,6 @@ public abstract class SoldierAbstract : SelectableAbstract, IPoolableObject, ICa
     {
         base.PlaceToArea();
 
-        if (isPlaced)
-        {
-            isPlaced = false;
-            soldierStructData.isPlaced = isPlaced;
-            return;
-        }
-
         isPlaced = true;
         soldierStructData.isPlaced = isPlaced;
     }
@@ -68,12 +63,16 @@ public abstract class SoldierAbstract : SelectableAbstract, IPoolableObject, ICa
     #region Damage/Health
     public override void TakeDamage(int damage)
     {
+        if (base.isDead)
+            return;
+
         soldierStructData.soldierHealth -= damage;
         if (soldierStructData.soldierHealth <= 0)
         {
             GamePlayController.currentlyTakeingDamageSoldiers.Remove(this as Soldier);
             soldierStructData.soldierHealth = 0;
             base.isDead = true;
+            AddToPool();
             //Soldier Destroyed Here
             //Add Pool Again GameObject
         }

@@ -9,7 +9,7 @@ using Structs;
 public abstract class UIInformationReferances : MonoBehaviour
 {
     [SerializeField]
-    protected SoldierScriptable[] m_soldierDatas;
+    protected SoldierDataSO[] m_soldierDatas;
 
     [SerializeField]
     [BoxGroup("Names")]

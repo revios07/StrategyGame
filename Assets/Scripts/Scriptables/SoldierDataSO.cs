@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Enemy/SoldierUnit", fileName = "SoldierUnit")]
-public class SoldierScriptable : ScriptableObject
+public class SoldierDataSO : ScriptableObject
 {
     public Enums.ObjectType typeOfThis;
     [SerializeField]

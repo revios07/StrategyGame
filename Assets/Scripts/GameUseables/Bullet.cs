@@ -8,7 +8,7 @@ public class Bullet : MonoBehaviour, IPoolableObject
     private bool _isMoveing;
 
     [SerializeField]
-    private BulletScriptable _bulletData;
+    private BulletDataSO _bulletData;
     private WaitForFixedUpdate _waitForFixedUpdate = new WaitForFixedUpdate();
     private IEnumerator _attackCoroutine;
 

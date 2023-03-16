@@ -5,7 +5,7 @@ using UnityEngine;
 public class InputHandler : MonoBehaviour
 {
     [SerializeField]
-    private InputData _inputData;
+    private InputDataSO _inputData;
     public Vector2 _mousePosition { get; private set; }
 
     private void Awake()

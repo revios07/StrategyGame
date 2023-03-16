@@ -4,7 +4,7 @@ using UnityEngine;
 using Enums;
 
 [CreateAssetMenu(menuName = "UI/ObjectAssignerData", fileName = "ObjectAssignerData")]
-public class GameObjectAssignerScriptable : ScriptableObject
+public class GameObjectAssignerDataSO : ScriptableObject
 {
     [NaughtyAttributes.BoxGroup("Local Scales When Assigned an Object")]
     [SerializeField]

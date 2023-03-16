@@ -6,7 +6,8 @@ using Interfaces;
 
 public class GamePlayController : GridPlacementSystem
 {
-    public static bool isAttackContinue;
+    public static bool isAttackContinue { get; set; }
+    public static bool isCarrying { get; private set; }
 
     public static Soldier lastSelectedSoldier;
     public static Building lastSelectedBuilding;
@@ -21,7 +22,7 @@ public class GamePlayController : GridPlacementSystem
     [SerializeField]
     private Vector2 _limitPlacementArea;
     [SerializeField]
-    private InputData _inputData;
+    private InputDataSO _inputData;
 
     private Soldier _soldier;
     private Building _building;
@@ -209,10 +210,12 @@ public class GamePlayController : GridPlacementSystem
     public void MoveWithMousePos(ref Vector3 mousePosOnGame)
     {
         //Cant Place Area
-        if (_inputData.GetMousePosition().x < Screen.width / 4f || _inputData.GetMousePosition().x > (Screen.width - Screen.width / 4f))
+        if (_inputData.GetMousePosition().x < Screen.width / 5f || _inputData.GetMousePosition().x > (Screen.width - Screen.width / 5f))
         {
+            isCarrying = true;
             mousePosOnGame.z = 10f;
             followTransform.position = Vector3.Lerp(followTransform.position, mousePosOnGame, 10f * Time.deltaTime);
+            ClearArea();
         }
         //Picked Object On Placeable Area
         else
@@ -226,6 +229,7 @@ public class GamePlayController : GridPlacementSystem
                     //Controll Player Can Place Selection With Sprite Change
                     if (previousPos != cellPos)
                     {
+                        isCarrying = true;
                         selectableAbstract.transform.parent = gridLayout.transform;
                         selectableAbstract.transform.localPosition = gridLayout.CellToLocalInterpolated(cellPos + new Vector3(0.5f, 0.5f, 0.0f));
                         previousPos = cellPos;
@@ -241,6 +245,8 @@ public class GamePlayController : GridPlacementSystem
                                 TakeArea(selectableAbstract.sizeArea, selectableAbstract.objectType);
                                 lastSelectedSoldier.PlaceToArea();
                                 SelectedObjectAssigner.instance.StopAssign();
+
+                                isCarrying = false;
                                 _isSoldierCarryStarted = false;
                                 _soldierCarryTimer = 0f;
 
@@ -275,7 +281,10 @@ public class GamePlayController : GridPlacementSystem
 
                         TakeArea(selectableAbstract.sizeArea, selectableAbstract.objectType);
 
+                        isCarrying = false;
+                        _isSoldierCarryStarted = false;
                         _soldierCarryTimer = 0f;
+
                         _soldier = null;
                         _building = null;
                         lastSelectedSoldier = null;

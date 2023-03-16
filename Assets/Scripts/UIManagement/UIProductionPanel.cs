@@ -9,7 +9,7 @@ public class UIProductionPanel : MonoBehaviour
     private Image[] _selectables;
 
     [SerializeField]
-    private TowerScriptable[] _buildingDatas;
+    private TowerDataSO[] _buildingDatas;
     [SerializeField]
     private bool _isRightTower;
     private int _placementIndex;
@@ -33,7 +33,7 @@ public class UIProductionPanel : MonoBehaviour
         int j = 0;
         if (_isRightTower)
         {
-            TowerScriptable temp = _buildingDatas[0];
+            TowerDataSO temp = _buildingDatas[0];
 
             _buildingDatas[0] = _buildingDatas[1];
             _buildingDatas[1] = temp;
