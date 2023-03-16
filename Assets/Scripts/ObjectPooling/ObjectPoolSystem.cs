@@ -49,28 +49,28 @@ public class ObjectPoolSystem : MonoBehaviour
         _pool.Add(ObjectType.Bullet, new Queue<GameObject>());
 
 
-        for (int i = 0; i < 3; ++i)
+        for (int i = 0; i < 30; ++i)
         {
             Building barracksClone = _buildingFactory.GetNewInstance("Barracks");
             Building powerPlantClone = _buildingFactory.GetNewInstance("PowerPlant");
-            Bullet bulletClone = _bulletFactory.GetNewInstance("Bullet");
 
             barracksClone.gameObject.SetActive(false);
             powerPlantClone.gameObject.SetActive(false);
-            bulletClone.gameObject.SetActive(false);
 
             _pool.GetValueOrDefault(ObjectType.Barracks).Enqueue(barracksClone.gameObject);
             _pool.GetValueOrDefault(ObjectType.PowerPlant).Enqueue(powerPlantClone.gameObject);
-            _pool.GetValueOrDefault(ObjectType.Bullet).Enqueue(bulletClone.gameObject);
         }
 
         for (int i = 0; i < 30; ++i)
         {
             Soldier soldierClone = (_soldierFactory.GetNewInstance("Soldier"));
+            Bullet bulletClone = _bulletFactory.GetNewInstance("Bullet");
 
             soldierClone.gameObject.SetActive(false);
+            bulletClone.gameObject.SetActive(false);
 
             _pool.GetValueOrDefault(ObjectType.Soldier).Enqueue(soldierClone.gameObject);
+            _pool.GetValueOrDefault(ObjectType.Bullet).Enqueue(bulletClone.gameObject);
         }
     }
     public Transform GetObjectFromPool(ObjectType pooledObjectType)
