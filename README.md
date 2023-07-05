@@ -1,9 +1,10 @@
 # StrategyGameDemo
  
-Made for a Game Development Company!
-in 10 Days
-I Appresiated for read this!
-I Hope all fine and Enjoy!
+Made in 10 Days
+RTS game with classic RTS mechanics;
+like drop and drag, buy and place,
+cant place on another object,
+shooting and move soldiers!
 
 Cheers!
 Batuhan
